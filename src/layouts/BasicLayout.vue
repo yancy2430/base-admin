@@ -25,8 +25,8 @@
     <template v-slot:footerRender>
       <global-footer />
     </template>
-      <multi-tab class="multi-tab"></multi-tab>
-      <router-view></router-view>
+    <multi-tab class="multi-tab"></multi-tab>
+    <router-view></router-view>
   </pro-layout>
 </template>
 
