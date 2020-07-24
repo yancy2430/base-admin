@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新建规则"
+    title="新增"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
@@ -13,8 +13,9 @@
         <a-form-item v-show="model && model.id > 0" label="主键ID">
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
-        <a-form-item label="描述">
-          <a-input v-decorator="['description', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+
+        <a-form-item :label="item.title" v-for="(item,i) in inputs" :key="item.id">
+          <a-input />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -40,6 +41,10 @@ export default {
     model: {
       type: Object,
       default: () => null
+    },
+    inputs:{
+      type:Array,
+      required:true
     }
   },
   data () {

@@ -30,35 +30,53 @@
     </div>
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+      <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-          <!-- lock | unlock -->
-          <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
+          <a-menu-item key="2"><a-icon type="lock" />导出</a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作 <a-icon type="down" />
         </a-button>
+      </a-dropdown>
+      <a-dropdown placement="bottomCenter" :trigger="['click']" v-model="opVisible" style="float: right;">
+        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+          显示<a-icon type="down" />
+        </a>
+        <a-menu slot="overlay">
+          <a-menu-item v-for="(item,i) in columns" :key="item.id">
+            <a-checkbox v-model="columns[i].hidden">
+              {{item.title}}
+            </a-checkbox>
+          </a-menu-item>
+        </a-menu>
       </a-dropdown>
     </div>
 
     <s-table
       ref="table"
       size="middle"
-      rowKey="key"
-      :columns="columns"
+      rowKey="id"
+      :components="components"
       :data="loadData"
       :alert="true"
       :rowSelection="rowSelection"
       showPagination="auto"
+      ellipsis
     >
-      <span slot="action" slot-scope="text, record">
-        <template>
-          <a @click="handleEdit(record)">配置</a>
+      <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width" v-if="item.hidden" :key="item.id" :title="item.title" :data-index="item.dataIndex">
+        <template slot-scope="text, record">
+        <span>
+          <a>Action 一 {{ item.title }}</a>
           <a-divider type="vertical" />
-          <a @click="handleSub(record)">订阅报警</a>
+          <a>Delete</a>
+        </span>
         </template>
-      </span>
+      </a-table-column>
+
+      <!--<a-table-column width="100" key="action" title="操作" data-index="action">-->
+      <!--</a-table-column>-->
+
     </s-table>
 
     <create-form
@@ -66,6 +84,7 @@
       :visible="visible"
       :loading="confirmLoading"
       :model="mdl"
+      :inputs="inputs"
       @cancel="handleCancel"
       @ok="handleOk"
     />
@@ -79,8 +98,6 @@
   import { fruitGoodsHeader, fruitGoodsList } from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
-
-  // eslint-disable-next-line no-unused-vars
 
   const statusMap = {
     0: {
@@ -111,6 +128,45 @@
     },
     data () {
       return {
+        opVisible: false,
+        components:{
+          header: {
+            cell: (h, props, children) => {
+              const { key, ...restProps } = props
+
+              const col = this.columns.find(col => {
+                const k = col.dataIndex || col.key
+                return k === key
+              })
+
+              if (!col || !col.width) {
+                return h('th', { ...restProps }, [...children])
+              }
+              const dragProps = {
+                key: col.dataIndex || col.key,
+                class: 'table-draggable-handle',
+                attrs: {
+                  w: 10,
+                  x: col.width,
+                  z: 1,
+                  axis: 'x',
+                  draggable: true,
+                  resizable: false
+                },
+                on: {
+                  dragging: (x, y) => {
+                    col.width = Math.max(x, 1)
+                  },
+                  dragstop:(x,y)=>{
+                    console.log("拖动停止")
+                  }
+                }
+              }
+              const drag = h('vue-draggable-resizable', { ...dragProps })
+              return h('th', { ...restProps, class: 'resize-table-th' }, [...children, drag])
+            }
+          }
+        },
         columns: [],
         finds: [],
         inputs: [],
@@ -159,6 +215,7 @@
               align: 'center',
               width: (20 * item.width) || 'auto',
               ellipsis: true,
+              hidden: true,
               dataIndex: item.fieldName,
               customRender: (text) => {
                 switch (item.showType) {
@@ -189,6 +246,8 @@
             key: 'operation',
             align: 'center',
             fixed: 'right',
+            hidden: true,
+            width:100,
             scopedSlots: { customRender: 'action' }
           })
           this.columns = columns
@@ -203,7 +262,9 @@
       }
     },
     methods: {
+      renderTable(){
 
+      },
       handleAdd () {
         this.mdl = null
         this.visible = true
@@ -284,3 +345,17 @@
     }
   }
 </script>
+
+<style lang="less">
+  .resize-table-th {
+    position: relative;
+    .table-draggable-handle {
+      height: 100% !important;
+      bottom: 0;
+      left: auto !important;
+      right: -5px;
+      cursor: col-resize;
+      touch-action: none;
+    }
+  }
+</style>

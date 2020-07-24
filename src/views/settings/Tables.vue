@@ -2,13 +2,14 @@
   <div class="page-header-index-wide">
     <a-card :bordered="false" :bodyStyle="{ padding: '16px 0', height: '100%' }" :style="{ height: '100%' }">
       <div class="account-settings-info-main" :class="{ 'mobile': isMobile }">
-        <div class="account-settings-info-left">
+        <div class="account-settings-info-left" style="height: 450px;overflow-x: hidden;">
           <a-menu
             :mode="isMobile ? 'horizontal' : 'inline'"
             :style="{ border: '0', width: isMobile ? '560px' : 'auto'}"
             :selectedKeys="selectedKeys"
             type="inner"
             @openChange="onOpenChange"
+            @click="onClick"
           >
             <a-menu-item v-for="item in tables" :key="item">
               {{ item }}
@@ -16,68 +17,47 @@
 
           </a-menu>
         </div>
-        <div class="account-settings-info-right">
+        <div class="account-settings-info-right" >
           <div class="account-settings-info-title">
-            <span>{{ $route.meta.title }}</span>
+            <span>编辑展示</span>
+            <a-button :loading="saveLoading" type="primary" style="float: right;" @click="onSave">
+              {{saveLoadingText}}
+            </a-button>
           </div>
-          <a-list item-layout="horizontal" :data-source="data">
-            <a-list-item slot="renderItem" slot-scope="item">
+          <a-spin :spinning="spinning">
+          <a-list item-layout="horizontal" :data-source="fields" style="height: 450px;overflow-x: hidden;">
+            <a-list-item slot="renderItem" slot-scope="item,index">
               <a-list-item-meta>
                 <div slot="title">
                   <a-row>
                     <a-col :span="24">
-                      <a-input disabled style="width: 220px;margin-right: 20px" placeholder="字段名" />
-                      <a-input style="width: 220px;margin-right: 20px" placeholder="字段中文名" :value="item.title" />
-                      <a-select default-value="0" style="width: 120px;margin-right: 20px" placeholder="显示类型">
-                        <a-select-option value="0">
-                          不显示
+                      <a-input disabled style="width: 220px;margin-right: 20px" :value="fields[index].fieldName" placeholder="字段名"/>
+                      <a-input style="width: 220px;margin-right: 20px" placeholder="字段中文名" v-model="fields[index].name" />
+                      <a-select style="width: 120px;margin-right: 20px" placeholder="显示类型" v-model="fields[index].showType">
+                        <a-select-option v-for="item in enums.show" :key="item.value" :value="item.value">
+                          {{item.name}}
                         </a-select-option>
-                        <a-select-option value="lucy">
-                          Lucy
-                        </a-select-option>
-                        <a-select-option value="disabled">
-                          Disabled
-                        </a-select-option>
-                        <a-select-option value="Yiminghe">
-                          yiminghe
+
+                      </a-select>
+                      <a-select style="width: 120px;margin-right: 20px" placeholder="查询类型" v-model="fields[index].findType">
+                        <a-select-option v-for="item in enums.find" :key="item.value" :value="item.value">
+                          {{item.name}}
                         </a-select-option>
                       </a-select>
-                      <a-select default-value="0" style="width: 120px;margin-right: 20px" placeholder="查询类型">
-                        <a-select-option value="0">
-                          不可查询
-                        </a-select-option>
-                        <a-select-option value="lucy">
-                          Lucy
-                        </a-select-option>
-                        <a-select-option value="disabled">
-                          Disabled
-                        </a-select-option>
-                        <a-select-option value="Yiminghe">
-                          yiminghe
+                      <a-select style="width: 120px;margin-right: 20px" placeholder="编辑类型"  v-model="fields[index].inputType">
+                        <a-select-option v-for="item in enums.input" :key="item.value" :value="item.value">
+                          {{item.name}}
                         </a-select-option>
                       </a-select>
-                      <a-select default-value="0" style="width: 120px;margin-right: 20px" placeholder="编辑类型">
-                        <a-select-option value="0">
-                          不可编辑
-                        </a-select-option>
-                        <a-select-option value="lucy">
-                          Lucy
-                        </a-select-option>
-                        <a-select-option value="disabled">
-                          Disabled
-                        </a-select-option>
-                        <a-select-option value="Yiminghe">
-                          yiminghe
-                        </a-select-option>
-                      </a-select>
-                      <a-input-number style="margin-right: 20px;" placeholder="宽度" value="" :min="0" :max="100" />
-                      <a-input-number style="margin-right: 20px;" placeholder="排序" value="" :min="0" :max="100" />
+                      <a-input-number style="margin-right: 20px;" placeholder="宽度"  v-model="fields[index].width" />
+                      <a-input-number style="margin-right: 20px;" placeholder="排序" v-model="fields[index].sort" />
                     </a-col>
                   </a-row>
                 </div>
               </a-list-item-meta>
             </a-list-item>
           </a-list>
+          </a-spin>
         </div>
       </div>
     </a-card>
@@ -87,30 +67,14 @@
 <script>
   import { RouteView } from '@/layouts'
   import { baseMixin } from '@/store/app-mixin'
-  import { tables } from '@/api/baseData'
-  import draggable from 'vuedraggable'
+  import { tables, enums, fields , saveFields } from '@/api/baseData'
 
-  const data = [
-    {
-      title: 'Ant Design Title 1'
-    },
-    {
-      title: 'Ant Design Title 2'
-    },
-    {
-      title: 'Ant Design Title 3'
-    },
-    {
-      title: 'Ant Design Title 4'
-    }
-  ]
   const plainOptions = ['搜索', '显示列', '编辑']
   const defaultCheckedList = ['Apple', 'Orange']
   export default {
     name: 'Tables',
     components: {
-      RouteView,
-      draggable
+      RouteView
     },
     mixins: [baseMixin],
     data () {
@@ -122,13 +86,13 @@
         ],
         checkedList: defaultCheckedList,
         plainOptions,
-        data,
         // horizontal  inline
         mode: 'inline',
-
+        spinning: false,
+        saveLoading: false,
+        saveLoadingText: '保存设置',
         openKeys: [],
         selectedKeys: [],
-
         // cropper
         preview: {},
         option: {
@@ -147,30 +111,55 @@
           fixedNumber: [1, 1]
         },
         pageTitle: '',
-        tables: []
+        tables: [],
+        enums: {},
+        fields:[],
+        test: '1',
       }
     },
     created () {
       tables()
         .then(res => {
           this.tables = res.data
+          this.onClick({
+            key: this.tables[0]
+          })
+        })
+      enums()
+        .then(res => {
+          this.enums = res.data
         })
     },
     mounted () {
-      this.updateMenu()
+
     },
     methods: {
+      onSave (){
+        this.saveLoading = true
+        saveFields(this.fields)
+          .then(res => {
+            if (res.code===0){
+
+            }else{
+              this.$message.error(res.msg);
+            }
+            this.saveLoading = false
+        })
+        console.log(this.fields)
+      },
       onOpenChange (openKeys) {
         this.openKeys = openKeys
       },
-      updateMenu () {
-        const routes = this.$route.matched.concat()
-        this.selectedKeys = [routes.pop().path]
-      }
-    },
-    watch: {
-      '$route' (val) {
-        this.updateMenu()
+      onClick (obj) {
+        this.selectedKeys = [obj.key]
+        this.spinning = true
+        fields({
+          table:obj.key
+        })
+          .then(res => {
+            this.fields = res.data
+            this.spinning = false
+        })
       }
     }
   }

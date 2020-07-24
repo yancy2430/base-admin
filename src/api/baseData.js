@@ -4,7 +4,9 @@ const api = {
   ch: 'http://192.168.2.100:89/base/FruitGoods/header',
   chPage: 'http://192.168.2.100:89/base/FruitGoods/page',
   tables: 'http://192.168.2.100:89/base/tables',
-
+  fields: 'http://localhost:89/base/fields',
+  saveFields: 'http://localhost:89/base/saveFields',
+  enums: 'http://localhost:89/base/enums',
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -32,5 +34,30 @@ export function tables () {
   return request({
     url: api.tables,
     method: 'get'
+  })
+}
+
+export function enums () {
+  return request({
+    url: api.enums,
+    method: 'get'
+  })
+}
+
+export function fields (parameter) {
+  return request({
+    url: api.fields,
+    method: 'post',
+    params: parameter
+  })
+}
+export function saveFields (parameter) {
+  return request({
+    url: api.saveFields,
+    method: 'post',
+    data: JSON.stringify(parameter),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
