@@ -31,6 +31,10 @@ import VueDraggableResizable from 'vue-draggable-resizable'
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 
+import { Cascader } from 'ant-design-vue';
+Vue.use(Cascader);
+import draggable from "vuedraggable";
+Vue.component('draggable', draggable)
 new Vue({
   router,
   store,

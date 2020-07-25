@@ -6,6 +6,7 @@ const api = {
   tables: url+'/base/tables',
   fields: url+'/base/fields',
   saveFields: 'http://localhost:89/base/saveFields',
+  saveOrUpdateHeader: 'http://localhost:89/base/saveOrUpdateHeader',
   enums: 'http://localhost:89/base/enums',
   service: '/service',
   permission: '/permission',
@@ -54,6 +55,17 @@ export function fields (parameter) {
 export function saveFields (parameter) {
   return request({
     url: api.saveFields,
+    method: 'post',
+    data: JSON.stringify(parameter),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+export function saveOrUpdateHeader (parameter) {
+  return request({
+    url: api.saveOrUpdateHeader,
     method: 'post',
     data: JSON.stringify(parameter),
     headers: {

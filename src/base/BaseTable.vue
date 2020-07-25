@@ -16,7 +16,8 @@
             </a-col>
           </template>
           <a-col :md="!advanced && 8 || 24" :sm="24">
-            <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
+            <span class="table-page-search-submitButtons"
+                  :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
               <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
               <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
@@ -32,28 +33,57 @@
       <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-          <a-menu-item key="2"><a-icon type="lock" />导出</a-menu-item>
+          <a-menu-item key="1">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
+          <a-menu-item key="2">
+            <a-icon type="lock"/>
+            导出
+          </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
-          批量操作 <a-icon type="down" />
+          批量操作
+          <a-icon type="down"/>
         </a-button>
       </a-dropdown>
       <a-dropdown placement="bottomCenter" :trigger="['click']" v-model="opVisible" style="float: right;">
         <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-          显示<a-icon type="down" />
+          显示
+          <a-icon type="down"/>
         </a>
         <a-menu slot="overlay">
-          <a-menu-item v-for="(item,i) in columns" :key="item.id">
-            <a-checkbox v-model="columns[i].hidden">
-              {{item.title}}
-            </a-checkbox>
-          </a-menu-item>
+          <!--<draggable-->
+            <!--v-model="columns"-->
+            <!--v-bind="dragOptions"-->
+            <!--@start="drag = true"-->
+            <!--@end="drag = false"-->
+          <!--&gt;-->
+            <!--<a-menu-item  v-for="element in columns" :key="element.sort">-->
+              <!--<a-checkbox>-->
+                <!--{{element.title}}-->
+              <!--</a-checkbox>-->
+            <!--</a-menu-item>-->
+          <!--</draggable>-->
+          <draggable
+            v-model="columns"
+            v-bind="dragOptions"
+            @start="drag = true"
+            @end="drag = false"
+          >
+              <a-menu-item class="ant-dropdown-menu-item" v-for="(element,i) in columns" :key="element.sort">
+                <a-checkbox v-model="columns[i].hidden" @click="updateHeader">
+                  {{element.title}}
+                </a-checkbox>
+              </a-menu-item>
+          </draggable>
+
         </a-menu>
       </a-dropdown>
     </div>
 
     <s-table
+      bordered
       ref="table"
       size="middle"
       rowKey="id"
@@ -72,9 +102,9 @@
         <template slot-scope="text, record">
         <span>
           <a>查看</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a>编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a>删除</a>
         </span>
         </template>
@@ -98,7 +128,7 @@
 <script>
   import moment from 'moment'
   import { STable, Ellipsis } from '@/components'
-  import { fruitGoodsHeader, fruitGoodsList } from '@/api/baseData'
+  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader } from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
 
@@ -131,8 +161,9 @@
     },
     data () {
       return {
+        drag:false,
         opVisible: false,
-        components:{
+        components: {
           header: {
             cell: (h, props, children) => {
               const { key, ...restProps } = props
@@ -160,8 +191,8 @@
                   dragging: (x, y) => {
                     col.width = Math.max(x, 1)
                   },
-                  dragstop:(x,y)=>{
-                    console.log("拖动停止")
+                  dragstop: (x, y) => {
+                    this.updateHeader()
                   }
                 }
               }
@@ -206,7 +237,6 @@
     created () {
       fruitGoodsHeader()
         .then(res => {
-          console.log(res.data)
           const columns = []
           this.finds.head = res.data.finds.slice(0, 2)
           this.finds.more = res.data.finds.slice(2, res.data.finds.length)
@@ -214,6 +244,7 @@
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
             columns.push({
+              sort: i,
               title: item.title,
               align: 'center',
               width: (20 * item.width) || 'auto',
@@ -227,13 +258,27 @@
                   case 2:
                     return text
                   case 3:
-                    return <img style="width: 50px;height: 40px" src={text} />
+                    return
+                  <
+                    img
+                    style = 'width: 50px;height: 40px'
+                    src = { text }
+                    />
                   case 4:
-                    return <img style="width: 40px;height: 40px" src={text} />
+                    return
+                  <
+                    img
+                    style = 'width: 40px;height: 40px'
+                    src = { text }
+                    />
                   case 5:
                     return text
                   case 6:
-                    return <a href={text} style="padding: 0 5px">{text}</a>
+                    return
+                  <
+                    a
+                    href = { text }
+                    style = 'padding: 0 5px' > { text } < /a>
                   case 7:
                     for (const index in item.mapping) {
                       if (text === item.mapping[index].value) {
@@ -245,15 +290,17 @@
             })
           }
           columns.push({
+            sort:columns.length,
             title: '操作',
             key: 'operation',
             align: 'center',
             fixed: 'right',
             hidden: true,
-            width:300,
+            width: 160,
             scopedSlots: { customRender: 'action' }
           })
           this.columns = columns
+          console.log(JSON.stringify(this.columns))
         })
     },
     computed: {
@@ -262,11 +309,35 @@
           selectedRowKeys: this.selectedRowKeys,
           onChange: this.onSelectChange
         }
+      },
+      dragOptions() {
+        return {
+          animation: 200,
+          group: "description",
+          disabled: false,
+          ghostClass: "ghost"
+        };
       }
     },
-    methods: {
-      renderTable(){
 
+
+    methods: {
+      updateHeader () {
+        console.log(this.columns)
+        const headers = []
+        for (let index in this.columns)  {
+          if (this.columns[index].dataIndex){
+            headers.push({
+              'id': this.columns[index].dataIndex,
+              'hidden': this.columns[index].hidden,
+              'width': this.columns[index].width
+            })
+          }
+        }
+        saveOrUpdateHeader(headers)
+          .then(res => {
+            console.log(res)
+          })
       },
       handleAdd () {
         this.mdl = null
@@ -352,6 +423,7 @@
 <style lang="less">
   .resize-table-th {
     position: relative;
+
     .table-draggable-handle {
       height: 100% !important;
       bottom: 0;
