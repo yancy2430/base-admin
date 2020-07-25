@@ -1,10 +1,10 @@
 import request from '@/utils/request'
-
+const url = 'http://localhost:89'
 const api = {
-  ch: 'http://192.168.2.100:89/base/FruitGoods/header',
-  chPage: 'http://192.168.2.100:89/base/FruitGoods/page',
-  tables: 'http://192.168.2.100:89/base/tables',
-  fields: 'http://localhost:89/base/fields',
+  ch: url+'/base/FruitGoods/header',
+  chPage: url+'/base/FruitGoods/page',
+  tables: url+'/base/tables',
+  fields: url+'/base/fields',
   saveFields: 'http://localhost:89/base/saveFields',
   enums: 'http://localhost:89/base/enums',
   service: '/service',

@@ -21,7 +21,7 @@
           <div class="account-settings-info-title">
             <span>编辑展示</span>
             <a-button :loading="saveLoading" type="primary" style="float: right;" @click="onSave">
-              {{saveLoadingText}}
+              {{ saveLoadingText }}
             </a-button>
           </div>
           <a-spin :spinning="spinning">

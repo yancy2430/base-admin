@@ -62,20 +62,23 @@
       :alert="true"
       :rowSelection="rowSelection"
       showPagination="auto"
-      ellipsis
+      :scroll="{ x: 1500}"
     >
-      <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width" v-if="item.hidden" :key="item.id" :title="item.title" :data-index="item.dataIndex">
+      <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width"
+                      v-if="item.hidden" :key="item.id"
+                      :title="item.title" :data-index="item.dataIndex" :align="item.align" :fixed="item.fixed"
+                      :ellipsis="item.ellipsis"
+      >
         <template slot-scope="text, record">
         <span>
-          <a>Action 一 {{ item.title }}</a>
+          <a>查看</a>
           <a-divider type="vertical" />
-          <a>Delete</a>
+          <a>编辑</a>
+          <a-divider type="vertical" />
+          <a>删除</a>
         </span>
         </template>
       </a-table-column>
-
-      <!--<a-table-column width="100" key="action" title="操作" data-index="action">-->
-      <!--</a-table-column>-->
 
     </s-table>
 
@@ -247,7 +250,7 @@
             align: 'center',
             fixed: 'right',
             hidden: true,
-            width:100,
+            width:300,
             scopedSlots: { customRender: 'action' }
           })
           this.columns = columns
