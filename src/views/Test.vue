@@ -2,27 +2,21 @@
   <div class="row">
     <div class="col-6">
       <h3>Transition</h3>
-
-      <a-dropdown placement="bottomCenter" :trigger="['click']" v-model="opVisible" style="float: right;">
-        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-          显示
-          <a-icon type="down"/>
-        </a>
-        <a-menu slot="overlay">
-          <draggable
-            v-model="columns"
-            v-bind="dragOptions"
-            @start="drag = true"
-            @end="drag = false"
-          >
-                <a-menu-item  v-for="element in columns" :key="element.sort">
-                  <a-checkbox>
-                    {{element.title}}
-                  </a-checkbox>
-                </a-menu-item>
-          </draggable>
-        </a-menu>
-      </a-dropdown>
+      <a-menu slot="overlay">
+        <draggable
+          v-model="list"
+          v-bind="dragOptions"
+          @change="change"
+          @start="drag = true"
+          @end="drag = false"
+        >
+          <a-menu-item  v-for="element in list" :key="element.order">
+            <a-checkbox>
+              {{element.name}}
+            </a-checkbox>
+          </a-menu-item>
+        </draggable>
+      </a-menu>
     </div>
   </div>
 </template>
@@ -56,6 +50,10 @@
     methods: {
       sort() {
         this.list = this.list.sort((a, b) => a.order - b.order);
+      },
+      change(){
+        console.log(this.list)
+
       }
     },
     computed: {

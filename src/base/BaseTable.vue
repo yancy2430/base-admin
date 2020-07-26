@@ -49,22 +49,10 @@
       </a-dropdown>
       <a-dropdown placement="bottomCenter" :trigger="['click']" v-model="opVisible" style="float: right;">
         <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-          显示
+          配置
           <a-icon type="down"/>
         </a>
         <a-menu slot="overlay">
-          <!--<draggable-->
-            <!--v-model="columns"-->
-            <!--v-bind="dragOptions"-->
-            <!--@start="drag = true"-->
-            <!--@end="drag = false"-->
-          <!--&gt;-->
-            <!--<a-menu-item  v-for="element in columns" :key="element.sort">-->
-              <!--<a-checkbox>-->
-                <!--{{element.title}}-->
-              <!--</a-checkbox>-->
-            <!--</a-menu-item>-->
-          <!--</draggable>-->
           <draggable
             v-model="columns"
             v-bind="dragOptions"
@@ -72,7 +60,7 @@
             @end="drag = false"
           >
               <a-menu-item class="ant-dropdown-menu-item" v-for="(element,i) in columns" :key="element.sort">
-                <a-checkbox v-model="columns[i].hidden" @click="updateHeader">
+                <a-checkbox v-model="columns[i].show" @change="updateHeader">
                   {{element.title}}
                 </a-checkbox>
               </a-menu-item>
@@ -83,7 +71,6 @@
     </div>
 
     <s-table
-      bordered
       ref="table"
       size="middle"
       rowKey="id"
@@ -95,7 +82,7 @@
       :scroll="{ x: 1500}"
     >
       <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width"
-                      v-if="item.hidden" :key="item.id"
+                      v-if="item.show" :key="item.id"
                       :title="item.title" :data-index="item.dataIndex" :align="item.align" :fixed="item.fixed"
                       :ellipsis="item.ellipsis"
       >
@@ -131,25 +118,6 @@
   import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader } from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
-
-  const statusMap = {
-    0: {
-      status: 'default',
-      text: '关闭'
-    },
-    1: {
-      status: 'processing',
-      text: '运行中'
-    },
-    2: {
-      status: 'success',
-      text: '已上线'
-    },
-    3: {
-      status: 'error',
-      text: '异常'
-    }
-  }
 
   export default {
     name: 'BaseTable',
@@ -244,12 +212,13 @@
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
             columns.push({
+              tableName:item.tableName,
               sort: i,
               title: item.title,
               align: 'center',
-              width: (20 * item.width) || 'auto',
+              width: i>res.data.columns.length-2?"":item.width,
               ellipsis: true,
-              hidden: true,
+              show: item.show,
               dataIndex: item.fieldName,
               customRender: (text) => {
                 switch (item.showType) {
@@ -258,27 +227,13 @@
                   case 2:
                     return text
                   case 3:
-                    return
-                  <
-                    img
-                    style = 'width: 50px;height: 40px'
-                    src = { text }
-                    />
+                    return <img style = 'width: 50px;height: 40px' src = { text } />
                   case 4:
-                    return
-                  <
-                    img
-                    style = 'width: 40px;height: 40px'
-                    src = { text }
-                    />
+                    return <img style = 'width: 40px;height: 40px' src = { text } />
                   case 5:
                     return text
                   case 6:
-                    return
-                  <
-                    a
-                    href = { text }
-                    style = 'padding: 0 5px' > { text } < /a>
+                    return <a href = { text } style = 'padding: 0 5px' > { text } </a>
                   case 7:
                     for (const index in item.mapping) {
                       if (text === item.mapping[index].value) {
@@ -295,12 +250,12 @@
             key: 'operation',
             align: 'center',
             fixed: 'right',
-            hidden: true,
+            show: true,
             width: 160,
             scopedSlots: { customRender: 'action' }
           })
           this.columns = columns
-          console.log(JSON.stringify(this.columns))
+
         })
     },
     computed: {
@@ -328,8 +283,9 @@
         for (let index in this.columns)  {
           if (this.columns[index].dataIndex){
             headers.push({
-              'id': this.columns[index].dataIndex,
-              'hidden': this.columns[index].hidden,
+              'id': this.columns[index].tableName+"-"+this.columns[index].dataIndex,
+              'tableName': this.columns[index].tableName,
+              'show': this.columns[index].show,
               'width': this.columns[index].width
             })
           }
