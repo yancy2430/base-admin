@@ -212,6 +212,25 @@ export const asyncRouterMap = [
             name: 'center',
             component: () => import('@/views/account/center'),
             meta: { title: '个人中心', keepAlive: true, permission: [ 'user' ] }
+          }
+        ]
+      },
+      {
+        path: '/setting',
+        component: RouteView,
+        meta: { title: '设置中心', keepAlive: true, icon: 'form', permission: [ 'form' ] },
+        children: [
+          {
+            path: 'tables',
+            name: 'Tables',
+            component: () => import('@/views/settings/Tables'),
+            meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
+          },
+          {
+            path: '/test',
+            name: 'Test',
+            component: () => import('@/views/Test'),
+            meta: { title: '测试', keepAlive: true, permission: [ 'form' ] }
           },
           {
             path: '/account/settings',
@@ -252,25 +271,6 @@ export const asyncRouterMap = [
                 meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [ 'user' ] }
               }
             ]
-          }
-        ]
-      },
-      {
-        path: '/setting',
-        component: RouteView,
-        meta: { title: '设置页面', keepAlive: true, icon: 'form', permission: [ 'form' ] },
-        children: [
-          {
-            path: 'tables',
-            name: 'Tables',
-            component: () => import('@/views/settings/Tables'),
-            meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
-          },
-          {
-            path: '/test',
-            name: 'Test',
-            component: () => import('@/views/Test'),
-            meta: { title: '测试', keepAlive: true, permission: [ 'form' ] }
           }
         ]
       }
