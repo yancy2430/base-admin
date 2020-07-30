@@ -81,6 +81,7 @@
       showPagination="auto"
       :scroll="{ x: 1500}"
     >
+
       <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width"
                       v-if="item.show" :key="item.id"
                       :title="item.title" :data-index="item.dataIndex" :align="item.align" :fixed="item.fixed"
@@ -96,7 +97,6 @@
         </span>
         </template>
       </a-table-column>
-
     </s-table>
 
     <create-form
