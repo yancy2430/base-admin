@@ -5,9 +5,10 @@ const api = {
   chPage: url+'/base/FruitGoods/page',
   tables: url+'/base/tables',
   fields: url+'/base/fields',
-  saveFields: 'http://localhost:89/base/saveFields',
-  saveOrUpdateHeader: 'http://localhost:89/base/saveOrUpdateHeader',
-  enums: 'http://localhost:89/base/enums',
+  city:url+'/base/City/tree',
+  saveFields: url+'/base/saveFields',
+  saveOrUpdateHeader: url+'/base/saveOrUpdateHeader',
+  enums: url+'/base/enums',
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -68,6 +69,16 @@ export function saveOrUpdateHeader (parameter) {
     url: api.saveOrUpdateHeader,
     method: 'post',
     data: JSON.stringify(parameter),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+export function getCitys () {
+  return request({
+    url: api.city,
+    method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
