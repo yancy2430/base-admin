@@ -47,8 +47,9 @@
           <a-icon type="down"/>
         </a-button>
       </a-dropdown>
+
       <a-dropdown placement="bottomCenter" :trigger="['click']" v-model="opVisible" style="float: right;">
-        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+        <a class="ant-dropdown-link" >
           配置
           <a-icon type="down"/>
         </a>
@@ -76,12 +77,11 @@
       rowKey="id"
       :components="components"
       :data="loadData"
-      :alert="true"
+      :alert="false"
       :rowSelection="rowSelection"
       showPagination="auto"
       :scroll="{ x: 1500}"
     >
-
       <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width"
                       v-if="item.show" :key="item.id"
                       :title="item.title" :data-index="item.dataIndex" :align="item.align" :fixed="item.fixed"
@@ -217,7 +217,6 @@
               title: item.title,
               align: 'center',
               width: i>res.data.columns.length-2?"":item.width,
-              ellipsis: true,
               show: item.show,
               dataIndex: item.fieldName,
               customRender: (text) => {
