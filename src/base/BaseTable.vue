@@ -194,10 +194,11 @@
           console.log('loadData request parameters:', requestParameters)
           return fruitGoodsList(requestParameters)
             .then(res => {
-              console.log(res.data)
+              this.mapping = res.data.mapping
               return res.data
             })
         },
+        mapping:{},
         selectedRowKeys: [],
         selectedRows: [],
         citys: []
@@ -228,40 +229,29 @@
               width: i > res.data.columns.length - 2 ? '' : item.width,
               show: item.show,
               dataIndex: item.fieldName,
-              customRender: (text) => {
+              customRender: (text, record, index) => {
                 switch (item.showType) {
                   case 1:
                     return text
                   case 2:
                     return text
                   case 3:
-                    return
-                  <
-                    img
-                    style = 'width: 50px;height: 40px'
-                    src = { text }
-                    />
+                    return <img style = 'width: 50px;height: 40px' src = { text } />
                   case 4:
-                    return
-                  <
-                    img
-                    style = 'width: 40px;height: 40px'
-                    src = { text }
-                    />
+                    return <img style = 'width: 40px;height: 40px' src = { text } />
                   case 5:
                     return text
                   case 6:
-                    return
-                  <
-                    a
-                    href = { text }
-                    style = 'padding: 0 5px' > { text } < /a>
+                    return <a href = { text } style = 'padding: 0 5px' > { text } < /a>
                   case 7:
                     for (const index in item.mapping) {
-                      if (text === item.mapping[index].value) {
+                      if (text == item.mapping[index].value) {
                         return item.mapping[index].name
                       }
                     }
+                    return ""
+                  case 8:
+                    return this.mapping[item.fieldName][text]
                 }
               }
             })
@@ -303,6 +293,9 @@
     },
 
     methods: {
+      filter(inputValue, path) {
+        return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+      },
       updateHeader () {
         console.log(this.columns)
         const headers = []

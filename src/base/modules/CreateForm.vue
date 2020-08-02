@@ -128,7 +128,6 @@
           <a-col :span="12">
             <a-form-item label="文本域">
               <a-textarea
-                v-model="value"
                 placeholder="Controlled autosize"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
               />
