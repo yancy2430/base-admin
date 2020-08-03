@@ -31,26 +31,28 @@
                 <div slot="title">
                   <a-row>
                     <a-col :span="24">
-                      <a-input disabled style="width: 220px;margin-right: 20px" :value="fields[index].fieldName" placeholder="字段名"/>
-                      <a-input style="width: 220px;margin-right: 20px" placeholder="字段中文名" v-model="fields[index].name" />
-                      <a-select style="width: 120px;margin-right: 20px" placeholder="显示类型" v-model="fields[index].showType">
-                        <a-select-option v-for="item in enums.show" :key="item.value" :value="item.value">
-                          {{item.name}}
-                        </a-select-option>
-
-                      </a-select>
-                      <a-select style="width: 120px;margin-right: 20px" placeholder="查询类型" v-model="fields[index].findType">
+                      <a-input disabled style="width: 200px;margin: 5px 20px 5px 0;" :value="fields[index].fieldName" placeholder="字段名"/>
+                      <a-input style="width: 200px;margin: 5px 20px 5px 0;" placeholder="字段中文名" v-model="fields[index].name" />
+                      <a-cascader
+                        style="width: 200px;margin: 5px 20px 5px 0;"
+                        :field-names="{ label: 'name', value: 'value', children: 'children' }"
+                        :options="enums.show"
+                        placeholder="选择显示类型"
+                        :defaultValue="[fields[index].showType]"
+                        @change="onChange"
+                        v-model="showType[index]"
+                        :allowClear="false"
+                      />
+                      <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="查询类型" v-model="fields[index].findType">
                         <a-select-option v-for="item in enums.find" :key="item.value" :value="item.value">
                           {{item.name}}
                         </a-select-option>
                       </a-select>
-                      <a-select style="width: 120px;margin-right: 20px" placeholder="编辑类型"  v-model="fields[index].inputType">
+                      <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="编辑类型"  v-model="fields[index].inputType">
                         <a-select-option v-for="item in enums.input" :key="item.value" :value="item.value">
                           {{item.name}}
                         </a-select-option>
                       </a-select>
-                      <a-input-number style="margin-right: 20px;" placeholder="宽度"  v-model="fields[index].width" />
-                      <a-input-number style="margin-right: 20px;" placeholder="排序" v-model="fields[index].sort" />
                     </a-col>
                   </a-row>
                 </div>
@@ -115,6 +117,7 @@
         enums: {},
         fields:[],
         test: '1',
+        showType:[]
       }
     },
     created () {
@@ -134,6 +137,9 @@
 
     },
     methods: {
+      onChange(value,selectedOptions) {
+        console.log(this.showType)
+      },
       onSave (){
         this.saveLoading = true
         saveFields(this.fields)
