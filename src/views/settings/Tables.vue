@@ -38,9 +38,8 @@
                         :field-names="{ label: 'name', value: 'value', children: 'children' }"
                         :options="enums.show"
                         placeholder="选择显示类型"
-                        :defaultValue="[fields[index].showType]"
                         @change="onChange"
-                        v-model="showType[index]"
+                        v-model="fields[index].foreigns"
                         :allowClear="false"
                       />
                       <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="查询类型" v-model="fields[index].findType">
