@@ -4,58 +4,26 @@
       <a-form layout="inline">
 
         <a-row :gutter="48">
-          <a-col :md="8" :sm="24" v-for="(find,index) in finds.head" :key="find.title">
-
-            <a-form-item :label="find.label">
-              <a-input-group compact>
-                <a-select v-model="findTypes[index]" style="width: 24%" :options="enums">
-                </a-select>
-                <a-input v-if="[7,8].indexOf(findTypes[index])!=-1" style=" width: 34%; text-align: center" placeholder="Minimum" />
-                <a-input
-                  v-if="[7,8].indexOf(findTypes[index])!=-1"
-                  style=" width: 8%; border-left: 0; pointer-events: none; backgroundColor: #fff"
-                  placeholder="~"
-                  disabled
-                />
-                <a-input v-if="[7,8].indexOf(findTypes[index])!=-1" style="width: 34%;text-align: center; border-left: 0" placeholder="Maximum" />
-
-                <a-input  v-if="[1,2,3,4,5,6].indexOf(findTypes[index])!=-1"  style=" width: 73%; text-align: center"  />
-
-
+          <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
+            <a-form-item :label="item.label">
+              <a-select v-model="item.findType" style="width: 24%" :options="enums">
+              </a-select>
+              <span v-if="[5].indexOf(item.showType)==-1">
+              <a-input-group compact v-if="[7,8].indexOf(item.findType)!=-1" style="width: 76%;margin-left: -1px;">
+                <a-input style=" width: 44%; text-align: center" placeholder="最小值" />
+                <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
+                <a-input  style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
               </a-input-group>
+              <a-input-group compact v-if="[1,2].indexOf(item.findType)!=-1"  style="width: 76%;margin-left: -1px;" >
+                <a-input  style=" width: 100%;margin-left: -2px;"  />
+              </a-input-group>
+              <a-cascader v-if="[18].indexOf(item.findType)!=-1 " change-on-select style=" width: 76%;margin-left: -3px;"  :options="options" placeholder="Please select" />
+              </span>
+              <a-date-picker v-if="([5].indexOf(item.showType)!=-1 && [7,8].indexOf(item.findType)==-1)" style=" width: 76%;margin-left: -3px;" />
+              <a-range-picker v-if="([5].indexOf(item.showType)!=-1 && [7,8].indexOf(item.findType)!=-1)" style=" width: 76%;margin-left: -3px;" />
 
             </a-form-item>
           </a-col>
-          <template v-if="advanced">
-            <a-col :md="8" :sm="24" v-for="(find,index) in finds.more" :key="find.title">
-              <a-form-item :label="find.label">
-                <a-input-group compact>
-                  <a-select v-model="findTypes[index+2]" style="width: 24%" :options="enums">
-                    <a-select-option :value="find.value" v-for="find in enums" :key="find.value">
-                      {{find.name}}
-                    </a-select-option>
-                  </a-select>
-                  <a-input style=" width: 34%; text-align: center" placeholder="Minimum" />
-                  <a-input
-                    style=" width: 8%; border-left: 0; pointer-events: none; backgroundColor: #fff"
-                    placeholder="~"
-                    disabled
-                  />
-                  <a-input style="width: 34%;text-align: center; border-left: 0" placeholder="Maximum" />
-
-
-                </a-input-group>
-
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="选择城市">
-                <a-cascader :options="citys"
-                            :show-search="{ filter }" placeholder="请选择城市" />
-              </a-form-item>
-            </a-col>
-
-          </template>
           <a-col :md="!advanced && 8 || 24" :sm="24">
             <span class="table-page-search-submitButtons"
                   :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
@@ -159,10 +127,12 @@
   import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, getCitys ,enums} from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
+  import AInputGroup from 'ant-design-vue/es/input/Group'
 
   export default {
     name: 'BaseTable',
     components: {
+      AInputGroup,
       STable,
       Ellipsis,
       CreateForm,
@@ -172,6 +142,40 @@
       return {
         drag: false,
         opVisible: false,
+        options: [
+          {
+            value: 'zhejiang',
+            label: 'Zhejiang',
+            children: [
+              {
+                value: 'hangzhou',
+                label: 'Hangzhou',
+                children: [
+                  {
+                    value: 'xihu',
+                    label: 'West Lake',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            value: 'jiangsu',
+            label: 'Jiangsu',
+            children: [
+              {
+                value: 'nanjing',
+                label: 'Nanjing',
+                children: [
+                  {
+                    value: 'zhonghuamen',
+                    label: 'Zhong Hua Men',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         components: {
           header: {
             cell: (h, props, children) => {
@@ -212,7 +216,6 @@
         },
         columns: [],
         finds: [],
-        findTypes: [],
         inputs: [],
         // create model
         visible: false,
@@ -252,14 +255,17 @@
     created () {
       enums()
         .then(res => {
-          console.log(res.data.find.slice(1, res.data.find.length))
+
           this.enums = res.data.find.slice(1, res.data.find.length)
+
         })
       fruitGoodsHeader()
         .then(res => {
           const columns = []
-          this.finds.head = res.data.finds.slice(0, 2)
-          this.finds.more = res.data.finds.slice(2, res.data.finds.length)
+          for (let i = 0; i < res.data.finds.length; i++) {
+            this.finds.push(res.data.finds[i])
+          }
+
           this.inputs = res.data.inputs
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
@@ -335,6 +341,9 @@
     },
 
     methods: {
+      findType(){
+
+      },
       filter(inputValue, path) {
         return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
       },
