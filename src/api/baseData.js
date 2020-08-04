@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const url = 'http://localhost:89'
+const url = 'http://192.168.0.104:89'
 const api = {
   ch: url+'/base/FruitGoods/header',
   chPage: url+'/base/FruitGoods/page',

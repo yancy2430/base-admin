@@ -4,15 +4,48 @@
       <a-form layout="inline">
 
         <a-row :gutter="48">
-          <a-col :md="8" :sm="24" v-for="find in finds.head" :key="find.title">
-            <a-form-item :label="find.title">
-              <a-input v-model="queryParam.id" placeholder=""/>
+          <a-col :md="8" :sm="24" v-for="(find,index) in finds.head" :key="find.title">
+
+            <a-form-item :label="find.label">
+              <a-input-group compact>
+                <a-select v-model="findTypes[index]" style="width: 24%" :options="enums">
+                </a-select>
+                <a-input v-if="[7,8].indexOf(findTypes[index])!=-1" style=" width: 34%; text-align: center" placeholder="Minimum" />
+                <a-input
+                  v-if="[7,8].indexOf(findTypes[index])!=-1"
+                  style=" width: 8%; border-left: 0; pointer-events: none; backgroundColor: #fff"
+                  placeholder="~"
+                  disabled
+                />
+                <a-input v-if="[7,8].indexOf(findTypes[index])!=-1" style="width: 34%;text-align: center; border-left: 0" placeholder="Maximum" />
+
+                <a-input  v-if="[1,2,3,4,5,6].indexOf(findTypes[index])!=-1"  style=" width: 73%; text-align: center"  />
+
+
+              </a-input-group>
+
             </a-form-item>
           </a-col>
           <template v-if="advanced">
-            <a-col :md="8" :sm="24" v-for="find in finds.more" :key="find.title">
-              <a-form-item :label="find.title">
-                <a-input v-model="queryParam.id" placeholder=""/>
+            <a-col :md="8" :sm="24" v-for="(find,index) in finds.more" :key="find.title">
+              <a-form-item :label="find.label">
+                <a-input-group compact>
+                  <a-select v-model="findTypes[index+2]" style="width: 24%" :options="enums">
+                    <a-select-option :value="find.value" v-for="find in enums" :key="find.value">
+                      {{find.name}}
+                    </a-select-option>
+                  </a-select>
+                  <a-input style=" width: 34%; text-align: center" placeholder="Minimum" />
+                  <a-input
+                    style=" width: 8%; border-left: 0; pointer-events: none; backgroundColor: #fff"
+                    placeholder="~"
+                    disabled
+                  />
+                  <a-input style="width: 34%;text-align: center; border-left: 0" placeholder="Maximum" />
+
+
+                </a-input-group>
+
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -123,7 +156,7 @@
 <script>
   import moment from 'moment'
   import { STable, Ellipsis } from '@/components'
-  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, getCitys } from '@/api/baseData'
+  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, getCitys ,enums} from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
 
@@ -179,6 +212,7 @@
         },
         columns: [],
         finds: [],
+        findTypes: [],
         inputs: [],
         // create model
         visible: false,
@@ -190,6 +224,7 @@
         queryParam: {},
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
+          console.log(this.finds)
           const requestParameters = Object.assign({}, parameter, this.queryParam)
           console.log('loadData request parameters:', requestParameters)
           return fruitGoodsList(requestParameters)
@@ -201,7 +236,9 @@
         mapping:{},
         selectedRowKeys: [],
         selectedRows: [],
-        citys: []
+        citys: [],
+        enums:[],
+        test:0,
       }
     },
     filters: {
@@ -213,6 +250,11 @@
       }
     },
     created () {
+      enums()
+        .then(res => {
+          console.log(res.data.find.slice(1, res.data.find.length))
+          this.enums = res.data.find.slice(1, res.data.find.length)
+        })
       fruitGoodsHeader()
         .then(res => {
           const columns = []
@@ -407,5 +449,8 @@
       cursor: col-resize;
       touch-action: none;
     }
+  }
+  .table-page-search-wrapper .ant-form-inline .ant-form-item > .ant-form-item-label {
+    width: 90px;
   }
 </style>

@@ -35,7 +35,7 @@
                       <a-input style="width: 200px;margin: 5px 20px 5px 0;" placeholder="字段中文名" v-model="fields[index].name" />
                       <a-cascader
                         style="width: 200px;margin: 5px 20px 5px 0;"
-                        :field-names="{ label: 'name', value: 'value', children: 'children' }"
+                        :field-names="{ label: 'label', value: 'value', children: 'children' }"
                         :options="enums.show"
                         placeholder="选择显示类型"
                         @change="onChange"
@@ -44,12 +44,12 @@
                       />
                       <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="查询类型" v-model="fields[index].findType">
                         <a-select-option v-for="item in enums.find" :key="item.value" :value="item.value">
-                          {{item.name}}
+                          {{item.label}}
                         </a-select-option>
                       </a-select>
                       <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="编辑类型"  v-model="fields[index].inputType">
                         <a-select-option v-for="item in enums.input" :key="item.value" :value="item.value">
-                          {{item.name}}
+                          {{item.label}}
                         </a-select-option>
                       </a-select>
                     </a-col>
