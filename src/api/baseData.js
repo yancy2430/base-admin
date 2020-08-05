@@ -9,6 +9,7 @@ const api = {
   saveFields: url+'/base/saveFields',
   saveOrUpdateHeader: url+'/base/saveOrUpdateHeader',
   enums: url+'/base/enums',
+  options:url+"/base/options",
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -79,6 +80,19 @@ export function getCitys () {
   return request({
     url: api.city,
     method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+export function getOptions (table,keyword) {
+  return request({
+    url: api.options,
+    method: 'get',
+    params: {
+      table:table,
+      keyword:keyword
+    },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }

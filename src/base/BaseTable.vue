@@ -6,39 +6,42 @@
         <a-row :gutter="48">
           <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
             <a-form-item :label="item.label">
-              <a-select @change="findType($event,item)" v-model="item.findType" style="width: 24%" :options="enums">
+              <a-select @change="findType($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
               </a-select>
               <!--基本输入框-->
-              <a-input style=" width: 76%;margin-left: -3px;" placeholder="" />
+              <a-input v-if="item.input==1" style=" width: 76%;margin-left: -3px;" placeholder="" />
               <!--数值/区间-->
-              <span v-if="[5].indexOf(item.showType)==-1">
-              <a-input-group compact v-if="[7,8].indexOf(item.findType)!=-1" style="width: 76%;margin-left: -1px;">
-                <a-input-number style=" width: 44%; text-align: center" placeholder="最小值" />
-                <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
-                <a-input-number  style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
-              </a-input-group>
-              <a-input-group compact v-if="[1,2].indexOf(item.findType)!=-1"  style="width: 76%;margin-left: -1px;" >
-                <a-input-number  style=" width: 100%;margin-left: -2px;"  />
-              </a-input-group>
+              <span v-if="item.input==2">
+                <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" style="width: 76%;margin-left: -1px;">
+                  <a-input-number style=" width: 44%; text-align: center" placeholder="最小值" />
+                  <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
+                  <a-input-number  style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
+                </a-input-group>
+                <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -1px;" >
+                  <a-input-number  style=" width: 100%;margin-left: -2px;"  />
+                </a-input-group>
               </span>
               <!--级联选择-->
-              <a-cascader v-if="[18].indexOf(item.findType)!=-1 " change-on-select style=" width: 76%;margin-left: -3px;"  :options="options" placeholder="Please select" />
+              <a-cascader :load-data="loadCascader" v-if="item.input==3" change-on-select style=" width: 76%;margin-left: -3px;"  :options="options" placeholder="" />
               <!--多选标签-->
               <a-select
+                v-if="item.input==4"
                 style=" width: 76%;margin-left: -3px;"
                 mode="multiple"
-                :default-value="['a1', 'b2']"
-                placeholder="Please select"
+                :filter-option="false"
+                :not-found-content="fetching ? undefined : null"
+                @search="loadOptions($event,item)"
               >
-                <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
-                  {{ (i + 9).toString(36) + i }}
+                <a-spin v-if="fetching" slot="notFoundContent" size="small" />
+                <a-select-option v-for="d in options" :key="d.id">
+                  {{ d.name }}
                 </a-select-option>
               </a-select>
 
               <!--日期-->
-              <a-date-picker v-if="([5].indexOf(item.showType)!=-1 && [7,8].indexOf(item.findType)==-1)" style=" width: 76%;margin-left: -3px;" />
+              <a-date-picker v-if="item.input==5" style=" width: 76%;margin-left: -3px;" />
               <!--日期区间-->
-              <a-range-picker v-if="([5].indexOf(item.showType)!=-1 && [7,8].indexOf(item.findType)!=-1)" style=" width: 76%;margin-left: -3px;" />
+              <a-range-picker v-if="item.input==5" style=" width: 76%;margin-left: -3px;" />
 
             </a-form-item>
           </a-col>
@@ -142,7 +145,7 @@
 <script>
   import moment from 'moment'
   import { STable, Ellipsis } from '@/components'
-  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, getCitys ,enums} from '@/api/baseData'
+  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, getCitys ,enums,getOptions} from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
   import AInputGroup from 'ant-design-vue/es/input/Group'
@@ -158,41 +161,11 @@
     },
     data () {
       return {
+        fetching: false,
         drag: false,
         opVisible: false,
         options: [
-          {
-            value: 'zhejiang',
-            label: 'Zhejiang',
-            children: [
-              {
-                value: 'hangzhou',
-                label: 'Hangzhou',
-                children: [
-                  {
-                    value: 'xihu',
-                    label: 'West Lake',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            value: 'jiangsu',
-            label: 'Jiangsu',
-            children: [
-              {
-                value: 'nanjing',
-                label: 'Nanjing',
-                children: [
-                  {
-                    value: 'zhonghuamen',
-                    label: 'Zhong Hua Men',
-                  },
-                ],
-              },
-            ],
-          },
+
         ],
         components: {
           header: {
@@ -245,12 +218,18 @@
         queryParam: {},
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          console.log(this.finds)
           const requestParameters = Object.assign({}, parameter, this.queryParam)
-          console.log('loadData request parameters:', requestParameters)
           return fruitGoodsList(requestParameters)
             .then(res => {
               this.mapping = res.data.mapping
+              return res.data
+            })
+        },
+        loadCascader: parameter => {
+          const requestParameters = Object.assign({}, parameter, this.queryParam)
+          return getOptions(requestParameters)
+            .then(res => {
+
               return res.data
             })
         },
@@ -359,6 +338,16 @@
     },
 
     methods: {
+      loadOptions(e,item){
+        console.log(e,item)
+
+        return getOptions(item.optionsTable,e)
+          .then(res => {
+            this.options = res.data;
+          })
+
+
+      },
       findType(e,item){
         console.log(e)
         console.log(item)

@@ -42,11 +42,7 @@
                         v-model="fields[index].foreign"
                         :allowClear="false"
                       />
-                      <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="查询类型" mode="multiple" v-model="fields[index].findType">
-                        <a-select-option v-for="item in enums.find" :key="item.value" :value="item.value">
-                          {{item.label}}
-                        </a-select-option>
-                      </a-select>
+                      <a-switch style="margin: 5px 20px 5px 0;" v-model="fields[index].findType" />
                       <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="编辑类型"  v-model="fields[index].inputType">
                         <a-select-option v-for="item in enums.input" :key="item.value" :value="item.value">
                           {{item.label}}
