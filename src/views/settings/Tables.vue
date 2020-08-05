@@ -39,10 +39,10 @@
                         :options="enums.show"
                         placeholder="选择显示类型"
                         @change="onChange"
-                        v-model="fields[index].foreigns"
+                        v-model="fields[index].foreign"
                         :allowClear="false"
                       />
-                      <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="查询类型" v-model="fields[index].findType">
+                      <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="查询类型" mode="multiple" v-model="fields[index].findType">
                         <a-select-option v-for="item in enums.find" :key="item.value" :value="item.value">
                           {{item.label}}
                         </a-select-option>
