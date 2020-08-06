@@ -21,28 +21,15 @@
                   <a-input-number  style=" width: 100%;margin-left: -2px;"  />
                 </a-input-group>
               </span>
-              <!--级联选择-->
-              <a-cascader
-                          @popupVisibleChange="cascader($event,item)"
-                          v-if="item.input==3" change-on-select
-                          style=" width: 76%;margin-left: -3px;"
-                          :options="options[item.name]"
-                          :field-names="{ label: 'name', value: 'id', children: 'items' }"
-              />
+              <cascader v-if="item.input==3"  :hash="item.treeHash" :pid="0"></cascader>
               <!--多选标签-->
-              <a-select
+              <m-select
                 v-if="item.input==4"
-                style=" width: 76%;margin-left: -3px;"
-                mode="multiple"
-                :filter-option="false"
-                :not-found-content="fetching ? undefined : null"
-                @search="loadOptions($event,item)"
+                style="width: 76%;margin-left: -3px;"
+                :init="true"
+                :hash="item.optionHash"
               >
-                <a-spin v-if="fetching" slot="notFoundContent" size="small" />
-                <a-select-option v-for="d in options" :key="d.id">
-                  {{ d.name }}
-                </a-select-option>
-              </a-select>
+              </m-select>
 
               <!--日期-->
               <a-date-picker v-if="item.input==5" style=" width: 76%;margin-left: -3px;" />
@@ -154,6 +141,8 @@
   import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
+  import Cascader from './modules/Cascader'
+  import MSelect from './modules/MSelect'
   import AInputGroup from 'ant-design-vue/es/input/Group'
 
   export default {
@@ -163,7 +152,9 @@
       STable,
       Ellipsis,
       CreateForm,
-      StepByStepModal
+      StepByStepModal,
+      Cascader,
+      MSelect
     },
     data () {
       return {
@@ -272,7 +263,7 @@
               show: item.show,
               dataIndex: item.fieldName,
               customRender: (text, record, index) => {
-                switch (item.showType) {
+                switch (item.inputType) {
                   case 1:
                     return text
                   case 2:
@@ -285,14 +276,16 @@
                     return text
                   case 6:
                     return <a href = { text } style = 'padding: 0 5px' > { text } < /a>
-                  case 7:
+                  case 11:
                     for (const index in item.mapping) {
                       if (text == item.mapping[index].value) {
                         return item.mapping[index].name
                       }
                     }
                     return ""
-                  case 8:
+                  case 9:
+                    return this.mapping[item.fieldName][text]
+                  case 10:
                     return this.mapping[item.fieldName][text]
                 }
               }
