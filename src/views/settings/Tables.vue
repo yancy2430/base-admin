@@ -17,43 +17,65 @@
 
           </a-menu>
         </div>
-        <div class="account-settings-info-right" >
+        <div class="account-settings-info-right">
           <div class="account-settings-info-title">
             <span>编辑展示</span>
             <a-button :loading="saveLoading" type="primary" style="float: right;" @click="onSave">
               {{ saveLoadingText }}
             </a-button>
           </div>
+          <a-row gutter="56" style="font-weight: bold;font-size: 16px;padding-bottom: 10px;border-bottom: 1px solid #ddd">
+            <a-col :span="4">
+              字段名
+            </a-col>
+            <a-col :span="4">
+              字段中文名
+            </a-col>
+            <a-col :span="2">
+              显示
+            </a-col>
+            <a-col :span="2">
+              查找
+            </a-col>
+            <a-col :span="4">
+              数据类型
+            </a-col>
+          </a-row>
           <a-spin :spinning="spinning">
-          <a-list item-layout="horizontal" :data-source="fields" style="height: 450px;overflow-x: hidden;">
-            <a-list-item slot="renderItem" slot-scope="item,index">
-              <a-list-item-meta>
-                <div slot="title">
-                  <a-row>
-                    <a-col :span="24">
-                      <a-input disabled style="width: 200px;margin: 5px 20px 5px 0;" :value="fields[index].fieldName" placeholder="字段名"/>
-                      <a-input style="width: 200px;margin: 5px 20px 5px 0;" placeholder="字段中文名" v-model="fields[index].name" />
-                      <a-cascader
-                        style="width: 200px;margin: 5px 20px 5px 0;"
-                        :field-names="{ label: 'label', value: 'value', children: 'children' }"
-                        :options="enums.show"
-                        placeholder="选择显示类型"
-                        @change="onChange"
-                        v-model="fields[index].foreign"
-                        :allowClear="false"
-                      />
-                      <a-switch style="margin: 5px 20px 5px 0;" v-model="fields[index].findType" />
-                      <a-select style="width: 200px;margin: 5px 20px 5px 0;" placeholder="编辑类型"  v-model="fields[index].inputType">
-                        <a-select-option v-for="item in enums.input" :key="item.value" :value="item.value">
-                          {{item.label}}
-                        </a-select-option>
-                      </a-select>
-                    </a-col>
-                  </a-row>
-                </div>
-              </a-list-item-meta>
-            </a-list-item>
-          </a-list>
+            <a-list item-layout="horizontal" :data-source="fields" style="height: 450px;overflow-x: hidden;">
+              <a-list-item slot="renderItem" slot-scope="item,index">
+                <a-list-item-meta>
+                  <div slot="title">
+                    <a-row gutter="56">
+                      <a-col :span="4">
+                        <a-input :value="fields[index].fieldName" placeholder="字段名"/>
+                      </a-col>
+                      <a-col :span="4">
+                        <a-input  placeholder="字段中文名" v-model="fields[index].name"/>
+                      </a-col>
+                      <a-col :span="2">
+                        <a-switch style="margin: 5px 20px 5px 0;" v-model="fields[index].showType"/>
+                      </a-col>
+                      <a-col :span="2">
+                        <a-switch style="margin: 5px 20px 5px 0;" v-model="fields[index].findType"/>
+                      </a-col>
+                      <a-col :span="4">
+                        <a-cascader
+                          style="width: 200px;margin: 5px 20px 5px 0;"
+                          :field-names="{ label: 'label', value: 'value', children: 'children' }"
+                          :options="enums.input"
+                          placeholder="编辑类型"
+                          @change="onChange"
+                          v-model="fields[index].foreign"
+                          :allowClear="false"
+                        />
+                      </a-col>
+
+                    </a-row>
+                  </div>
+                </a-list-item-meta>
+              </a-list-item>
+            </a-list>
           </a-spin>
         </div>
       </div>
@@ -64,7 +86,7 @@
 <script>
   import { RouteView } from '@/layouts'
   import { baseMixin } from '@/store/app-mixin'
-  import { tables, enums, fields , saveFields } from '@/api/baseData'
+  import { tables, allEnums, fields, saveFields } from '@/api/baseData'
 
   const plainOptions = ['搜索', '显示列', '编辑']
   const defaultCheckedList = ['Apple', 'Orange']
@@ -110,9 +132,9 @@
         pageTitle: '',
         tables: [],
         enums: {},
-        fields:[],
+        fields: [],
         test: '1',
-        showType:[]
+        showType: []
       }
     },
     created () {
@@ -123,7 +145,7 @@
             key: this.tables[0]
           })
         })
-      enums()
+      allEnums()
         .then(res => {
           this.enums = res.data
         })
@@ -132,21 +154,20 @@
 
     },
     methods: {
-      onChange(value,selectedOptions) {
+      onChange (value, selectedOptions) {
         console.log(this.showType)
       },
-      onSave (){
+      onSave () {
         this.saveLoading = true
         saveFields(this.fields)
           .then(res => {
             if (res.code===0){
-
-            }else{
+              this.$message.success(res.msg);
+            } else {
               this.$message.error(res.msg);
             }
             this.saveLoading = false
-        })
-        console.log(this.fields)
+          })
       },
       onOpenChange (openKeys) {
         this.openKeys = openKeys
@@ -155,12 +176,12 @@
         this.selectedKeys = [obj.key]
         this.spinning = true
         fields({
-          table:obj.key
+          table: obj.key
         })
           .then(res => {
-            this.fields = res.data
             this.spinning = false
-        })
+            this.fields = res.data
+          })
       }
     }
   }

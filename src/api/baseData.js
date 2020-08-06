@@ -5,11 +5,12 @@ const api = {
   chPage: url+'/base/FruitGoods/page',
   tables: url+'/base/tables',
   fields: url+'/base/fields',
-  city:url+'/base/City/tree',
   saveFields: url+'/base/saveFields',
   saveOrUpdateHeader: url+'/base/saveOrUpdateHeader',
+  allEnums: url+'/base/allEnums',
   enums: url+'/base/enums',
   options:url+"/base/options",
+  trees:url+"/base/trees",
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -40,12 +41,13 @@ export function tables () {
   })
 }
 
-export function enums () {
+export function allEnums () {
   return request({
-    url: api.enums,
+    url: api.allEnums,
     method: 'get'
   })
 }
+
 
 export function fields (parameter) {
   return request({
@@ -76,10 +78,14 @@ export function saveOrUpdateHeader (parameter) {
   })
 }
 
-export function getCitys () {
+export function trees (table,pid) {
   return request({
-    url: api.city,
+    url: api.trees,
     method: 'get',
+    params: {
+      table:table,
+      pid:pid,
+    },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
@@ -92,6 +98,19 @@ export function getOptions (table,keyword) {
     params: {
       table:table,
       keyword:keyword
+    },
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+export function enums (table) {
+  return request({
+    url: api.enums,
+    method: 'get',
+    params: {
+      table:table
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'

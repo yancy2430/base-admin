@@ -22,7 +22,13 @@
                 </a-input-group>
               </span>
               <!--级联选择-->
-              <a-cascader :load-data="loadCascader" v-if="item.input==3" change-on-select style=" width: 76%;margin-left: -3px;"  :options="options" placeholder="" />
+              <a-cascader
+                          @popupVisibleChange="cascader($event,item)"
+                          v-if="item.input==3" change-on-select
+                          style=" width: 76%;margin-left: -3px;"
+                          :options="options[item.name]"
+                          :field-names="{ label: 'name', value: 'id', children: 'items' }"
+              />
               <!--多选标签-->
               <a-select
                 v-if="item.input==4"
@@ -145,7 +151,7 @@
 <script>
   import moment from 'moment'
   import { STable, Ellipsis } from '@/components'
-  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, getCitys ,enums,getOptions} from '@/api/baseData'
+  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
   import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
   import AInputGroup from 'ant-design-vue/es/input/Group'
@@ -165,7 +171,6 @@
         drag: false,
         opVisible: false,
         options: [
-
         ],
         components: {
           header: {
@@ -226,18 +231,16 @@
             })
         },
         loadCascader: parameter => {
-          const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return getOptions(requestParameters)
+          console.log(parameter)
+          return trees("")
             .then(res => {
-
+              this.mapping = res.data.mapping
               return res.data
             })
         },
         mapping:{},
         selectedRowKeys: [],
         selectedRows: [],
-        citys: [],
-        enums:[],
         test:0,
       }
     },
@@ -250,12 +253,6 @@
       }
     },
     created () {
-      enums()
-        .then(res => {
-
-          this.enums = res.data.find.slice(1, res.data.find.length)
-
-        })
       fruitGoodsHeader()
         .then(res => {
           const columns = []
@@ -314,11 +311,6 @@
           this.columns = columns
 
         })
-      getCitys().then(res => {
-        if (res.code === 0) {
-          this.citys = res.data
-        }
-      })
     },
     computed: {
       rowSelection () {
@@ -338,10 +330,20 @@
     },
 
     methods: {
+      cascader(show,item,pid) {
+
+        if (this.options.length ===0){
+          return trees(item.treeHash,pid)
+            .then(res => {
+              this.options[item.name] = res.data
+              console.log(this.options)
+            })
+        }
+      },
       loadOptions(e,item){
         console.log(e,item)
 
-        return getOptions(item.optionsTable,e)
+        return getOptions(item.optionHash,e)
           .then(res => {
             this.options = res.data;
           })
