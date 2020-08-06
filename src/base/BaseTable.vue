@@ -2,40 +2,47 @@
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
-
-        <a-row :gutter="48">
+        <a-row type="flex" :gutter="48">
           <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
             <a-form-item :label="item.label">
-              <a-select @change="findType($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
+              <a-select v-if="item.input!=7 && !item.enumHash" @change="findType($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
               </a-select>
-              <!--基本输入框-->
-              <a-input v-if="item.input==1" style=" width: 76%;margin-left: -3px;" placeholder="" />
-              <!--数值/区间-->
-              <span v-if="item.input==2">
-                <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" style="width: 76%;margin-left: -1px;">
-                  <a-input-number style=" width: 44%; text-align: center" placeholder="最小值" />
-                  <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
-                  <a-input-number  style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
-                </a-input-group>
-                <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -1px;" >
-                  <a-input-number  style=" width: 100%;margin-left: -2px;"  />
-                </a-input-group>
-              </span>
-              <cascader v-if="item.input==3"  :hash="item.treeHash" :pid="0"></cascader>
-              <!--多选标签-->
-              <m-select
-                v-if="item.input==4"
-                style="width: 76%;margin-left: -3px;"
-                :init="true"
-                :hash="item.optionHash"
-              >
-              </m-select>
-
-              <!--日期-->
-              <a-date-picker v-if="item.input==5" style=" width: 76%;margin-left: -3px;" />
-              <!--日期区间-->
-              <a-range-picker v-if="item.input==5" style=" width: 76%;margin-left: -3px;" />
-
+                  <!--基本输入框-->
+                  <a-input v-if="item.input==1" style="width: 76%;margin-left: -3px;" placeholder="" />
+                  <!--数值/区间-->
+                  <span v-if="item.input==2">
+                    <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" style="width: 76%;margin-left: -1px;">
+                      <a-input-number style=" width: 44%; text-align: center" placeholder="最小值" />
+                      <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
+                      <a-input-number  style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
+                    </a-input-group>
+                    <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -1px;" >
+                      <a-input-number  style=" width: 100%;margin-left: -2px;"  />
+                    </a-input-group>
+                  </span>
+                  <cascader v-if="item.input==3"  :hash="item.treeHash" :pid="0"></cascader>
+                  <!--多选标签-->
+                  <m-select
+                    v-if="item.input==4 && item.optionHash"
+                    style="width: 76%;margin-left: -3px;"
+                    :hash="item.optionHash"
+                  >
+                  </m-select>
+                  <s-select
+                    v-if="item.input==4 && item.enumHash"
+                    style="width: 76%;margin-left: -3px;"
+                    :hash="item.enumHash"
+                  >
+                  </s-select>
+                  <!--日期-->
+                  <a-date-picker v-if="item.input==5 && [7,8].indexOf(item.select)==-1" style=" width: 76%;margin-left: -3px;" />
+                  <!--日期区间-->
+                  <a-range-picker v-if="item.input==5 && [7,8].indexOf(item.select)!=-1" style=" width: 76%;margin-left: -3px;" />
+                  <!--日期时间-->
+                  <a-date-picker show-time v-if="item.input==6 && [7,8].indexOf(item.select)==-1" style=" width: 76%;margin-left: -3px;" />
+                  <!--日期时间区间-->
+                  <a-range-picker show-time v-if="item.input==6 && [7,8].indexOf(item.select)!=-1" style=" width: 76%;margin-left: -3px;" />
+                  <a-switch v-if="item.input==7" v-model="item.value" @change="onChange" />
             </a-form-item>
           </a-col>
           <a-col :md="!advanced && 8 || 24" :sm="24">
@@ -143,6 +150,7 @@
   import CreateForm from './modules/CreateForm'
   import Cascader from './modules/Cascader'
   import MSelect from './modules/MSelect'
+  import SSelect from './modules/SSelect'
   import AInputGroup from 'ant-design-vue/es/input/Group'
 
   export default {
@@ -154,7 +162,8 @@
       CreateForm,
       StepByStepModal,
       Cascader,
-      MSelect
+      MSelect,
+      SSelect
     },
     data () {
       return {

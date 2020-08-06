@@ -3,7 +3,6 @@
     mode="multiple"
     label-in-value
     :value="value"
-    placeholder="Select users"
     style="width: 100%"
     :filter-option="false"
     :not-found-content="fetching ? undefined : null"
@@ -23,7 +22,6 @@
   export default {
     props: {
       hash: Number,
-      init:Boolean
     },
     data() {
       this.lastFetchId = 0;
@@ -36,6 +34,9 @@
     },
     methods: {
       fetchUser(value) {
+        if (this.init) {
+          return;
+        }
         console.log('fetching user', value);
         this.lastFetchId += 1;
         const fetchId = this.lastFetchId;

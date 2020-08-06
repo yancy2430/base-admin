@@ -1,66 +1,41 @@
 <template>
-  <a-select
-    mode="multiple"
-    label-in-value
-    :value="value"
-    placeholder="Select users"
-    style="width: 100%"
-    :filter-option="false"
-    :not-found-content="fetching ? undefined : null"
-    @search="fetchUser"
-    @change="handleChange"
-  >
-    <a-spin v-if="fetching" slot="notFoundContent" size="small" />
-    <a-select-option v-for="d in data" :key="d.id">
-      {{ d.name }}
-    </a-select-option>
-  </a-select>
+  <div>
+    <a-select
+      v-if="data.length>5"
+      mode="multiple">
+      <a-select-option v-for="d in data" :key="d.id" :value="d.id">
+        {{d.name}}
+      </a-select-option>
+    </a-select>
+    <a-checkbox-group v-else >
+      <a-checkbox :value="d.id" v-for="d in data" :key="d.id">
+        {{d.name}}
+      </a-checkbox>
+    </a-checkbox-group>
+  </div>
 </template>
 <script>
-  import debounce from 'lodash/debounce';
-
-  import {  getOptions } from '@/api/baseData'
+  import {  getEnums } from '@/api/baseData'
   export default {
+    name: 'SSelect',
     props: {
       hash: Number,
-      init:Boolean
-    },
-    data() {
-      this.lastFetchId = 0;
-      this.fetchUser = debounce(this.fetchUser, 10);
+    },data() {
       return {
         data: [],
         value: [],
-        fetching: false,
       };
     },
-    methods: {
-      fetchUser(value) {
-        console.log('fetching user', value);
-        this.lastFetchId += 1;
-        const fetchId = this.lastFetchId;
-        this.data = [];
-        this.fetching = true;
-        getOptions(this.hash, value)
-          .then(res => {
+    created () {
+      getEnums(this.hash)
+        .then(res => {
+          this.data = res.data;
+        })
+    }
 
-            if (fetchId !== this.lastFetchId) {
-              // for fetch callback order
-              return;
-            }
-
-            this.data = res.data;
-            console.log(this.data)
-            this.fetching = false;
-          })
-      },
-      handleChange(value) {
-        Object.assign(this, {
-          value,
-          data: [],
-          fetching: false,
-        });
-      },
-    },
-  };
+  }
 </script>
+
+<style scoped>
+
+</style>

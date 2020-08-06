@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const url = 'http://localhost:89'
+const url = 'http://192.168.2.100:89'
 const api = {
   ch: url+'/base/FruitGoods/header',
   chPage: url+'/base/FruitGoods/page',
@@ -105,12 +105,13 @@ export function getOptions (table,keyword) {
   })
 }
 
-export function enums (table) {
+export function getEnums(hash) {
+  console.log(hash)
   return request({
     url: api.enums,
     method: 'get',
     params: {
-      table:table
+      hash:hash
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'

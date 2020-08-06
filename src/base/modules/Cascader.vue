@@ -1,6 +1,7 @@
 <template>
   <!--级联选择-->
   <a-cascader
+    placeholder=""
     change-on-select
     style=" width: 76%;margin-left: -3px;"
     :options="options"
