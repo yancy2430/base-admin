@@ -8,48 +8,51 @@
               <a-select v-if="item.input!=7 && !item.enumHash" @change="findType($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
               </a-select>
                   <!--基本输入框-->
-                  <a-input v-if="item.input==1" style="width: 76%;margin-left: -3px;" placeholder="" />
+                  <a-input v-if="item.input==1"  v-model="item.value" style="width: 76%;margin-left: -3px;" placeholder="" />
                   <!--数值/区间-->
-                  <span v-if="item.input==2">
+                  <span v-else-if="item.input==2">
                     <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" style="width: 76%;margin-left: -1px;">
-                      <a-input-number style=" width: 44%; text-align: center" placeholder="最小值" />
+                      <a-input-number  v-model="item.value[0]" style=" width: 44%; text-align: center" placeholder="最小值" />
                       <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
-                      <a-input-number  style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
+                      <a-input-number  v-model="item.value[1]" style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
                     </a-input-group>
                     <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -1px;" >
-                      <a-input-number  style=" width: 100%;margin-left: -2px;"  />
+                      <a-input-number  v-model="item.value" style=" width: 100%;margin-left: -2px;"  />
                     </a-input-group>
                   </span>
-                  <cascader v-if="item.input==3"  :hash="item.treeHash" :pid="0"></cascader>
+                  <cascader v-else-if="item.input==3"  v-model="item.value"  :hash="item.treeHash" :pid="0"></cascader>
                   <!--多选标签-->
                   <m-select
-                    v-if="item.input==4 && item.optionHash"
+                    v-else-if="item.input==4 && item.optionHash"
                     style="width: 76%;margin-left: -3px;"
+                    v-model="item.value"
+                    @on-result-change="onResultChange"
                     :hash="item.optionHash"
                   >
                   </m-select>
                   <s-select
-                    v-if="item.input==4 && item.enumHash"
+                    v-else-if="item.input==4 && item.enumHash"
                     style="width: 76%;margin-left: -3px;"
+                    v-model="item.value"
                     :hash="item.enumHash"
                   >
                   </s-select>
                   <!--日期-->
-                  <a-date-picker v-if="item.input==5 && [7,8].indexOf(item.select)==-1" style=" width: 76%;margin-left: -3px;" />
+                  <a-date-picker v-else-if="item.input==5 && [7,8].indexOf(item.select)==-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
                   <!--日期区间-->
-                  <a-range-picker v-if="item.input==5 && [7,8].indexOf(item.select)!=-1" style=" width: 76%;margin-left: -3px;" />
+                  <a-range-picker v-else-if="item.input==5 && [7,8].indexOf(item.select)!=-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
                   <!--日期时间-->
-                  <a-date-picker show-time v-if="item.input==6 && [7,8].indexOf(item.select)==-1" style=" width: 76%;margin-left: -3px;" />
+                  <a-date-picker show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)==-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
                   <!--日期时间区间-->
-                  <a-range-picker show-time v-if="item.input==6 && [7,8].indexOf(item.select)!=-1" style=" width: 76%;margin-left: -3px;" />
-                  <a-switch v-if="item.input==7" v-model="item.value" @change="onChange" />
+                  <a-range-picker show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)!=-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
+                  <a-switch v-else-if="item.input==7" v-model="item.value" />
             </a-form-item>
           </a-col>
           <a-col :md="!advanced && 8 || 24" :sm="24">
             <span class="table-page-search-submitButtons"
                   :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-              <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-              <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
+              <a-button type="primary" @click="refer">查询</a-button>
+              <a-button style="margin-left: 8px" >重置</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
                 {{ advanced ? '收起' : '展开' }}
                 <a-icon :type="advanced ? 'up' : 'down'"/>
@@ -219,15 +222,29 @@
         mdl: null,
         // 高级搜索 展开/关闭
         advanced: false,
-        // 查询参数
-        queryParam: {},
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return fruitGoodsList(requestParameters)
+
+          const data =[]
+          for (let i = 0; i < this.finds.length; i++) {
+            let item = this.finds[i]
+            data.push({
+              name:item.name,
+              findType:item.select,
+              value:item.value,
+            })
+          }
+          console.log(data)
+
+          return fruitGoodsList(parameter,data)
             .then(res => {
-              this.mapping = res.data.mapping
-              return res.data
+              if (res.code==0) {
+                this.mapping = res.data.mapping
+                return res.data
+              }else {
+
+                return null;
+              }
             })
         },
         loadCascader: parameter => {
@@ -259,7 +276,6 @@
           for (let i = 0; i < res.data.finds.length; i++) {
             this.finds.push(res.data.finds[i])
           }
-
           this.inputs = res.data.inputs
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
@@ -332,6 +348,12 @@
     },
 
     methods: {
+      onResultChange(e){
+        console.log(e)
+      },
+      refer(){
+        this.$refs.table.refresh(true)
+      },
       cascader(show,item,pid) {
 
         if (this.options.length ===0){
@@ -449,11 +471,6 @@
       toggleAdvanced () {
         this.advanced = !this.advanced
       },
-      resetSearchForm () {
-        this.queryParam = {
-          date: moment(new Date())
-        }
-      }
     }
   }
 </script>

@@ -26,11 +26,15 @@ export function fruitGoodsHeader () {
   })
 }
 
-export function fruitGoodsList (parameter) {
+export function fruitGoodsList (parameter,data) {
   return request({
     url: api.chPage,
     method: 'post',
-    params: parameter
+    params: parameter,
+    data: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
 

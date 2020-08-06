@@ -2,10 +2,10 @@
   <a-select
     mode="multiple"
     label-in-value
-    :value="value"
     style="width: 100%"
     :filter-option="false"
     :not-found-content="fetching ? undefined : null"
+    v-model="mValue"
     @search="fetchUser"
     @change="handleChange"
   >
@@ -22,17 +22,36 @@
   export default {
     props: {
       hash: Number,
+      result: Array,
     },
     data() {
       this.lastFetchId = 0;
       this.fetchUser = debounce(this.fetchUser, 10);
       return {
         data: [],
-        value: [],
+        mValue:this.value,
         fetching: false,
       };
     },
+    watch: {
+      result(val) {
+        this.mValue = val;//新增result的watch，监听变更并同步到myResult上
+      },
+      mValue(val){
+        //xxcanghai 小小沧海 博客园
+        let v = []
+        for (let i = 0; i < val.length; i++) {
+          v.push(val[i].key)
+        }
+        this.$emit("input",v);
+      }
+    },
     methods: {
+      handleChange($event){
+        console.log($event)
+        // this.$emit('input', $event.target.value)
+
+      },
       fetchUser(value) {
         if (this.init) {
           return;
@@ -51,7 +70,6 @@
             }
 
             this.data = res.data;
-            console.log(this.data)
             this.fetching = false;
           })
       },
