@@ -5,6 +5,7 @@
     change-on-select
     style=" width: 76%;margin-left: -3px;"
     :options="options"
+    v-model="mValue"
     :field-names="{ label: 'name', value: 'id', children: 'children' }"
   />
 </template>
@@ -17,10 +18,20 @@
     props: {
       hash: Number,
       pid: Number,
+      result: Array,
     },
     data () {
       return {
-        options: []
+        options: [],
+        mValue:this.result
+      }
+    },
+    watch: {
+      result(val) {
+        this.mValue = val;//新增result的watch，监听变更并同步到myResult上
+      },
+      mValue(val){
+        this.$emit("input",val[val.length-1]);
       }
     },
     created () {

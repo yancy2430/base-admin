@@ -7,8 +7,7 @@
     :not-found-content="fetching ? undefined : null"
     v-model="mValue"
     @search="fetchUser"
-    @change="handleChange"
-  >
+    @change="handleChange">
     <a-spin v-if="fetching" slot="notFoundContent" size="small" />
     <a-select-option v-for="d in data" :key="d.id">
       {{ d.name }}
@@ -29,7 +28,7 @@
       this.fetchUser = debounce(this.fetchUser, 10);
       return {
         data: [],
-        mValue:this.value,
+        mValue:this.result,
         fetching: false,
       };
     },

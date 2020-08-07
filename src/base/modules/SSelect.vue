@@ -20,11 +20,26 @@
     name: 'SSelect',
     props: {
       hash: Number,
+      result: Array,
     },data() {
       return {
         data: [],
         value: [],
+        mValue:this.result,
       };
+    },
+    watch: {
+      result(val) {
+        this.mValue = val;//新增result的watch，监听变更并同步到myResult上
+      },
+      mValue(val){
+        //xxcanghai 小小沧海 博客园
+        let v = []
+        for (let i = 0; i < val.length; i++) {
+          v.push(val[i].key)
+        }
+        this.$emit("input",v);
+      }
     },
     created () {
       getEnums(this.hash)

@@ -5,20 +5,15 @@
         <a-row type="flex" :gutter="48">
           <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
             <a-form-item :label="item.label">
-              <a-select v-if="item.input!=7 && !item.enumHash" @change="findType($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
+              <a-select v-if="item.input!=7 && !item.enumHash" v-model="item.select" style="width: 24%" :options="item.finds">
               </a-select>
                   <!--基本输入框-->
                   <a-input v-if="item.input==1"  v-model="item.value" style="width: 76%;margin-left: -3px;" placeholder="" />
                   <!--数值/区间-->
                   <span v-else-if="item.input==2">
-                    <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" style="width: 76%;margin-left: -1px;">
-                      <a-input-number  v-model="item.value[0]" style=" width: 44%; text-align: center" placeholder="最小值" />
-                      <a-input style=" width: 12%; border-left: 0; pointer-events: none; backgroundColor: #fff" placeholder="~" disabled />
-                      <a-input-number  v-model="item.value[1]" style="width: 44%;text-align: center; border-left: 0" placeholder="最大值" />
-                    </a-input-group>
-                    <a-input-group compact v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -1px;" >
-                      <a-input-number  v-model="item.value" style=" width: 100%;margin-left: -2px;"  />
-                    </a-input-group>
+                    <between-input v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" v-model="item.value" style="width: 76%;margin-left: -1px;">
+                    </between-input>
+                    <a-input-number v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -2px;"  v-model="item.value"  />
                   </span>
                   <cascader v-else-if="item.input==3"  v-model="item.value"  :hash="item.treeHash" :pid="0"></cascader>
                   <!--多选标签-->
@@ -155,10 +150,12 @@
   import MSelect from './modules/MSelect'
   import SSelect from './modules/SSelect'
   import AInputGroup from 'ant-design-vue/es/input/Group'
+  import BetweenInput from './modules/BetweenInput'
 
   export default {
     name: 'BaseTable',
     components: {
+      BetweenInput,
       AInputGroup,
       STable,
       Ellipsis,
@@ -374,10 +371,7 @@
 
 
       },
-      findType(e,item){
-        console.log(e)
-        console.log(item)
-      },
+
       filter(inputValue, path) {
         return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
       },
