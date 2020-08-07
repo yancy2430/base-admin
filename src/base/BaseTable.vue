@@ -5,7 +5,7 @@
         <a-row type="flex" :gutter="48">
           <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
             <a-form-item :label="item.label">
-              <a-select v-if="item.input!=7 && !item.enumHash" v-model="item.select" style="width: 24%" :options="item.finds">
+              <a-select v-if="item.input!=7 && !item.enumHash" @change="selectChange($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
               </a-select>
                   <!--基本输入框-->
                   <a-input v-if="item.input==1"  v-model="item.value" style="width: 76%;margin-left: -3px;" placeholder="" />
@@ -21,7 +21,6 @@
                     v-else-if="item.input==4 && item.optionHash"
                     style="width: 76%;margin-left: -3px;"
                     v-model="item.value"
-                    @on-result-change="onResultChange"
                     :hash="item.optionHash"
                   >
                   </m-select>
@@ -33,13 +32,14 @@
                   >
                   </s-select>
                   <!--日期-->
-                  <a-date-picker v-else-if="item.input==5 && [7,8].indexOf(item.select)==-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
+                  <a-date-picker valueFormat="YYYY-MM-DD" v-else-if="item.input==5 && [7,8].indexOf(item.select)==-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
                   <!--日期区间-->
-                  <a-range-picker v-else-if="item.input==5 && [7,8].indexOf(item.select)!=-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
+                  <a-range-picker valueFormat="YYYY-MM-DD"  v-else-if="item.input==5 && [7,8].indexOf(item.select)!=-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
                   <!--日期时间-->
-                  <a-date-picker show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)==-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
+                  <a-date-picker valueFormat="YYYY-MM-DD HH:mm:ss" show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)==-1" v-model="item.value" style=" width: 76%;margin-left: -3px;" />
                   <!--日期时间区间-->
-                  <a-range-picker show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)!=-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
+                  <a-range-picker @change="selectChange($event,item)" valueFormat="YYYY-MM-DD HH:mm:ss" show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)!=-1" v-model="item.value" style=" width: 76%;margin-left: -3px;" />
+
                   <a-switch v-else-if="item.input==7" v-model="item.value" />
             </a-form-item>
           </a-col>
@@ -299,16 +299,21 @@
                   case 6:
                     return <a href = { text } style = 'padding: 0 5px' > { text } < /a>
                   case 11:
-                    for (const index in item.mapping) {
+                    if (this.mapping){
+                      for (const index in item.mapping) {
                       if (text == item.mapping[index].value) {
                         return item.mapping[index].name
                       }
-                    }
+                    }}
                     return ""
                   case 9:
-                    return this.mapping[item.fieldName][text]
+                    if (this.mapping){
+                      return this.mapping[item.fieldName][text]
+                    }
                   case 10:
-                    return this.mapping[item.fieldName][text]
+                    if (this.mapping){
+                      return this.mapping[item.fieldName][text]
+                    }
                 }
               }
             })
@@ -345,8 +350,13 @@
     },
 
     methods: {
-      onResultChange(e){
-        console.log(e)
+      selectChange(e,item){
+        console.log(e,item)
+        if (item.select===7 || item.select===8){
+          Array.isArray(item.value)?null:item.value=[item.value]
+        }else {
+          Array.isArray(item.value)?item.value=item.value[0]:null
+        }
       },
       refer(){
         this.$refs.table.refresh(true)
@@ -447,7 +457,6 @@
       },
       handleCancel () {
         this.visible = false
-
         const form = this.$refs.createModal.form
         form.resetFields() // 清理表单数据（可不做）
       },

@@ -2,13 +2,13 @@
   <div>
     <a-select
       v-if="data.length>5"
-      mode="multiple">
+      mode="multiple" v-model="mValue">
       <a-select-option v-for="d in data" :key="d.id" :value="d.id">
         {{d.name}}
       </a-select-option>
     </a-select>
-    <a-checkbox-group v-else >
-      <a-checkbox :value="d.id" v-for="d in data" :key="d.id">
+    <a-checkbox-group v-else v-model="mValue">
+      <a-checkbox :value="d.id" v-for="d in data" :key="d.id"  >
         {{d.name}}
       </a-checkbox>
     </a-checkbox-group>
@@ -30,13 +30,16 @@
     },
     watch: {
       result(val) {
-        this.mValue = val;//新增result的watch，监听变更并同步到myResult上
+        this.mValue = val;
       },
       mValue(val){
-        //xxcanghai 小小沧海 博客园
         let v = []
-        for (let i = 0; i < val.length; i++) {
-          v.push(val[i].key)
+        if (this.data.length>5) {
+          for (let i = 0; i < val.length; i++) {
+            v.push(val[i].key)
+          }
+        }else {
+          v = val;
         }
         this.$emit("input",v);
       }

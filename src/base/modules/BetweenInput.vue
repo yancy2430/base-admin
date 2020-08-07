@@ -27,6 +27,12 @@
       },
       mValue(val){
         console.log(val)
+        if (null==val[0]){
+          val[0]=""
+        }
+        if (null==val[1]){
+          val[1]=""
+        }
         this.$emit("input",val);
       }
     },
