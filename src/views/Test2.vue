@@ -1,18 +1,16 @@
 <template>
   <section>
     <!-- Two-way Data-Binding -->
-    <Editor/>
+    <a-input placeholder="Basic usage" />
 
   </section>
 </template>
 <script>
 
-  import Editor from '../base/Editor.vue'
 
   export default {
-    name:"Test",
+    name:"Test2",
     components: {
-      Editor
     }
   }
 </script>

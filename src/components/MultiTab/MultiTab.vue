@@ -33,7 +33,6 @@ export default {
       } catch (e) {
       }
     })
-
     this.pages.push(this.$route)
     this.fullPathList.push(this.$route.fullPath)
     this.selectedLastPath()
@@ -128,6 +127,8 @@ export default {
       }
     },
     activeKey: function (newPathKey) {
+
+      console.log(this.pages)
       this.$router.push({ path: newPathKey })
     }
   },

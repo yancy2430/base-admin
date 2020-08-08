@@ -1,6 +1,7 @@
 <template>
   <div :class="wrpCls">
     <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
+    <span :class="prefixCls" ><a-icon type="reload" /></span>
     <select-lang :class="prefixCls" />
   </div>
 </template>

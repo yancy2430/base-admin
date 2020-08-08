@@ -1,11 +1,15 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
+import { UserLayout, BasicLayout, BlankLayout,RouteView } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 
-const RouteView = {
-  name: 'RouteView',
-  render: (h) => h('router-view')
-}
+/**
+ * 不需要缓存 情况下用下面这个 需要缓存页面则用 layouts的RouteView
+ * @type {*[]}
+ */
+// const RouteView = {
+//   name: 'RouteView',
+//   render: (h) => h('router-view')
+// }
 
 export const asyncRouterMap = [
 
@@ -13,7 +17,7 @@ export const asyncRouterMap = [
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: { title: 'menu.home' },
+    meta: { title: 'menu.home', keepAlive: true},
     redirect: '/dashboard/workplace',
     children: [
       // dashboard
@@ -44,7 +48,7 @@ export const asyncRouterMap = [
         name: 'list',
         component: RouteView,
         redirect: '/list/table-list',
-        meta: { title: '基础组件', icon: 'table', permission: [ 'table' ] },
+        meta: { title: '基础组件', icon: 'table',keepAlive: true, permission: [ 'table' ] },
         children: [
           {
             path: '/list/table-list/:pageNo([1-9]\\d*)?',
@@ -107,6 +111,18 @@ export const asyncRouterMap = [
             name: 'Test',
             component: () => import('@/views/Test'),
             meta: { title: '测试', keepAlive: true, permission: [ 'form' ] }
+          },
+          {
+            path: '/test1',
+            name: 'Test1',
+            component: () => import('@/views/Test1'),
+            meta: { title: '测试1', keepAlive: true, permission: [ 'form' ] }
+          },
+          {
+            path: '/test2',
+            name: 'Test2',
+            component: () => import('@/views/Test2'),
+            meta: { title: '测试2', keepAlive: true, permission: [ 'form' ] }
           },
           {
             path: '/RoleList',

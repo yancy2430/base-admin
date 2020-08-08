@@ -1,8 +1,9 @@
 <template>
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row type="flex" :gutter="48">
+      <a-form layout="inline"
+              ref="form">
+        <a-row type="flex" :gutter="48" :key="searchVersion">
           <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
             <a-form-item :label="item.label">
               <a-select v-if="item.input!=7 && !item.enumHash" @change="selectChange($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
@@ -46,8 +47,8 @@
           <a-col :md="!advanced && 8 || 24" :sm="24">
             <span class="table-page-search-submitButtons"
                   :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-              <a-button type="primary" @click="refer">查询</a-button>
-              <a-button style="margin-left: 8px" >重置</a-button>
+              <a-button type="primary" @click="onSearch">查询</a-button>
+              <a-button style="margin-left: 8px" @click="resetSearch">重置</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
                 {{ advanced ? '收起' : '展开' }}
                 <a-icon :type="advanced ? 'up' : 'down'"/>
@@ -58,7 +59,7 @@
       </a-form>
     </div>
     <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+      <a-button type="primary" icon="plus">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1">
@@ -127,24 +128,12 @@
       </a-table-column>
     </s-table>
 
-    <create-form
-      ref="createModal"
-      :visible="visible"
-      :loading="confirmLoading"
-      :model="mdl"
-      :inputs="inputs"
-      @cancel="handleCancel"
-      @ok="handleOk"
-    />
-    <step-by-step-modal ref="modal" @ok="handleOk"/>
   </a-card>
 </template>
 
 <script>
-  import moment from 'moment'
   import { STable, Ellipsis } from '@/components'
   import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
-  import StepByStepModal from './modules/StepByStepModal'
   import CreateForm from './modules/CreateForm'
   import Cascader from './modules/Cascader'
   import MSelect from './modules/MSelect'
@@ -160,13 +149,13 @@
       STable,
       Ellipsis,
       CreateForm,
-      StepByStepModal,
       Cascader,
       MSelect,
       SSelect
     },
     data () {
       return {
+        searchVersion:new Date().getTime(),
         fetching: false,
         drag: false,
         opVisible: false,
@@ -212,11 +201,8 @@
         },
         columns: [],
         finds: [],
+        cpFinds: [],
         inputs: [],
-        // create model
-        visible: false,
-        confirmLoading: false,
-        mdl: null,
         // 高级搜索 展开/关闭
         advanced: false,
         // 加载数据方法 必须为 Promise 对象
@@ -231,8 +217,6 @@
               value:item.value,
             })
           }
-          console.log(data)
-
           return fruitGoodsList(parameter,data)
             .then(res => {
               if (res.code==0) {
@@ -244,26 +228,9 @@
               }
             })
         },
-        loadCascader: parameter => {
-          console.log(parameter)
-          return trees("")
-            .then(res => {
-              this.mapping = res.data.mapping
-              return res.data
-            })
-        },
         mapping:{},
         selectedRowKeys: [],
         selectedRows: [],
-        test:0,
-      }
-    },
-    filters: {
-      statusFilter (type) {
-        return statusMap[type].text
-      },
-      statusTypeFilter (type) {
-        return statusMap[type].status
       }
     },
     created () {
@@ -273,6 +240,7 @@
           for (let i = 0; i < res.data.finds.length; i++) {
             this.finds.push(res.data.finds[i])
           }
+          this.cpFinds = JSON.parse(JSON.stringify(this.finds));
           this.inputs = res.data.inputs
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
@@ -350,43 +318,24 @@
     },
 
     methods: {
+      onSearch(){//搜索
+        this.$refs.table.refresh(true)
+
+      },
+      resetSearch(){//重置搜索
+        this.searchVersion = new Date().getTime()
+        this.finds = JSON.parse(JSON.stringify(this.cpFinds));
+      },
       selectChange(e,item){
-        console.log(e,item)
         if (item.select===7 || item.select===8){
           Array.isArray(item.value)?null:item.value=[item.value]
         }else {
           Array.isArray(item.value)?item.value=item.value[0]:null
         }
-      },
-      refer(){
-        this.$refs.table.refresh(true)
-      },
-      cascader(show,item,pid) {
-
-        if (this.options.length ===0){
-          return trees(item.treeHash,pid)
-            .then(res => {
-              this.options[item.name] = res.data
-              console.log(this.options)
-            })
-        }
-      },
-      loadOptions(e,item){
-        console.log(e,item)
-
-        return getOptions(item.optionHash,e)
-          .then(res => {
-            this.options = res.data;
-          })
-
-
+        this.$refs.form.$forceUpdate()
       },
 
-      filter(inputValue, path) {
-        return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
-      },
       updateHeader () {
-        console.log(this.columns)
         const headers = []
         for (let index in this.columns) {
           if (this.columns[index].dataIndex) {
@@ -402,70 +351,6 @@
           .then(res => {
             console.log(res)
           })
-      },
-      handleAdd () {
-        this.mdl = null
-        this.visible = true
-      },
-      handleEdit (record) {
-        this.visible = true
-        this.mdl = { ...record }
-      },
-      handleOk () {
-        const form = this.$refs.createModal.form
-        this.confirmLoading = true
-        form.validateFields((errors, values) => {
-          if (!errors) {
-            console.log('values', values)
-            if (values.id > 0) {
-              // 修改 e.g.
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  resolve()
-                }, 1000)
-              }).then(res => {
-                this.visible = false
-                this.confirmLoading = false
-                // 重置表单数据
-                form.resetFields()
-                // 刷新表格
-                this.$refs.table.refresh()
-
-                this.$message.info('修改成功')
-              })
-            } else {
-              // 新增
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  resolve()
-                }, 1000)
-              }).then(res => {
-                this.visible = false
-                this.confirmLoading = false
-                // 重置表单数据
-                form.resetFields()
-                // 刷新表格
-                this.$refs.table.refresh()
-
-                this.$message.info('新增成功')
-              })
-            }
-          } else {
-            this.confirmLoading = false
-          }
-        })
-      },
-      handleCancel () {
-        this.visible = false
-        const form = this.$refs.createModal.form
-        form.resetFields() // 清理表单数据（可不做）
-      },
-      handleSub (record) {
-        if (record.status !== 0) {
-          this.$message.info(`${record.no} 订阅成功`)
-        } else {
-          this.$message.error(`${record.no} 订阅失败，规则已关闭`)
-        }
       },
       onSelectChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys

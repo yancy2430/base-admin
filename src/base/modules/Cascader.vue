@@ -18,16 +18,16 @@
     props: {
       hash: Number,
       pid: Number,
-      result: Array,
+      value: Array,
     },
     data () {
       return {
         options: [],
-        mValue:this.result
+        mValue:this.value
       }
     },
     watch: {
-      result(val) {
+      value(val) {
         this.mValue = val;//新增result的watch，监听变更并同步到myResult上
       },
       mValue(val){

@@ -29,7 +29,7 @@
       };
     },
     watch: {
-      result(val) {
+      value(val) {
         this.mValue = val;
       },
       mValue(val){
