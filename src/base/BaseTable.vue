@@ -1,62 +1,8 @@
 <template>
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
-      <a-form layout="inline"
-              ref="form">
-        <a-row type="flex" :gutter="48" :key="searchVersion">
-          <a-col :md="8" :sm="24" v-for="(item,index) in finds" :key="index" v-if="!advanced?index<2:true">
-            <a-form-item :label="item.label">
-              <a-select v-if="item.input!=7 && !item.enumHash" @change="selectChange($event,item)" v-model="item.select" style="width: 24%" :options="item.finds">
-              </a-select>
-                  <!--基本输入框-->
-                  <a-input v-if="item.input==1"  v-model="item.value" style="width: 76%;margin-left: -3px;" placeholder="" />
-                  <!--数值/区间-->
-                  <span v-else-if="item.input==2">
-                    <between-input v-if="item.input==2 && [7,8].indexOf(item.select)!=-1" v-model="item.value" style="width: 76%;margin-left: -1px;">
-                    </between-input>
-                    <a-input-number v-if="item.input==2 && [7,8].indexOf(item.select)==-1"  style="width: 76%;margin-left: -2px;"  v-model="item.value"  />
-                  </span>
-                  <cascader v-else-if="item.input==3"  v-model="item.value"  :hash="item.treeHash" :pid="0"></cascader>
-                  <!--多选标签-->
-                  <m-select
-                    v-else-if="item.input==4 && item.optionHash"
-                    style="width: 76%;margin-left: -3px;"
-                    v-model="item.value"
-                    :hash="item.optionHash"
-                  >
-                  </m-select>
-                  <s-select
-                    v-else-if="item.input==4 && item.enumHash"
-                    style="width: 76%;margin-left: -3px;"
-                    v-model="item.value"
-                    :hash="item.enumHash"
-                  >
-                  </s-select>
-                  <!--日期-->
-                  <a-date-picker valueFormat="YYYY-MM-DD" v-else-if="item.input==5 && [7,8].indexOf(item.select)==-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
-                  <!--日期区间-->
-                  <a-range-picker valueFormat="YYYY-MM-DD"  v-else-if="item.input==5 && [7,8].indexOf(item.select)!=-1"  v-model="item.value" style=" width: 76%;margin-left: -3px;" />
-                  <!--日期时间-->
-                  <a-date-picker valueFormat="YYYY-MM-DD HH:mm:ss" show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)==-1" v-model="item.value" style=" width: 76%;margin-left: -3px;" />
-                  <!--日期时间区间-->
-                  <a-range-picker @change="selectChange($event,item)" valueFormat="YYYY-MM-DD HH:mm:ss" show-time v-else-if="item.input==6 && [7,8].indexOf(item.select)!=-1" v-model="item.value" style=" width: 76%;margin-left: -3px;" />
-
-                  <a-switch v-else-if="item.input==7" v-model="item.value" />
-            </a-form-item>
-          </a-col>
-          <a-col :md="!advanced && 8 || 24" :sm="24">
-            <span class="table-page-search-submitButtons"
-                  :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-              <a-button type="primary" @click="onSearch">查询</a-button>
-              <a-button style="margin-left: 8px" @click="resetSearch">重置</a-button>
-              <a @click="toggleAdvanced" style="margin-left: 8px">
-                {{ advanced ? '收起' : '展开' }}
-                <a-icon :type="advanced ? 'up' : 'down'"/>
-              </a>
-            </span>
-          </a-col>
-        </a-row>
-      </a-form>
+        <search-form v-model="finds" @search="onSearch">
+        </search-form>
     </div>
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="visible =true">新建</a-button>
@@ -76,7 +22,6 @@
           <a-icon type="down"/>
         </a-button>
       </a-dropdown>
-
       <a-dropdown placement="bottomCenter" :trigger="['click']" v-model="opVisible" style="float: right;">
         <a class="ant-dropdown-link">
           配置
@@ -118,17 +63,23 @@
       >
         <template slot-scope="text, record">
           <span>
-            <a>查看</a>
+            <a @click="check=true">查看</a>
             <a-divider type="vertical"/>
-            <a>编辑</a>
+            <a @click="visible=true">编辑</a>
             <a-divider type="vertical"/>
+            <a-popconfirm
+                title="是否删除这条数据?"
+                ok-text="是"
+                cancel-text="否"
+              >
             <a>删除</a>
+            </a-popconfirm>
           </span>
         </template>
       </a-table-column>
     </s-table>
     <a-drawer
-      title="Create a new account"
+      title="新增"
       :width="720"
       :visible="visible"
       :body-style="{ paddingBottom: '80px' }"
@@ -137,22 +88,35 @@
       <create-form>
       </create-form>
     </a-drawer>
+    <a-drawer
+      title="详情"
+      :width="720"
+      :visible="check"
+      :body-style="{ paddingBottom: '80px' }"
+      @close="check=false"
+    >
+      <view-detail></view-detail>
+    </a-drawer>
   </a-card>
 </template>
 
 <script>
   import { STable, Ellipsis } from '@/components'
-  import { fruitGoodsHeader, fruitGoodsList, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
+  import { header, page, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
   import CreateForm from './modules/CreateForm'
   import Cascader from './modules/Cascader'
   import MSelect from './modules/MSelect'
   import SSelect from './modules/SSelect'
   import AInputGroup from 'ant-design-vue/es/input/Group'
   import BetweenInput from './modules/BetweenInput'
+  import ViewDetail from './modules/ViewDetail'
+  import SearchForm from './modules/SearchForm'
 
   export default {
     name: 'BaseTable',
     components: {
+      SearchForm,
+      ViewDetail,
       BetweenInput,
       AInputGroup,
       STable,
@@ -162,8 +126,12 @@
       MSelect,
       SSelect
     },
+    props:{
+      module:String,
+    },
     data () {
       return {
+        check:false,
         visible:false,
         searchVersion:new Date().getTime(),
         fetching: false,
@@ -213,21 +181,12 @@
         finds: [],
         cpFinds: [],
         inputs: [],
+        searchData:[],
         // 高级搜索 展开/关闭
         advanced: false,
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-
-          const data =[]
-          for (let i = 0; i < this.finds.length; i++) {
-            let item = this.finds[i]
-            data.push({
-              name:item.name,
-              findType:item.select,
-              value:item.value,
-            })
-          }
-          return fruitGoodsList(parameter,data)
+          return page(parameter,this.searchData,this.module)
             .then(res => {
               if (res.code==0) {
                 this.mapping = res.data.mapping
@@ -244,7 +203,7 @@
       }
     },
     created () {
-      fruitGoodsHeader()
+      header(this.module)
         .then(res => {
           const columns = []
           for (let i = 0; i < res.data.finds.length; i++) {
@@ -328,23 +287,10 @@
     },
 
     methods: {
-      onSearch(){//搜索
+      onSearch(val){//搜索
+        this.searchData = val
         this.$refs.table.refresh(true)
-
       },
-      resetSearch(){//重置搜索
-        this.searchVersion = new Date().getTime()
-        this.finds = JSON.parse(JSON.stringify(this.cpFinds));
-      },
-      selectChange(e,item){
-        if (item.select===7 || item.select===8){
-          Array.isArray(item.value)?null:item.value=[item.value]
-        }else {
-          Array.isArray(item.value)?item.value=item.value[0]:null
-        }
-        this.$refs.form.$forceUpdate()
-      },
-
       updateHeader () {
         const headers = []
         for (let index in this.columns) {
@@ -365,9 +311,6 @@
       onSelectChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys
         this.selectedRows = selectedRows
-      },
-      toggleAdvanced () {
-        this.advanced = !this.advanced
       },
     }
   }

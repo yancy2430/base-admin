@@ -1,6 +1,6 @@
 <template>
   <page-header-wrapper>
-    <BaseTable></BaseTable>
+    <BaseTable module="policy"></BaseTable>
   </page-header-wrapper>
 </template>
 

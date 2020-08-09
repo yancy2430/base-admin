@@ -1,8 +1,6 @@
 import request from '@/utils/request'
-const url = 'http://localhost:89'
+const url = 'http://localhost:8928'
 const api = {
-  ch: url+'/base/FruitGoods/header',
-  chPage: url+'/base/FruitGoods/page',
   tables: url+'/base/tables',
   fields: url+'/base/fields',
   saveFields: url+'/base/saveFields',
@@ -16,9 +14,9 @@ const api = {
   permissionNoPager: '/permission/no-pager',
   orgTree: '/org/tree'
 }
-export function fruitGoodsHeader () {
+export function header (module) {
   return request({
-    url: api.ch,
+    url: url+'/base/'+module+'/header',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -26,9 +24,9 @@ export function fruitGoodsHeader () {
   })
 }
 
-export function fruitGoodsList (parameter,data) {
+export function page (parameter,data,module) {
   return request({
-    url: api.chPage,
+    url: url+'/base/'+module+'/page',
     method: 'post',
     params: parameter,
     data: JSON.stringify(data),

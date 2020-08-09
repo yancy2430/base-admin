@@ -24,7 +24,7 @@
               {{ saveLoadingText }}
             </a-button>
           </div>
-          <a-row gutter="56" style="font-weight: bold;font-size: 16px;padding-bottom: 10px;border-bottom: 1px solid #ddd">
+          <a-row :gutter="gutter" style="font-weight: bold;font-size: 16px;padding-bottom: 10px;border-bottom: 1px solid #ddd">
             <a-col :span="4">
               字段名
             </a-col>
@@ -40,13 +40,16 @@
             <a-col :span="4">
               数据类型
             </a-col>
+            <a-col :span="6">
+              备注
+            </a-col>
           </a-row>
           <a-spin :spinning="spinning">
             <a-list item-layout="horizontal" :data-source="fields" style="height: 450px;overflow-x: hidden;">
               <a-list-item slot="renderItem" slot-scope="item,index">
                 <a-list-item-meta>
                   <div slot="title">
-                    <a-row gutter="56">
+                    <a-row :gutter="gutter">
                       <a-col :span="4">
                         <a-input :value="fields[index].fieldName" placeholder="字段名"/>
                       </a-col>
@@ -70,7 +73,9 @@
                           :allowClear="false"
                         />
                       </a-col>
-
+                      <a-col :span="6">
+                        <a-input  placeholder="字段中文名" v-model="fields[index].remark"/>
+                      </a-col>
                     </a-row>
                   </div>
                 </a-list-item-meta>
@@ -98,6 +103,7 @@
     mixins: [baseMixin],
     data () {
       return {
+        gutter:48,
         list: [
           { name: 'John', text: '', id: 0 },
           { name: 'Joao', text: '', id: 1 },
