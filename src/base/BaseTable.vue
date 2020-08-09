@@ -59,7 +59,7 @@
       </a-form>
     </div>
     <div class="table-operator">
-      <a-button type="primary" icon="plus">新建</a-button>
+      <a-button type="primary" icon="plus" @click="visible =true">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1">
@@ -117,17 +117,26 @@
                       :ellipsis="item.ellipsis"
       >
         <template slot-scope="text, record">
-        <span>
-          <a>查看</a>
-          <a-divider type="vertical"/>
-          <a>编辑</a>
-          <a-divider type="vertical"/>
-          <a>删除</a>
-        </span>
+          <span>
+            <a>查看</a>
+            <a-divider type="vertical"/>
+            <a>编辑</a>
+            <a-divider type="vertical"/>
+            <a>删除</a>
+          </span>
         </template>
       </a-table-column>
     </s-table>
-
+    <a-drawer
+      title="Create a new account"
+      :width="720"
+      :visible="visible"
+      :body-style="{ paddingBottom: '80px' }"
+      @close="visible=false"
+    >
+      <create-form>
+      </create-form>
+    </a-drawer>
   </a-card>
 </template>
 
@@ -155,6 +164,7 @@
     },
     data () {
       return {
+        visible:false,
         searchVersion:new Date().getTime(),
         fetching: false,
         drag: false,
