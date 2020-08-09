@@ -1,135 +1,48 @@
 <template>
 
-    <section>
-      <a-form :form="form" layout="vertical" hide-required-mark>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Name">
-              <a-input
-                v-decorator="[
-                  'name',
-                  {
-                    rules: [{ required: true, message: 'Please enter user name' }],
-                  },
-                ]"
-                placeholder="Please enter user name"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="Url">
-              <a-input
-                v-decorator="[
-                  'url',
-                  {
-                    rules: [{ required: true, message: 'please enter url' }],
-                  },
-                ]"
-                style="width: 100%"
-                addon-before="http://"
-                addon-after=".com"
-                placeholder="please enter url"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Owner">
-              <a-select
-                v-decorator="[
-                  'owner',
-                  {
-                    rules: [{ required: true, message: 'Please select an owner' }],
-                  },
-                ]"
-                placeholder="Please a-s an owner"
-              >
-                <a-select-option value="xiao">
-                  Xiaoxiao Fu
-                </a-select-option>
-                <a-select-option value="mao">
-                  Maomao Zhou
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="Type">
-              <a-select
-                v-decorator="[
-                  'type',
-                  {
-                    rules: [{ required: true, message: 'Please choose the type' }],
-                  },
-                ]"
-                placeholder="Please choose the type"
-              >
-                <a-select-option value="private">
-                  Private
-                </a-select-option>
-                <a-select-option value="public">
-                  Public
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item label="Approver">
-              <a-select
-                v-decorator="[
-                  'approver',
-                  {
-                    rules: [{ required: true, message: 'Please choose the approver' }],
-                  },
-                ]"
-                placeholder="Please choose the approver"
-              >
-                <a-select-option value="jack">
-                  Jack Ma
-                </a-select-option>
-                <a-select-option value="tom">
-                  Tom Liu
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="DateTime">
-              <a-date-picker
-                v-decorator="[
-                  'dateTime',
-                  {
-                    rules: [{ required: true, message: 'Please choose the dateTime' }],
-                  },
-                ]"
-                style="width: 100%"
-                :get-popup-container="trigger => trigger.parentNode"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="16">
-          <a-col :span="24">
-            <a-form-item label="Description">
-              <a-textarea
-                v-decorator="[
-                  'description',
-                  {
-                    rules: [{ required: true, message: 'Please enter url description' }],
-                  },
-                ]"
-                :rows="4"
-                placeholder="please enter url description"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
-      </a-form>
-      <div
-        :style="{
+  <section>
+    <a-form :form="form" layout="vertical" hide-required-mark>
+      <a-row :gutter="16">
+        <a-col :span="item.inputType===12?24:12" v-for="(item,index) in inputs" :key="index">
+
+          <a-form-item :label="item.title">
+            <a-tooltip placement="topRight" mouseEnterDelay="0.4">
+              <template slot="title">
+                <span>{{item.prompt}}</span>
+              </template>
+              <a-textarea v-if="item.inputType===12" :label="item.title" placeholder="Controlled autosize"
+                          :auto-size="{ minRows: 3, maxRows: 5 }"/>
+              <!--文本-->
+              <a-input v-else-if="item.inputType===1" placeholder=""/>
+              <!--数字-->
+              <a-input v-else-if="item.inputType===2" placeholder=""/>
+              <!--选择-->
+              <a-input v-else-if="item.inputType===3" placeholder=""/>
+              <!--勾选-->
+              <a-input v-else-if="item.inputType===4" placeholder=""/>
+              <!--日期时间-->
+              <a-input v-else-if="item.inputType===5" placeholder=""/>
+              <!--日期-->
+              <a-input v-else-if="item.inputType===6" placeholder=""/>
+              <!--图片-->
+              <a-input v-else-if="item.inputType===7" placeholder=""/>
+              <!--文件-->
+              <a-input v-else-if="item.inputType===8" placeholder=""/>
+              <!--单级外键-->
+              <a-input v-else-if="item.inputType===9" placeholder=""/>
+              <!--多级外键-->
+              <a-input v-else-if="item.inputType===10" placeholder=""/>
+              <!--枚举类-->
+              <a-input v-else-if="item.inputType===11" placeholder=""/>
+              <!--开关-->
+              <a-input v-else-if="item.inputType===13" placeholder=""/>
+            </a-tooltip>
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
+    <div
+      :style="{
           position: 'absolute',
           right: 0,
           bottom: 0,
@@ -140,71 +53,50 @@
           textAlign: 'right',
           zIndex: 1,
         }"
-      >
-        <a-button :style="{ marginRight: '8px' }" @click="onClose">
-          Cancel
-        </a-button>
-        <a-button type="primary" @click="onClose">
-          Submit
-        </a-button>
-      </div>
-    </section>
+    >
+      <a-button :style="{ marginRight: '8px' }" @click="onClose">
+        Cancel
+      </a-button>
+      <a-button type="primary" @click="onClose">
+        Submit
+      </a-button>
+    </div>
+  </section>
 </template>
 
 <script>
   import pick from 'lodash.pick'
 
-  import moment from 'moment';
+  import moment from 'moment'
   // 表单字段
   const fields = ['description', 'id']
 
   export default {
     props: {
-      visible: {
-        type: Boolean,
-        required: true
-      },
-      loading: {
-        type: Boolean,
-        default: () => false
-      },
-      model: {
-        type: Object,
-        default: () => null
-      },
       inputs: {
         type: Array,
         required: true
       }
     },
     data () {
-      this.formLayout = {
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 7 }
-        },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 13 }
-        }
-      }
+
       return {
         form: this.$form.createForm(this),
         options: [
           {
             value: 'zhejiang',
             label: 'Zhejiang',
-            name:'Zhejiang',
+            name: 'Zhejiang',
             children: [
               {
                 value: 'hangzhou',
                 label: 'Hangzhou',
-                name:'hangzhou',
+                name: 'hangzhou',
                 children: [
                   {
                     value: 'xihu',
                     label: 'West Lake',
-                    name:'xihu',
+                    name: 'xihu',
                   },
                 ],
               },
@@ -213,17 +105,17 @@
           {
             value: 'jiangsu',
             label: 'Jiangsu',
-            name:'Jiangsu',
+            name: 'Jiangsu',
             children: [
               {
                 value: 'nanjing',
                 label: 'Nanjing',
-                name:'nanjing',
+                name: 'nanjing',
                 children: [
                   {
                     value: 'zhonghuamen',
                     label: 'Zhong Hua Men',
-                    name:'zhonghuamen',
+                    name: 'zhonghuamen',
                   },
                 ],
               },
@@ -243,14 +135,14 @@
         this.model && this.form.setFieldsValue(pick(this.model, fields))
       })
     },
-    methods:{
+    methods: {
       moment,
-      range(start, end) {
-        const result = [];
+      range (start, end) {
+        const result = []
         for (let i = start; i < end; i++) {
-          result.push(i);
+          result.push(i)
         }
-        return result;
+        return result
       },
     }
   }

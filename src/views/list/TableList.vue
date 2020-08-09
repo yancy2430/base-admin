@@ -1,6 +1,6 @@
 <template>
   <page-header-wrapper>
-    <BaseTable module="policy"></BaseTable>
+    <BaseTable module="fruitGoods"></BaseTable>
   </page-header-wrapper>
 </template>
 

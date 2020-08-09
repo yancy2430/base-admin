@@ -56,7 +56,7 @@
       showPagination="auto"
       :scroll="{ x: 1500}"
     >
-      <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width"
+      <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width<50?50:item.width"
                       v-if="item.show" :key="item.id"
                       :title="item.title" :data-index="item.dataIndex" :align="item.align" :fixed="item.fixed"
                       :ellipsis="item.ellipsis"
@@ -85,7 +85,7 @@
       :body-style="{ paddingBottom: '80px' }"
       @close="visible=false"
     >
-      <create-form>
+      <create-form :inputs="inputs">
       </create-form>
     </a-drawer>
     <a-drawer
@@ -104,11 +104,6 @@
   import { STable, Ellipsis } from '@/components'
   import { header, page, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
   import CreateForm from './modules/CreateForm'
-  import Cascader from './modules/Cascader'
-  import MSelect from './modules/MSelect'
-  import SSelect from './modules/SSelect'
-  import AInputGroup from 'ant-design-vue/es/input/Group'
-  import BetweenInput from './modules/BetweenInput'
   import ViewDetail from './modules/ViewDetail'
   import SearchForm from './modules/SearchForm'
 
@@ -117,14 +112,9 @@
     components: {
       SearchForm,
       ViewDetail,
-      BetweenInput,
-      AInputGroup,
       STable,
       Ellipsis,
       CreateForm,
-      Cascader,
-      MSelect,
-      SSelect
     },
     props:{
       module:String,
@@ -205,6 +195,7 @@
     created () {
       header(this.module)
         .then(res => {
+
           const columns = []
           for (let i = 0; i < res.data.finds.length; i++) {
             this.finds.push(res.data.finds[i])
@@ -234,7 +225,7 @@
                   case 5:
                     return text
                   case 6:
-                    return <a href = { text } style = 'padding: 0 5px' > { text } < /a>
+                    return text
                   case 11:
                     if (this.mapping){
                       for (const index in item.mapping) {
@@ -244,11 +235,11 @@
                     }}
                     return ""
                   case 9:
-                    if (this.mapping){
+                    if (this.mapping[item.fieldName]){
                       return this.mapping[item.fieldName][text]
                     }
                   case 10:
-                    if (this.mapping){
+                    if (this.mapping[item.fieldName]){
                       return this.mapping[item.fieldName][text]
                     }
                 }

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const url = 'http://localhost:8928'
+const url = 'http://localhost:89'
 const api = {
   tables: url+'/base/tables',
   fields: url+'/base/fields',

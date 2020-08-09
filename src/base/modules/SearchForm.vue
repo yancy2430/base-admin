@@ -67,9 +67,21 @@
 </template>
 
 <script>
+  import Cascader from './Cascader'
+  import MSelect from './MSelect'
+  import SSelect from './SSelect'
+  import AInputGroup from 'ant-design-vue/es/input/Group'
+  import BetweenInput from './BetweenInput'
   export default {
     name: 'SearchForm',
     props: ["value"],
+    components: {
+      BetweenInput,
+      AInputGroup,
+      Cascader,
+      MSelect,
+      SSelect
+    },
     data(){
       return {
         advanced:false,
