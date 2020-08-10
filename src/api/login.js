@@ -9,7 +9,7 @@ const userApi = {
   SendSms: '/account/sms',
   SendSmsErr: '/account/sms_err',
   // get my info
-  adminInfo: url+'/admin/info',
+  UserInfo: '/user/info',
   UserMenu: '/user/nav'
 }
 
@@ -42,7 +42,7 @@ export function getSmsCaptcha (parameter) {
 
 export function getInfo () {
   return request({
-    url: userApi.adminInfo,
+    url: userApi.UserInfo,
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
