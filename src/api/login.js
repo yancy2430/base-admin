@@ -1,7 +1,7 @@
 import request from '@/utils/request'
-
+const url = 'http://localhost:89'
 const userApi = {
-  Login: '/auth/login',
+  Login: url+'/admin/login',
   Logout: '/auth/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
@@ -28,7 +28,7 @@ export function login (parameter) {
   return request({
     url: userApi.Login,
     method: 'post',
-    data: parameter
+    params: parameter
   })
 }
 

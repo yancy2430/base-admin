@@ -44,7 +44,6 @@
         </a-menu>
       </a-dropdown>
     </div>
-
     <s-table
       ref="table"
       size="middle"
@@ -63,7 +62,7 @@
       >
         <template slot-scope="text, record">
           <span>
-            <a @click="check=true">查看</a>
+            <a @click="onShowDetail($event,record)">查看</a>
             <a-divider type="vertical"/>
             <a @click="visible=true">编辑</a>
             <a-divider type="vertical"/>
@@ -95,7 +94,7 @@
       :body-style="{ paddingBottom: '80px' }"
       @close="check=false"
     >
-      <view-detail></view-detail>
+      <view-detail :columns="columns" :data="item"></view-detail>
     </a-drawer>
   </a-card>
 </template>
@@ -121,6 +120,7 @@
     },
     data () {
       return {
+        item:{},
         check:false,
         visible:false,
         searchVersion:new Date().getTime(),
@@ -303,6 +303,11 @@
         this.selectedRowKeys = selectedRowKeys
         this.selectedRows = selectedRows
       },
+      onShowDetail(e,item){
+        console.log(this.columns)
+        this.item = item
+        this.check=true
+      }
     }
   }
 </script>

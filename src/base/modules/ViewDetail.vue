@@ -1,35 +1,8 @@
 <template>
   <div>
     <a-row>
-      <a-col :span="12">
-        <description-item title="Full Name" content="Lily" />
-      </a-col>
-      <a-col :span="12">
-        <description-item title="Account" content="AntDesign@example.com" />
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col :span="12">
-        <description-item title="City" content="HangZhou" />
-      </a-col>
-      <a-col :span="12">
-        <description-item title="Country" content="China🇨🇳" />
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col :span="12">
-        <description-item title="Birthday" content="February 2,1900" />
-      </a-col>
-      <a-col :span="12">
-        <description-item title="Website" content="-" />
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col :span="24">
-        <description-item
-          title="Skills"
-          content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
-        />
+      <a-col :span="12" v-for="(item,key) in columns" :key="key">
+        <description-item :title="item.title" :content="data[item.dataIndex]" />
       </a-col>
     </a-row>
   </div>
@@ -43,6 +16,7 @@
       descriptionItem,
     },
     props:{
+      columns:Array,
       data:Object
     },
     data() {
