@@ -367,6 +367,7 @@ const info = (options) => {
   })
 
   userInfo.role = roleObj
+  console.log(userInfo)
   return builder(userInfo)
 }
 
