@@ -1,6 +1,6 @@
 <template>
-  <div class="page-header-index-wide">
-    <a-card :bordered="false" :bodyStyle="{ padding: '16px 0', height: '100%' }" :style="{ height: '100%' }">
+  <page-header-wrapper>
+    <a-card :bordered="false" >
       <div class="account-settings-info-main" :class="{ 'mobile': isMobile }">
         <div class="account-settings-info-left" style="height: 450px;overflow-x: hidden;">
           <a-menu
@@ -85,7 +85,7 @@
         </div>
       </div>
     </a-card>
-  </div>
+  </page-header-wrapper>
 </template>
 
 <script>

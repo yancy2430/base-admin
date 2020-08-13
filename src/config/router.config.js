@@ -17,7 +17,7 @@ export const asyncRouterMap = [
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: { title: 'menu.home', keepAlive: true},
+    meta: { title: '首页', keepAlive: true},
     redirect: '/dashboard/workplace',
     children: [
       // dashboard
@@ -26,7 +26,7 @@ export const asyncRouterMap = [
         name: 'dashboard',
         redirect: '/dashboard/workplace',
         component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        meta: { title: '仪表盘', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
         children: [
           {
             path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
@@ -56,12 +56,6 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/list/TableList'),
             meta: { title: '基础表格', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/list/basic-list',
-            name: 'BasicList',
-            component: () => import('@/views/list/BasicList'),
-            meta: { title: '订单处理', keepAlive: true, permission: [ 'table' ] }
           }
         ]
       },
@@ -100,6 +94,12 @@ export const asyncRouterMap = [
         component: RouteView,
         meta: { title: '设置中心', keepAlive: true, icon: 'form', permission: [ 'form' ] },
         children: [
+          {
+            path: 'MenuTree',
+            name: 'MenuTree',
+            component: () => import('@/views/settings/MenuTree'),
+            meta: { title: '菜单设置', keepAlive: true, permission: [ 'form' ] }
+          },
           {
             path: 'tables',
             name: 'Tables',
