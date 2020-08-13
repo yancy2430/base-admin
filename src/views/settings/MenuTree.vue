@@ -2,18 +2,19 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="addItem()">新建菜单</a-button>
+        <a-button type="primary" icon="plus" @click="addItem(0)">新建菜单</a-button>
 
       </div>
       <a-table :columns="columns" :data-source="data" row-key="id">
         <span slot="action" slot-scope="record">
-        <a @click="addItem($event,record)">新增</a>
+        <a @click="addItem(record.id)">新增</a>
               <a-divider type="vertical"/>
         <a @click="editItem($event,record)">编辑</a>
               <a-divider type="vertical"/>
              <a-popconfirm
                title="是否删除这条数据?"
                ok-text="是"
+               @confirm="delMenu(record.id)"
                cancel-text="否"
              >
             <a>删除</a>
@@ -28,7 +29,7 @@
         :width="720"
         @close="visible =false"
       >
-        <menu-edit :menu-id="menuId" @close="closeEdit"></menu-edit>
+        <menu-edit :menu-id="menuId" :menu-pid="menuPid" @close="closeEdit"></menu-edit>
       </a-drawer>
     </a-card>
   </page-header-wrapper>
@@ -70,7 +71,7 @@
     },
   ]
 
-  import { resources, saveMenu } from '@/api/system'
+  import { resources, saveMenu ,delMenu} from '@/api/system'
   import MenuEdit from './modules/MenuEdit'
 
   export default {
@@ -78,6 +79,7 @@
     components: { MenuEdit, MenuTreeBtnList },
     data () {
       return {
+        menuPid:0,
         visible: false,
         data: [],
         menuId:undefined,
@@ -99,18 +101,24 @@
         }, 500)
       },
       editItem(e,item){
+        this.menuPid = undefined
         this.menuId = item.id
         this.visible = true
+        this.visible = true
       },
-      addItem (e, item) {
-        if (!item) {
-          this.menuId = undefined
-        }else {
-        }
+      addItem (pid) {
+        this.menuPid = pid
+        this.menuId = undefined
         this.visible = true
       },
       delMenu(id){
-
+        delMenu(id).then(res=>{
+          if (res.code===0){
+            resources().then(res => {
+              this.data = res.data
+            })
+          }
+        })
       }
     }
   }

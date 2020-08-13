@@ -4,7 +4,8 @@
       <a-row :gutter="16">
         <a-col :span="12">
           <a-form-item label="菜单名称">
-            <a-input type="hidden" v-model="form.id"></a-input>
+            <a-input type="hidden" v-if="menuPid" v-model="form.pid"></a-input>
+            <a-input type="hidden" v-else v-model="form.id"></a-input>
             <a-input v-model="form.name" placeholder="请输入菜单名称">
               <div slot="prefix">
                 <a-dropdown :trigger="['click']">
@@ -24,7 +25,6 @@
                 </a-dropdown>
               </div>
             </a-input>
-            <a-input type="hidden" v-model="form.pid"></a-input>
           </a-form-item>
         </a-col>
         <a-col :span="12">
@@ -86,7 +86,8 @@
     name: 'MenuEdit',
     components: { MenuTreeBtnList },
     props:{
-      menuId:Number
+      menuId:Number,
+      menuPid:Number
     },
     data () {
       return {
@@ -98,11 +99,30 @@
       }
     },
     created(){
+      if (this.menuPid!==undefined){
+        this.form={
+          pid:this.menuPid,
+          btns: []
+        }
+      }else {
         this.getMenu(this.menuId)
+      }
     },
     watch:{
+      menuPid(menuPid){
+        console.log("menuPid",menuPid)
+        if (menuPid!==undefined){
+          this.form={
+            pid:menuPid,
+            btns: []
+          }
+        }
+      },
       menuId(id){
-        this.getMenu(id)
+        console.log("id",id)
+        if (this.menuId!==undefined){
+          this.getMenu(id)
+        }
       }
     },
     methods:{
@@ -114,11 +134,6 @@
           }
           this.loginBtn = false
         })
-      },
-      editItem(e,item){
-        console.log(item)
-        this.form = item;
-        this.visible = true
       },
       getMenu(id){
         menu(id).then(res => {

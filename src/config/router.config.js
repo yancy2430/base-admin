@@ -1,15 +1,15 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, BlankLayout,RouteView } from '@/layouts'
+import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 
 /**
  * 不需要缓存 情况下用下面这个 需要缓存页面则用 layouts的RouteView
  * @type {*[]}
  */
-// const RouteView = {
-//   name: 'RouteView',
-//   render: (h) => h('router-view')
-// }
+const RouteView = {
+  name: 'RouteView',
+  render: (h) => h('router-view')
+}
 
 export const asyncRouterMap = [
 
