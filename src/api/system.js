@@ -13,3 +13,34 @@ export function resources () {
     }
   })
 }
+export function saveMenu (parameter) {
+  return request({
+    url: url+'/system/saveMenu',
+    method: 'post',
+    data: JSON.stringify(parameter),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+export function menu (id) {
+  return request({
+    url: url+'/system/menu',
+    method: 'post',
+    params: {id:id},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+export function delMenu (id) {
+  return request({
+    url: url+'/system/delMenu',
+    method: 'post',
+    params: {id:id},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+

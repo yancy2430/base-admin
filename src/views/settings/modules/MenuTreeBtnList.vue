@@ -3,17 +3,23 @@
     <a-button class="editable-add-btn" @click="handleAdd">
       添加按钮
     </a-button>
-    <a-table bordered :data-source="dataSource" :columns="columns" size="small" >
+    <a-table :data-source="dataSource" :columns="columns" :row-key="(record , index) => index" size="small" >
       <template slot="name" slot-scope="text, record">
-        <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)" />
+        <a-input v-model="record.name" placeholder="" />
+      </template>
+      <template slot="path" slot-scope="text, record">
+        <a-input v-model="record.path" placeholder="" />
+      </template>
+      <template slot="code" slot-scope="text, record">
+        <a-input v-model="record.code" placeholder="" />
       </template>
       <template slot="operation" slot-scope="text, record">
         <a-popconfirm
-          v-if="dataSource.length"
-          title="Sure to delete?"
-          @confirm="() => onDelete(record.key)"
+          v-if="value.length"
+          title="是否删除按钮?"
+          @confirm="() => onDelete(record.code)"
         >
-          <a href="javascript:;">Delete</a>
+          <a href="javascript:;">删除</a>
         </a-popconfirm>
       </template>
     </a-table>
@@ -26,23 +32,21 @@
     components: {
       EditableCell,
     },
+    props:["value"],
+    model: {
+      prop: 'value',
+      event: 'input'
+    },
+    watch:{
+      value(v){
+        this.dataSource = [...v];
+      }
+    },
     data() {
+      this.dataSource = [...this.value];
       return {
-        dataSource: [
-          {
-            key: '0',
-            name: 'Edward King 0',
-            age: '32',
-            address: 'London, Park Lane no. 0',
-          },
-          {
-            key: '1',
-            name: 'Edward King 1',
-            age: '32',
-            address: 'London, Park Lane no. 1',
-          },
-        ],
-        count: 2,
+        count:0,
+        dataSource:[],
         columns: [
           {
             title: '显示名称',
@@ -53,10 +57,12 @@
           {
             title: '提交路径',
             dataIndex: 'path',
+            scopedSlots: { customRender: 'path' },
           },
           {
             title: '权限代码',
             dataIndex: 'code',
+            scopedSlots: { customRender: 'code' },
           },
           {
             title: '操作',
@@ -67,28 +73,21 @@
       };
     },
     methods: {
-      onCellChange(key, dataIndex, value) {
-        const dataSource = [...this.dataSource];
-        const target = dataSource.find(item => item.key === key);
-        if (target) {
-          target[dataIndex] = value;
-          this.dataSource = dataSource;
-        }
-      },
       onDelete(key) {
-        const dataSource = [...this.dataSource];
-        this.dataSource = dataSource.filter(item => item.key !== key);
+        const dataSource = [...this.value];
+        this.dataSource = dataSource.filter(item => item.code !== key);
+        this.$emit('input', this.dataSource)
       },
       handleAdd() {
-        const { count, dataSource } = this;
         const newData = {
-          key: count,
-          name: `Edward King ${count}`,
-          age: 32,
-          address: `London, Park Lane no. ${count}`,
+          key: this.count,
+          name: `Edward King `,
+          path: "",
+          code: `London, Park Lane no. `,
         };
-        this.dataSource = [...dataSource, newData];
-        this.count = count + 1;
+        this.dataSource.push(newData)
+        this.$emit('input', this.dataSource)
+        this.count = this.count + 1;
       },
     },
   };
