@@ -36,11 +36,12 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="菜单路径">
-            <a-input
-              v-model="form.path"
-              placeholder="菜单全路径"
-            />
+          <a-form-item label="组件路径">
+            <a-select show-search v-model="form.path">
+              <a-select-option :value="item" v-for="(item,index) in paths" :key="index">
+                {{item}}
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
 
@@ -82,6 +83,7 @@
 <script>
   import { menu, saveMenu , delMenu} from '@/api/system'
   import MenuTreeBtnList from './MenuTreeBtnList'
+  const requireComponents = require.context('@/views', true, /\.vue/);
   export default {
     name: 'MenuEdit',
     components: { MenuTreeBtnList },
@@ -91,6 +93,7 @@
     },
     data () {
       return {
+        paths:requireComponents.keys(),
         addTitle: '顶级菜单',
         loginBtn:false,
         form: {

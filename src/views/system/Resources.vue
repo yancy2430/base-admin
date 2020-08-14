@@ -37,7 +37,6 @@
 
 <script>
   import MenuTreeBtnList from './modules/MenuTreeBtnList'
-
   const columns = [
     {
       title: '名称',
@@ -75,7 +74,7 @@
   import MenuEdit from './modules/MenuEdit'
 
   export default {
-    name: 'MenuTree',
+    name: 'Resources',
     components: { MenuEdit, MenuTreeBtnList },
     data () {
       return {

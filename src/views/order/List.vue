@@ -1,11 +1,10 @@
 <template>
-  <page-header-wrapper>
-  </page-header-wrapper>
+  <page-header-wrapper></page-header-wrapper>
 </template>
 
 <script>
     export default {
-        name: 'EmptyView'
+        name: 'List'
     }
 </script>
 

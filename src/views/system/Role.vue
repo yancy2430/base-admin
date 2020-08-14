@@ -70,7 +70,7 @@ import { actionToObject } from '@/utils/permissions'
 import { baseMixin } from '@/store/app-mixin'
 
 export default {
-  name: 'RoleList',
+  name: 'Role',
   mixins: [baseMixin],
   components: {},
   data () {

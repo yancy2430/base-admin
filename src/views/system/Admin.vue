@@ -1,11 +1,12 @@
 <template>
   <page-header-wrapper>
+    test
   </page-header-wrapper>
 </template>
 
 <script>
     export default {
-        name: 'EmptyView'
+        name: 'Admin'
     }
 </script>
 

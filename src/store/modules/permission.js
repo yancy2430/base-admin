@@ -66,11 +66,7 @@ const permission = {
       return new Promise(resolve => {
         const { roles } = data
         generatorDynamicRouter("test").then(res=>{
-          console.log(JSON.stringify(res))
-          console.log(JSON.stringify(asyncRouterMap))
-
           const accessedRouters = filterAsyncRouter(res, roles)
-          console.log(accessedRouters)
           commit('SET_ROUTERS', res)
           resolve()
         })
