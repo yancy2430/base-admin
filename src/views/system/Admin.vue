@@ -1,12 +1,14 @@
 <template>
   <page-header-wrapper>
-    test
+    <base-table module="adminUser" />
   </page-header-wrapper>
 </template>
 
 <script>
+    import BaseTable from '../../base/BaseTable'
     export default {
-        name: 'Admin'
+        name: 'Admin',
+      components: { BaseTable }
     }
 </script>
 

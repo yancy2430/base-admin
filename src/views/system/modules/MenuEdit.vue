@@ -28,18 +28,15 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="唯一编码">
-            <a-input
-              v-model="form.code"
-              placeholder="唯一字符串编码"
-            />
+          <a-form-item label="访问路径">
+            <a-input v-model="form.path" placeholder="访问路径" />
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="组件路径">
-            <a-select show-search v-model="form.path">
-              <a-select-option :value="item" v-for="(item,index) in paths" :key="index">
-                {{item}}
+          <a-form-item label="选择组件">
+            <a-select show-search v-model="form.component">
+              <a-select-option :value="item.replace('./','/').replace('.vue','')" v-for="(item,index) in paths" :key="index">
+                {{item.replace("./","/").replace(".vue","")}}
               </a-select-option>
             </a-select>
           </a-form-item>
@@ -93,7 +90,7 @@
     },
     data () {
       return {
-        paths:requireComponents.keys(),
+        paths:["/RouteView"].concat(requireComponents.keys()),
         addTitle: '顶级菜单',
         loginBtn:false,
         form: {

@@ -42,11 +42,7 @@
       title: '名称',
       dataIndex: 'name',
     },
-    {
-      title: '唯一码',
-      dataIndex: 'code',
-      width: '12%',
-    },
+
     {
       title: '路径',
       dataIndex: 'path',
