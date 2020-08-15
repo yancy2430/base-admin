@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 const url = 'http://localhost:89'
 const api = {
-  tables: url+'/base/tables',
-  fields: url+'/base/fields',
-  saveFields: url+'/base/saveFields',
-  saveOrUpdateHeader: url+'/base/saveOrUpdateHeader',
-  allEnums: url+'/base/allEnums',
-  enums: url+'/base/enums',
-  options:url+"/base/options",
-  trees:url+"/base/trees",
+  tables: url+'/tables',
+  fields: url+'/fields',
+  saveFields: url+'/saveFields',
+  saveOrUpdateHeader: url+'/saveOrUpdateHeader',
+  allEnums: url+'/allEnums',
+  enums: url+'/enums',
+  options:url+"/options",
+  trees:url+"/trees",
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -16,7 +16,7 @@ const api = {
 }
 export function header (module) {
   return request({
-    url: url+'/base/'+module+'/header',
+    url: url+'/'+module+'/header',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -26,7 +26,7 @@ export function header (module) {
 
 export function page (parameter,data,module) {
   return request({
-    url: url+'/base/'+module+'/page',
+    url: url+'/'+module+'/page',
     method: 'post',
     params: parameter,
     data: JSON.stringify(data),
