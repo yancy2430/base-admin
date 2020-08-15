@@ -204,12 +204,13 @@
           this.inputs = res.data.inputs
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
+
             columns.push({
               tableName: item.tableName,
               sort: i,
               title: item.title,
               align: 'center',
-              width: i > res.data.columns.length - 2 ? '' : item.width,
+              // width: i == res.data.columns.length - 1 ? '' : item.width,
               show: item.show,
               dataIndex: item.fieldName,
               customRender: (text, record, index) => {
@@ -225,6 +226,10 @@
                   case 5:
                     return text
                   case 6:
+                    return text
+                  case 7:
+                    return text
+                  case 8:
                     return text
                   case 11:
                     if (this.mapping){

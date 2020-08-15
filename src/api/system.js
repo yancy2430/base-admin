@@ -44,4 +44,36 @@ export function delMenu (id) {
   })
 }
 
+export function roleList () {
+
+  return request({
+    url: url+'/admin/roleList',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+export function addRole (data) {
+  return request({
+    url: url+'/admin/addRole',
+    method: 'post',
+    data:JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+export function addGroup (data) {
+
+  return request({
+    url: url+'/admin/addGroup',
+    method: 'post',
+    data:JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
 

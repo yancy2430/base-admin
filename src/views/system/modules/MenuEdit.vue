@@ -81,6 +81,14 @@
   import { menu, saveMenu , delMenu} from '@/api/system'
   import MenuTreeBtnList from './MenuTreeBtnList'
   const requireComponents = require.context('@/views', true, /\.vue/);
+  // 打印结果
+  // 遍历出每个组件的路径
+  requireComponents.keys().forEach(fileName => {
+    // 组件实例
+    const reqCom = requireComponents(fileName)
+    // 截取路径作为组件名
+    console.log(reqCom)
+  })
   export default {
     name: 'MenuEdit',
     components: { MenuTreeBtnList },

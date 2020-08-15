@@ -5,7 +5,7 @@
         <a-button type="primary" icon="plus" @click="addItem(0)">新建菜单</a-button>
 
       </div>
-      <a-table :columns="columns" :data-source="data" row-key="id">
+      <a-table :columns="columns" :data-source="data" size="middle" row-key="id">
         <span slot="action" slot-scope="record">
         <a @click="addItem(record.id)">新增</a>
               <a-divider type="vertical"/>
