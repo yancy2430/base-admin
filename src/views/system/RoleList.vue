@@ -23,7 +23,7 @@
                 </a-popconfirm>
           </div>
           <div v-else>
-                <a @click="assignPermissions()">分配权限</a>
+                <a @click="assignPermissions(record.id)">分配权限</a>
                 <a-divider type="vertical"/>
                 <a @click="showEditRole(record)">编辑</a>
                 <a-divider type="vertical"/>
@@ -60,10 +60,10 @@
         placement="right"
         :closable="false"
         :visible="allotVisible"
-        :width="720"
+        :width="820"
         @close="allotVisible =false"
       >
-        <role-edit></role-edit>
+        <role-edit :roleId="roleId"></role-edit>
       </a-drawer>
     </a-card>
   </page-header-wrapper>
@@ -82,6 +82,7 @@
     ,
     data () {
       return {
+        roleId:0,
         groupData: {},
         roleData: {},
         AddRoleConfirmLoading:false,
@@ -122,7 +123,8 @@
       })
     },
     methods: {
-      assignPermissions(){
+      assignPermissions(id){
+        this.roleId = id
         this.allotVisible = true
       },
       showAddRole(groupId){

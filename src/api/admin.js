@@ -9,3 +9,16 @@ export function methods () {
     }
   })
 }
+
+export function permissByRole (roleId) {
+  return request({
+    url: url+'/admin/permissionsByRole',
+    method: 'post',
+    params:{
+      roleId:roleId
+    },
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
