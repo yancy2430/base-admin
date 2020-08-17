@@ -5,7 +5,7 @@
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="showAddGroup">新建权限组</a-button>
       </div>
-      <a-table :defaultExpandAllRows="true" :columns="columns" :data-source="data" :row-key="item=>{ return (item.id+''+(item.code || '')) }">
+      <a-table :key="table" :defaultExpandAllRows="true" :columns="columns" :data-source="data" :row-key="item=>{ return (item.id+''+(item.code || '')) }">
 
         <span slot="action" slot-scope="record">
           <div v-if="record.children">
@@ -83,6 +83,7 @@
     data () {
       return {
         roleId:0,
+        table:0,
         groupData: {},
         roleData: {},
         AddRoleConfirmLoading:false,
@@ -120,6 +121,7 @@
     created () {
       roleList().then(res => {
         this.data = res.data
+        this.table= new Date().getTime()
       })
     },
     methods: {

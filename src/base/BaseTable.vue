@@ -215,22 +215,10 @@
               dataIndex: item.fieldName,
               customRender: (text, record, index) => {
                 switch (item.inputType) {
-                  case 1:
-                    return text
-                  case 2:
-                    return text
                   case 3:
                     return <img style = 'width: 50px;height: 40px' src = { text } />
                   case 4:
                     return <img style = 'width: 40px;height: 40px' src = { text } />
-                  case 5:
-                    return text
-                  case 6:
-                    return text
-                  case 7:
-                    return text
-                  case 8:
-                    return text
                   case 11:
                     if (this.mapping){
                       for (const index in item.mapping) {
@@ -247,6 +235,8 @@
                     if (this.mapping[item.fieldName]){
                       return this.mapping[item.fieldName][text]
                     }
+                  default:
+                    return text
                 }
               }
             })
