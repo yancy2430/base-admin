@@ -5,4 +5,4 @@ import RouteView from './RouteView'
 import PageView from './PageView'
 import EmptyView from './EmptyView'
 
-export { UserLayout, BasicLayout, BlankLayout, RouteView, PageView , EmptyView}
+export { UserLayout, BasicLayout, BlankLayout, RouteView, PageView, EmptyView }

@@ -2,7 +2,7 @@ import request from '@/utils/request'
 const url = 'http://localhost:89'
 export function resources () {
   return request({
-    url: url+'/system/resources',
+    url: url + '/system/resources',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -11,7 +11,7 @@ export function resources () {
 }
 export function saveMenu (parameter) {
   return request({
-    url: url+'/system/saveMenu',
+    url: url + '/system/saveMenu',
     method: 'post',
     data: JSON.stringify(parameter),
     headers: {
@@ -21,9 +21,9 @@ export function saveMenu (parameter) {
 }
 export function menu (id) {
   return request({
-    url: url+'/system/menu',
+    url: url + '/system/menu',
     method: 'post',
-    params: {id:id},
+    params: { id: id },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
@@ -31,9 +31,9 @@ export function menu (id) {
 }
 export function delMenu (id) {
   return request({
-    url: url+'/system/delMenu',
+    url: url + '/system/delMenu',
     method: 'post',
-    params: {id:id},
+    params: { id: id },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
@@ -41,9 +41,8 @@ export function delMenu (id) {
 }
 
 export function roleList () {
-
   return request({
-    url: url+'/admin/roleList',
+    url: url + '/admin/roleList',
     method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -52,24 +51,21 @@ export function roleList () {
 }
 export function addRole (data) {
   return request({
-    url: url+'/admin/addRole',
+    url: url + '/admin/addRole',
     method: 'post',
-    data:JSON.stringify(data),
+    data: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
   })
 }
 export function addGroup (data) {
-
   return request({
-    url: url+'/admin/addGroup',
+    url: url + '/admin/addGroup',
     method: 'post',
-    data:JSON.stringify(data),
+    data: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
   })
 }
-
-

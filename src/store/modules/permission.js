@@ -65,12 +65,11 @@ const permission = {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
-        generatorDynamicRouter("test").then(res=>{
+        generatorDynamicRouter('test').then(res => {
           const accessedRouters = filterAsyncRouter(res, roles)
           commit('SET_ROUTERS', res)
           resolve()
         })
-
       })
     }
   }

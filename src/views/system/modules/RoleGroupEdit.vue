@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form  :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
+    <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
       <a-form-item label="权限组名">
         <a-input v-model="value.name"/>
       </a-form-item>
@@ -18,7 +18,7 @@
 <script>
   export default {
     name: 'RoleGroupEdit',
-    props: ['value'],
+    props: ['value']
 
   }
 </script>

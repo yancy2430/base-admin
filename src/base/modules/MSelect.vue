@@ -14,56 +14,55 @@
   </a-select>
 </template>
 <script>
-  import debounce from 'lodash/debounce';
+  import debounce from 'lodash/debounce'
 
-  import {  getOptions } from '@/api/baseData'
+  import { getOptions } from '@/api/baseData'
   export default {
     props: {
       hash: Number,
       result: {
-        type:Array,
-        default:function () {
+        type: Array,
+        default: function () {
           return []
         }
-      },
+      }
     },
     model: {
       prop: 'result',
       event: 'change'
     },
-    data() {
-      this.lastFetchId = 0;
-      this.fetchUser = debounce(this.fetchUser, 100);
+    data () {
+      this.lastFetchId = 0
+      this.fetchUser = debounce(this.fetchUser, 100)
       return {
         data: [],
-        fetching: false,
-      };
+        fetching: false
+      }
     },
     methods: {
-      fetchUser(value) {
+      fetchUser (value) {
         if (this.init) {
-          return;
+          return
         }
-        this.lastFetchId += 1;
-        const fetchId = this.lastFetchId;
-        this.data = [];
-        this.fetching = true;
+        this.lastFetchId += 1
+        const fetchId = this.lastFetchId
+        this.data = []
+        this.fetching = true
         getOptions(this.hash, value)
           .then(res => {
-
             if (fetchId !== this.lastFetchId) {
               // for fetch callback order
-              return;
+              return
             }
 
-            this.data = res.data;
-            this.fetching = false;
+            this.data = res.data
+            this.fetching = false
           })
       },
-      handleChange(value) {
+      handleChange (value) {
         console.log(value)
         this.$emit('change', value)
-      },
-    },
-  };
+      }
+    }
+  }
 </script>

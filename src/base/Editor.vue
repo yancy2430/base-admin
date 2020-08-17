@@ -19,20 +19,22 @@
       name: 'Editor',
       components: {
         quillEditor
-      },data () {
+      },
+data () {
         return {
           content: '<h2>I am Example</h2>',
           editorOption: {
           }
         }
-      },methods: {
+      },
+methods: {
       },
       computed: {
-        editor() {
+        editor () {
           return this.$refs.myQuillEditor.quill
         }
       },
-      mounted() {
+      mounted () {
         console.log('this is current quill instance object', this.editor)
       }
     }

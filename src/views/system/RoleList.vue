@@ -10,30 +10,30 @@
         <span slot="action" slot-scope="record">
           <div v-if="record.children">
             <a @click="showAddRole(record.id)">新增角色</a>
-              <a-divider type="vertical"/>
-              <a @click="showEditGroup(record)">编辑</a>
-                  <a-divider type="vertical"/>
-                 <a-popconfirm
-                   title="是否删除这条数据?"
-                   ok-text="是"
-                   @confirm="delMenu(record.id)"
-                   cancel-text="否"
-                 >
-                <a  style="color: #ff4d4f;">删除</a>
-                </a-popconfirm>
+            <a-divider type="vertical"/>
+            <a @click="showEditGroup(record)">编辑</a>
+            <a-divider type="vertical"/>
+            <a-popconfirm
+              title="是否删除这条数据?"
+              ok-text="是"
+              @confirm="delMenu(record.id)"
+              cancel-text="否"
+            >
+              <a style="color: #ff4d4f;">删除</a>
+            </a-popconfirm>
           </div>
           <div v-else>
-                <a @click="assignPermissions(record.id)">分配权限</a>
-                <a-divider type="vertical"/>
-                <a @click="showEditRole(record)">编辑</a>
-                <a-divider type="vertical"/>
-                 <a-popconfirm
-                   title="是否删除这条数据?"
-                   ok-text="是"
-                   @confirm="delMenu(record.id)"
-                   cancel-text="否">
-                <a style="color: #ff4d4f;">删除</a>
-                </a-popconfirm>
+            <a @click="assignPermissions(record.id)">分配权限</a>
+            <a-divider type="vertical"/>
+            <a @click="showEditRole(record)">编辑</a>
+            <a-divider type="vertical"/>
+            <a-popconfirm
+              title="是否删除这条数据?"
+              ok-text="是"
+              @confirm="delMenu(record.id)"
+              cancel-text="否">
+              <a style="color: #ff4d4f;">删除</a>
+            </a-popconfirm>
           </div>
         </span>
       </a-table>
@@ -71,23 +71,22 @@
 
 <script>
   import BaseTable from '../../base/BaseTable'
-  import { roleList, addGroup ,addRole} from '@/api/system'
+  import { roleList, addGroup, addRole } from '@/api/system'
   import RoleGroupEdit from './modules/RoleGroupEdit'
   import RoleEdit from './modules/RoleEdit'
   import RoleAdd from './modules/RoleAdd'
 
   export default {
     name: 'RoleList',
-    components: { RoleAdd, RoleEdit, RoleGroupEdit, BaseTable }
-    ,
+    components: { RoleAdd, RoleEdit, RoleGroupEdit, BaseTable },
     data () {
       return {
-        roleId:0,
-        table:0,
+        roleId: 0,
+        table: 0,
         groupData: {},
         roleData: {},
-        AddRoleConfirmLoading:false,
-        allotVisible:false,
+        AddRoleConfirmLoading: false,
+        allotVisible: false,
         showAddRoleVisible: false,
         showGroupVisible: false,
         confirmLoading: false,
@@ -96,45 +95,45 @@
           {
             title: '名称',
             dataIndex: 'name',
-            width: '25%',
+            width: '25%'
           },
           {
             title: '角色代码',
             dataIndex: 'code',
-            width: '20%',
+            width: '20%'
           },
           {
             title: '说明',
             dataIndex: 'desc',
-            width: '20%',
+            width: '20%'
           },
           {
             title: '操作',
             key: 'operation',
             fixed: 'right',
             width: 200,
-            scopedSlots: { customRender: 'action' },
-          },
+            scopedSlots: { customRender: 'action' }
+          }
         ]
       }
     },
     created () {
       roleList().then(res => {
         this.data = res.data
-        this.table= new Date().getTime()
+        this.table = new Date().getTime()
       })
     },
     methods: {
-      assignPermissions(id){
+      assignPermissions (id) {
         this.roleId = id
         this.allotVisible = true
       },
-      showAddRole(groupId){
-        this.roleData={}
+      showAddRole (groupId) {
+        this.roleData = {}
         this.showAddRoleVisible = true
-        this.roleData["groupId"] = groupId
+        this.roleData['groupId'] = groupId
       },
-      showEditRole(item){
+      showEditRole (item) {
         this.showAddRoleVisible = true
         this.roleData = item
       },
@@ -153,12 +152,12 @@
           }
         })
       },
-      showAddGroup(item){
-        this.groupData={}
+      showAddGroup (item) {
+        this.groupData = {}
         this.showGroupVisible = true
       },
-      showEditGroup(item){
-        this.groupData=item
+      showEditGroup (item) {
+        this.groupData = item
         this.showGroupVisible = true
       },
       addGroup () {
@@ -175,8 +174,7 @@
             this.$message.error(res.msg)
           }
         })
-
-      },
+      }
 
     }
   }

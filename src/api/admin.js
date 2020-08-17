@@ -2,7 +2,7 @@ import request from '@/utils/request'
 const url = 'http://localhost:89'
 export function methods () {
   return request({
-    url: url+'/admin/methods',
+    url: url + '/admin/methods',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -12,10 +12,10 @@ export function methods () {
 
 export function permissByRole (roleId) {
   return request({
-    url: url+'/admin/permissionsByRole',
+    url: url + '/admin/permissionsByRole',
     method: 'post',
-    params:{
-      roleId:roleId
+    params: {
+      roleId: roleId
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -23,17 +23,16 @@ export function permissByRole (roleId) {
   })
 }
 
-export function savePermissionsByRole (roleId,data) {
+export function savePermissionsByRole (roleId, data) {
   return request({
-    url: url+'/admin/savePermissionsByRole',
+    url: url + '/admin/savePermissionsByRole',
     method: 'post',
-    params:{
-      roleId:roleId
+    params: {
+      roleId: roleId
     },
-    data:JSON.stringify(data),
+    data: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
   })
 }
-

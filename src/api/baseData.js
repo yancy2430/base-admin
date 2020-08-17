@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 const url = 'http://localhost:89'
 const api = {
-  tables: url+'/tables',
-  fields: url+'/fields',
-  saveFields: url+'/saveFields',
-  saveOrUpdateHeader: url+'/saveOrUpdateHeader',
-  allEnums: url+'/allEnums',
-  enums: url+'/enums',
-  options:url+"/options",
-  trees:url+"/trees",
+  tables: url + '/tables',
+  fields: url + '/fields',
+  saveFields: url + '/saveFields',
+  saveOrUpdateHeader: url + '/saveOrUpdateHeader',
+  allEnums: url + '/allEnums',
+  enums: url + '/enums',
+  options: url + '/options',
+  trees: url + '/trees',
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -16,7 +16,7 @@ const api = {
 }
 export function header (module) {
   return request({
-    url: url+'/'+module+'/header',
+    url: url + '/' + module + '/header',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -24,9 +24,9 @@ export function header (module) {
   })
 }
 
-export function page (parameter,data,module) {
+export function page (parameter, data, module) {
   return request({
-    url: url+'/'+module+'/page',
+    url: url + '/' + module + '/page',
     method: 'post',
     params: parameter,
     data: JSON.stringify(data),
@@ -49,7 +49,6 @@ export function allEnums () {
     method: 'get'
   })
 }
-
 
 export function fields (parameter) {
   return request({
@@ -80,26 +79,26 @@ export function saveOrUpdateHeader (parameter) {
   })
 }
 
-export function trees (table,pid) {
+export function trees (table, pid) {
   return request({
     url: api.trees,
     method: 'get',
     params: {
-      table:table,
-      pid:pid,
+      table: table,
+      pid: pid
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
   })
 }
-export function getOptions (table,keyword) {
+export function getOptions (table, keyword) {
   return request({
     url: api.options,
     method: 'get',
     params: {
-      table:table,
-      keyword:keyword
+      table: table,
+      keyword: keyword
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -107,13 +106,13 @@ export function getOptions (table,keyword) {
   })
 }
 
-export function getEnums(hash) {
+export function getEnums (hash) {
   console.log(hash)
   return request({
     url: api.enums,
     method: 'get',
     params: {
-      hash:hash
+      hash: hash
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'

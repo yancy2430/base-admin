@@ -7,18 +7,18 @@
       </div>
       <a-table :columns="columns" :data-source="data" size="middle" row-key="id">
         <span slot="action" slot-scope="record">
-        <a @click="addItem(record.id)">新增</a>
-              <a-divider type="vertical"/>
-        <a @click="editItem($event,record)">编辑</a>
-              <a-divider type="vertical"/>
-             <a-popconfirm
-               title="是否删除这条数据?"
-               ok-text="是"
-               @confirm="delMenu(record.id)"
-               cancel-text="否"
-             >
+          <a @click="addItem(record.id)">新增</a>
+          <a-divider type="vertical"/>
+          <a @click="editItem($event,record)">编辑</a>
+          <a-divider type="vertical"/>
+          <a-popconfirm
+            title="是否删除这条数据?"
+            ok-text="是"
+            @confirm="delMenu(record.id)"
+            cancel-text="否"
+          >
             <a>删除</a>
-            </a-popconfirm>
+          </a-popconfirm>
         </span>
       </a-table>
       <a-drawer
@@ -37,48 +37,48 @@
 
 <script>
   import MenuTreeBtnList from './modules/MenuTreeBtnList'
+
+  import { resources, delMenu } from '@/api/system'
+  import MenuEdit from './modules/MenuEdit'
   const columns = [
     {
       title: '名称',
-      dataIndex: 'name',
+      dataIndex: 'name'
     },
 
     {
       title: '路径',
       dataIndex: 'path',
-      width: '20%',
+      width: '20%'
     },
     {
       title: '图标',
       dataIndex: 'icon',
-      width: '12%',
+      width: '12%'
     },
     {
       title: '排序',
       dataIndex: 'sort',
-      width: '20%',
+      width: '20%'
     }, {
       title: '操作',
       key: 'operation',
       fixed: 'right',
       width: 160,
-      scopedSlots: { customRender: 'action' },
-    },
+      scopedSlots: { customRender: 'action' }
+    }
   ]
-
-  import { resources, saveMenu ,delMenu} from '@/api/system'
-  import MenuEdit from './modules/MenuEdit'
 
   export default {
     name: 'Resources',
     components: { MenuEdit, MenuTreeBtnList },
     data () {
       return {
-        menuPid:0,
+        menuPid: 0,
         visible: false,
         data: [],
-        menuId:undefined,
-        columns,
+        menuId: undefined,
+        columns
       }
     },
     created () {
@@ -87,7 +87,7 @@
       })
     },
     methods: {
-      closeEdit(){
+      closeEdit () {
         resources().then(res => {
           this.data = res.data
         })
@@ -95,7 +95,7 @@
           this.visible = false
         }, 500)
       },
-      editItem(e,item){
+      editItem (e, item) {
         this.menuPid = undefined
         this.menuId = item.id
         this.visible = true
@@ -106,9 +106,9 @@
         this.menuId = undefined
         this.visible = true
       },
-      delMenu(id){
-        delMenu(id).then(res=>{
-          if (res.code===0){
+      delMenu (id) {
+        delMenu(id).then(res => {
+          if (res.code === 0) {
             resources().then(res => {
               this.data = res.data
             })

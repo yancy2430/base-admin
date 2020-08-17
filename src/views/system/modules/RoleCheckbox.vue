@@ -1,26 +1,24 @@
 <template>
   <a-checkbox v-model="data" @change="onChange">
-    {{title}}
+    {{ title }}
   </a-checkbox>
 </template>
 
 <script>
   export default {
     name: 'RoleCheckbox',
-    props:["value","title"],
-    data(){
-
+    props: ['value', 'title'],
+    data () {
       return {
-        data:Boolean(""+this.value)
+        data: Boolean('' + this.value)
       }
     },
     methods: {
       onChange (e) {
-        this.$emit("value",e.target.checked)
-        this.$emit("change",e.target.checked)
-
-      },
-    },
+        this.$emit('value', e.target.checked)
+        this.$emit('change', e.target.checked)
+      }
+    }
   }
 </script>
 

@@ -127,7 +127,6 @@ export default {
       }
     },
     activeKey: function (newPathKey) {
-
       console.log(this.pages)
       this.$router.push({ path: newPathKey })
     }

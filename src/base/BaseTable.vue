@@ -1,8 +1,8 @@
 <template>
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
-        <search-form v-model="finds" @search="onSearch">
-        </search-form>
+      <search-form v-model="finds" @search="onSearch">
+      </search-form>
     </div>
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="visible =true">新建</a-button>
@@ -36,7 +36,7 @@
           >
             <a-menu-item class="ant-dropdown-menu-item" v-for="(element,i) in columns" :key="element.sort">
               <a-checkbox v-model="columns[i].show" @change="updateHeader">
-                {{element.title}}
+                {{ element.title }}
               </a-checkbox>
             </a-menu-item>
           </draggable>
@@ -55,10 +55,17 @@
       showPagination="auto"
       :scroll="{ x: 1500}"
     >
-      <a-table-column v-for="(item,index) in columns" :customRender="item.customRender" :width="item.width<50?50:item.width"
-                      v-if="item.show" :key="item.id"
-                      :title="item.title" :data-index="item.dataIndex" :align="item.align" :fixed="item.fixed"
-                      :ellipsis="item.ellipsis"
+      <a-table-column
+        v-for="(item,index) in columns"
+        :customRender="item.customRender"
+        :width="item.width<50?50:item.width"
+        v-if="item.show"
+        :key="item.id"
+        :title="item.title"
+        :data-index="item.dataIndex"
+        :align="item.align"
+        :fixed="item.fixed"
+        :ellipsis="item.ellipsis"
       >
         <template slot-scope="text, record">
           <span>
@@ -67,11 +74,11 @@
             <a @click="visible=true">编辑</a>
             <a-divider type="vertical"/>
             <a-popconfirm
-                title="是否删除这条数据?"
-                ok-text="是"
-                cancel-text="否"
-              >
-            <a>删除</a>
+              title="是否删除这条数据?"
+              ok-text="是"
+              cancel-text="否"
+            >
+              <a>删除</a>
             </a-popconfirm>
           </span>
         </template>
@@ -101,7 +108,7 @@
 
 <script>
   import { STable, Ellipsis } from '@/components'
-  import { header, page, saveOrUpdateHeader, trees,getOptions} from '@/api/baseData'
+  import { header, page, saveOrUpdateHeader, trees, getOptions } from '@/api/baseData'
   import CreateForm from './modules/CreateForm'
   import ViewDetail from './modules/ViewDetail'
   import SearchForm from './modules/SearchForm'
@@ -113,17 +120,17 @@
       ViewDetail,
       STable,
       Ellipsis,
-      CreateForm,
+      CreateForm
     },
-    props:{
-      module:String,
+    props: {
+      module: String
     },
     data () {
       return {
-        item:{},
-        check:false,
-        visible:false,
-        searchVersion:new Date().getTime(),
+        item: {},
+        check: false,
+        visible: false,
+        searchVersion: new Date().getTime(),
         fetching: false,
         drag: false,
         opVisible: false,
@@ -171,36 +178,34 @@
         finds: [],
         cpFinds: [],
         inputs: [],
-        searchData:[],
+        searchData: [],
         // 高级搜索 展开/关闭
         advanced: false,
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return page(parameter,this.searchData,this.module)
+          return page(parameter, this.searchData, this.module)
             .then(res => {
-              if (res.code==0) {
+              if (res.code == 0) {
                 this.mapping = res.data.mapping
                 return res.data
-              }else {
-
-                return null;
+              } else {
+                return null
               }
             })
         },
-        mapping:{},
+        mapping: {},
         selectedRowKeys: [],
-        selectedRows: [],
+        selectedRows: []
       }
     },
     created () {
       header(this.module)
         .then(res => {
-
           const columns = []
           for (let i = 0; i < res.data.finds.length; i++) {
             this.finds.push(res.data.finds[i])
           }
-          this.cpFinds = JSON.parse(JSON.stringify(this.finds));
+          this.cpFinds = JSON.parse(JSON.stringify(this.finds))
           this.inputs = res.data.inputs
           for (const i in res.data.columns) {
             const item = res.data.columns[i]
@@ -220,19 +225,20 @@
                   case 4:
                     return <img style = 'width: 40px;height: 40px' src = { text } />
                   case 11:
-                    if (this.mapping){
+                    if (this.mapping) {
                       for (const index in item.mapping) {
                       if (text == item.mapping[index].value) {
                         return item.mapping[index].name
                       }
-                    }}
-                    return ""
+                    }
+}
+                    return ''
                   case 9:
-                    if (this.mapping[item.fieldName]){
+                    if (this.mapping[item.fieldName]) {
                       return this.mapping[item.fieldName][text]
                     }
                   case 10:
-                    if (this.mapping[item.fieldName]){
+                    if (this.mapping[item.fieldName]) {
                       return this.mapping[item.fieldName][text]
                     }
                   default:
@@ -252,7 +258,6 @@
             scopedSlots: { customRender: 'action' }
           })
           this.columns = columns
-
         })
     },
     computed: {
@@ -273,13 +278,13 @@
     },
 
     methods: {
-      onSearch(val){//搜索
+      onSearch (val) { // 搜索
         this.searchData = val
         this.$refs.table.refresh(true)
       },
       updateHeader () {
         const headers = []
-        for (let index in this.columns) {
+        for (const index in this.columns) {
           if (this.columns[index].dataIndex) {
             headers.push({
               'id': this.columns[index].tableName + '-' + this.columns[index].dataIndex,
@@ -298,10 +303,10 @@
         this.selectedRowKeys = selectedRowKeys
         this.selectedRows = selectedRows
       },
-      onShowDetail(e,item){
+      onShowDetail (e, item) {
         console.log(this.columns)
         this.item = item
-        this.check=true
+        this.check = true
       }
     }
   }

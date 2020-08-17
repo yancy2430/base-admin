@@ -7,17 +7,21 @@
       :form="form"
       @submit="handleSubmit"
     >
-      <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;"
-               :message="message"/>
+      <a-alert
+        v-if="isLoginError"
+        type="error"
+        showIcon
+        style="margin-bottom: 24px;"
+        :message="message"/>
       <a-form-item>
         <a-input
           size="large"
           type="text"
           placeholder="账户: admin"
           v-decorator="[
-                'username',
-                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
-              ]"
+            'username',
+            {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+          ]"
         >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input>
@@ -28,9 +32,9 @@
           size="large"
           placeholder="密码: admin or ant.design"
           v-decorator="[
-                'password',
-                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
-              ]"
+            'password',
+            {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+          ]"
         >
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input-password>
@@ -73,13 +77,13 @@
     components: {},
     data () {
       return {
-        message:"",
+        message: '',
         customActiveKey: 'tab1',
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
         loginType: 0,
         isLoginError: false,
-        form: this.$form.createForm(this),
+        form: this.$form.createForm(this)
       }
     },
     created () {
@@ -107,26 +111,25 @@
         setTimeout(() => {
           login(values)
             .then((res) => {
-              if (res.code===0){
+              if (res.code === 0) {
                 this.loginSuccess(res)
-              } else{
+              } else {
                 this.isLoginError = true
                 this.message = res.msg
               }
             })
-            .catch(err =>{
+            .catch(err => {
               this.isLoginError = true
-              this.message = res.msg
+              this.message = err
             })
             .finally(() => {
               this.loginBtn = false
             })
         }, 600)
-
       },
       loginSuccess (res) {
         console.log(res)
-        storage.set(ACCESS_TOKEN,res.data)
+        storage.set(ACCESS_TOKEN, res.data)
         this.$router.push({ path: '/' })
         // 延迟 1 秒显示欢迎信息
         setTimeout(() => {
@@ -136,7 +139,7 @@
           })
         }, 1000)
         this.isLoginError = false
-      },
+      }
     }
   }
 </script>

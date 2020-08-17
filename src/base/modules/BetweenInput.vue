@@ -11,31 +11,32 @@
     name: 'BetweenInput',
     props: {
       value: {
-        type:Array,
-        default:function() {
-          return ["",""]
+        type: Array,
+        default: function () {
+          return ['', '']
         }
-      },
+      }
     },
     data () {
       return {
         mValue: this.value
       }
-    },watch: {
-      value(val) {
-        this.mValue = val;//新增result的watch，监听变更并同步到myResult上
-      },
-      mValue(val){
-        console.log(val)
-        if (null==val[0]){
-          val[0]=""
-        }
-        if (null==val[1]){
-          val[1]=""
-        }
-        this.$emit("input",val);
-      }
     },
+watch: {
+      value (val) {
+        this.mValue = val// 新增result的watch，监听变更并同步到myResult上
+      },
+      mValue (val) {
+        console.log(val)
+        if (val[0] == null) {
+          val[0] = ''
+        }
+        if (val[1] == null) {
+          val[1] = ''
+        }
+        this.$emit('input', val)
+      }
+    }
   }
 </script>
 

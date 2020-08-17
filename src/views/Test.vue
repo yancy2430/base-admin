@@ -10,7 +10,7 @@
   import Editor from '../base/Editor.vue'
 
   export default {
-    name:"Test",
+    name: 'Test',
     components: {
       Editor
     }

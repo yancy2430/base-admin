@@ -8,10 +8,13 @@
           <a-form-item :label="item.title">
             <a-tooltip placement="topRight" mouseEnterDelay="0.4">
               <template slot="title">
-                <span>{{item.prompt}}</span>
+                <span>{{ item.prompt }}</span>
               </template>
-              <a-textarea v-if="item.inputType===12" :label="item.title" placeholder="Controlled autosize"
-                          :auto-size="{ minRows: 3, maxRows: 5 }"/>
+              <a-textarea
+                v-if="item.inputType===12"
+                :label="item.title"
+                placeholder="Controlled autosize"
+                :auto-size="{ minRows: 3, maxRows: 5 }"/>
               <!--文本-->
               <a-input v-else-if="item.inputType===1" placeholder=""/>
               <!--数字-->
@@ -43,16 +46,16 @@
     </a-form>
     <div
       :style="{
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          borderTop: '1px solid #e9e9e9',
-          padding: '10px 16px',
-          background: '#fff',
-          textAlign: 'right',
-          zIndex: 1,
-        }"
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #e9e9e9',
+        padding: '10px 16px',
+        background: '#fff',
+        textAlign: 'right',
+        zIndex: 1,
+      }"
     >
       <a-button :style="{ marginRight: '8px' }" @click="onClose">
         Cancel
@@ -79,7 +82,6 @@
       }
     },
     data () {
-
       return {
         form: this.$form.createForm(this),
         options: [
@@ -96,11 +98,11 @@
                   {
                     value: 'xihu',
                     label: 'West Lake',
-                    name: 'xihu',
-                  },
-                ],
-              },
-            ],
+                    name: 'xihu'
+                  }
+                ]
+              }
+            ]
           },
           {
             value: 'jiangsu',
@@ -115,13 +117,13 @@
                   {
                     value: 'zhonghuamen',
                     label: 'Zhong Hua Men',
-                    name: 'zhonghuamen',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
+                    name: 'zhonghuamen'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     },
     created () {
@@ -143,7 +145,7 @@
           result.push(i)
         }
         return result
-      },
+      }
     }
   }
 </script>

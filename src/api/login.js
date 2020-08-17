@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 const url = 'http://localhost:89'
 const userApi = {
-  Login: url+'/admin/login',
+  Login: url + '/admin/login',
   Logout: '/auth/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
@@ -9,8 +9,8 @@ const userApi = {
   SendSms: '/account/sms',
   SendSmsErr: '/account/sms_err',
   // get my info
-  UserInfo: url+'/admin/info',
-  UserMenu: url+'/admin/menu'
+  UserInfo: url + '/admin/info',
+  UserMenu: url + '/admin/menu'
 }
 
 /**

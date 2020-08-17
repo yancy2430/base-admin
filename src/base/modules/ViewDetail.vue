@@ -8,18 +8,18 @@
   </div>
 </template>
 <script>
-  import descriptionItem from './DescriptionItem';
+  import descriptionItem from './DescriptionItem'
 
   export default {
-    name:"BaseTable",
+    name: 'BaseTable',
     components: {
-      descriptionItem,
+      descriptionItem
     },
-    props:{
-      columns:Array,
-      data:Object
+    props: {
+      columns: Array,
+      data: Object
     },
-    data() {
+    data () {
       return {
         visible: false,
         pStyle: {
@@ -27,20 +27,20 @@
           color: 'rgba(0,0,0,0.85)',
           lineHeight: '24px',
           display: 'block',
-          marginBottom: '16px',
+          marginBottom: '16px'
         },
         pStyle2: {
-          marginBottom: '24px',
-        },
-      };
+          marginBottom: '24px'
+        }
+      }
     },
     methods: {
-      showDrawer() {
-        this.visible = true;
+      showDrawer () {
+        this.visible = true
       },
-      onClose() {
-        this.visible = false;
-      },
-    },
-  };
+      onClose () {
+        this.visible = false
+      }
+    }
+  }
 </script>

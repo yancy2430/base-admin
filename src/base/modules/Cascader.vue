@@ -14,24 +14,24 @@
   import { trees, getOptions } from '@/api/baseData'
 
   export default {
-    name: 'cascader',
+    name: 'Cascader',
     props: {
       hash: Number,
       pid: Number,
-      value: Array,
+      value: Array
     },
     data () {
       return {
         options: [],
-        mValue:this.value
+        mValue: this.value
       }
     },
     watch: {
-      value(val) {
-        this.mValue = val;//新增result的watch，监听变更并同步到myResult上
+      value (val) {
+        this.mValue = val// 新增result的watch，监听变更并同步到myResult上
       },
-      mValue(val){
-        this.$emit("input",val[val.length-1]);
+      mValue (val) {
+        this.$emit('input', val[val.length - 1])
       }
     },
     created () {
@@ -39,13 +39,12 @@
         .then(res => {
           this.options = res.data
         })
-
     },
     methods: {
       onChange (value) {
         console.log(value)
-      },
-    },
+      }
+    }
   }
 </script>
 

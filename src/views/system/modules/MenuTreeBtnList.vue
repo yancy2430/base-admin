@@ -10,7 +10,7 @@
       <template slot="path" slot-scope="text, record">
         <a-select show-search v-model="record.path" style="width: 100%" @change="handleChange(record)">
           <a-select-option :value="method.url" v-for="(method,index) in methods" :key="index">
-            {{method.url}}
+            {{ method.url }}
           </a-select-option>
         </a-select>
       </template>
@@ -36,7 +36,7 @@
   export default {
     name: 'MenuTreeBtnList',
     components: {
-      EditableCell,
+      EditableCell
     },
     props: ['value'],
     model: {
@@ -66,27 +66,27 @@
             title: '显示名称',
             dataIndex: 'name',
             width: '180px',
-            scopedSlots: { customRender: 'name' },
+            scopedSlots: { customRender: 'name' }
           },
           {
             title: '提交路径',
             dataIndex: 'path',
-            scopedSlots: { customRender: 'path' },
+            scopedSlots: { customRender: 'path' }
 
           },
           {
             title: '权限代码',
             dataIndex: 'code',
             scopedSlots: { customRender: 'code' },
-            width: '180px',
+            width: '180px'
           },
           {
             title: '操作',
             dataIndex: 'operation',
             width: '80px',
-            scopedSlots: { customRender: 'operation' },
-          },
-        ],
+            scopedSlots: { customRender: 'operation' }
+          }
+        ]
       }
     },
     methods: {
@@ -100,22 +100,22 @@
           key: this.count,
           name: `Edward King `,
           path: '',
-          code: `London, Park Lane no. `,
+          code: `London, Park Lane no. `
         }
         this.dataSource.push(newData)
         this.$emit('input', this.dataSource)
         this.count = this.count + 1
       },
-      handleChange(record){
+      handleChange (record) {
         console.log(record)
-        record.code =this.toHump(record.path)
+        record.code = this.toHump(record.path)
       },
       toHump (name) {
         return name.replace(/\/(\w)/g, function (all, letter) {
           return letter.toUpperCase()
         })
       }
-    },
+    }
   }
 </script>
 <style>

@@ -36,7 +36,7 @@
           <a-form-item label="选择组件">
             <a-select show-search v-model="form.component">
               <a-select-option :value="item.replace('./','/').replace('.vue','')" v-for="(item,index) in paths" :key="index">
-                {{item.replace("./","/").replace(".vue","")}}
+                {{ item.replace("./","/").replace(".vue","") }}
               </a-select-option>
             </a-select>
           </a-form-item>
@@ -56,16 +56,16 @@
     <menu-tree-btn-list v-model="form.btns"></menu-tree-btn-list>
     <div
       :style="{
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          borderTop: '1px solid #e9e9e9',
-          padding: '10px 16px',
-          background: '#fff',
-          textAlign: 'right',
-          zIndex: 1,
-        }"
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #e9e9e9',
+        padding: '10px 16px',
+        background: '#fff',
+        textAlign: 'right',
+        zIndex: 1,
+      }"
     >
       <a-button :style="{ marginRight: '8px' }" @click="visible = false">
         取消
@@ -78,9 +78,9 @@
 </template>
 
 <script>
-  import { menu, saveMenu , delMenu} from '@/api/system'
+  import { menu, saveMenu } from '@/api/system'
   import MenuTreeBtnList from './MenuTreeBtnList'
-  const requireComponents = require.context('@/views', true, /\.vue/);
+  const requireComponents = require.context('@/views', true, /\.vue/)
   // 打印结果
   // 遍历出每个组件的路径
   requireComponents.keys().forEach(fileName => {
@@ -92,58 +92,58 @@
   export default {
     name: 'MenuEdit',
     components: { MenuTreeBtnList },
-    props:{
-      menuId:Number,
-      menuPid:Number
+    props: {
+      menuId: Number,
+      menuPid: Number
     },
     data () {
       return {
-        paths:["/RouteView"].concat(requireComponents.keys()),
+        paths: ['/RouteView'].concat(requireComponents.keys()),
         addTitle: '顶级菜单',
-        loginBtn:false,
+        loginBtn: false,
         form: {
           btns: []
-        },
+        }
       }
     },
-    created(){
-      if (this.menuPid!==undefined){
-        this.form={
-          pid:this.menuPid,
+    created () {
+      if (this.menuPid !== undefined) {
+        this.form = {
+          pid: this.menuPid,
           btns: []
         }
-      }else {
+      } else {
         this.getMenu(this.menuId)
       }
     },
-    watch:{
-      menuPid(menuPid){
-        console.log("menuPid",menuPid)
-        if (menuPid!==undefined){
-          this.form={
-            pid:menuPid,
+    watch: {
+      menuPid (menuPid) {
+        console.log('menuPid', menuPid)
+        if (menuPid !== undefined) {
+          this.form = {
+            pid: menuPid,
             btns: []
           }
         }
       },
-      menuId(id){
-        console.log("id",id)
-        if (this.menuId!==undefined){
+      menuId (id) {
+        console.log('id', id)
+        if (this.menuId !== undefined) {
           this.getMenu(id)
         }
       }
     },
-    methods:{
+    methods: {
       handleSubmit (e) {
         this.loginBtn = true
         saveMenu(this.form).then(res => {
-          if (res.code===0){
+          if (res.code === 0) {
             this.$emit('close', true)
           }
           this.loginBtn = false
         })
       },
-      getMenu(id){
+      getMenu (id) {
         menu(id).then(res => {
           this.form = res.data
         })

@@ -10,11 +10,11 @@ const constantRouterComponents = {
   BlankLayout: BlankLayout,
   RouteView: RouteView,
   PageView: PageView,
-  EmptyView:EmptyView,
+  EmptyView: EmptyView,
 
   '403': () => import(/* webpackChunkName: "error" */ '@/views/exception/403'),
   '404': () => import(/* webpackChunkName: "error" */ '@/views/exception/404'),
-  '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
+  '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500')
 
   // 你需要动态引入的页面组件
   // 'Workplace': () => import('@/views/dashboard/Workplace'),
@@ -34,7 +34,7 @@ const rootRouter = {
   path: '/',
   component: 'BasicLayout',
   redirect: '/dashboard/workplace',
-  meta: { title: '首页', keepAlive: true},
+  meta: { title: '首页', keepAlive: true },
   children: []
 }
 
@@ -83,7 +83,7 @@ export const generator = (routerMap, parent) => {
       // 该路由对应页面的 组件 :方案1
       // component: constantRouterComponents[item.component || item.key],
       // 该路由对应页面的 组件 :方案2 (动态加载)
-      component: (constantRouterComponents[item.component.replace('/','') || item.key]) || (() => import(`@/views${item.component}`)),
+      component: (constantRouterComponents[item.component.replace('/', '') || item.key]) || (() => import(`@/views${item.component}`)),
 
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
       meta: {
@@ -133,7 +133,7 @@ const listToTree = (list, tree, parentId) => {
           'title': item.name,
           'show': true
         },
-        name:item.code,
+        name: item.code,
         // component: item.component || "EmptyView",
         key: item.code,
         children: []

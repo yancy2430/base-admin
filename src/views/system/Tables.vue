@@ -54,7 +54,7 @@
                         <a-input :value="fields[index].fieldName" placeholder="字段名"/>
                       </a-col>
                       <a-col :span="4">
-                        <a-input  placeholder="字段中文名" v-model="fields[index].name"/>
+                        <a-input placeholder="字段中文名" v-model="fields[index].name"/>
                       </a-col>
                       <a-col :span="2">
                         <a-switch style="margin: 5px 20px 5px 0;" v-model="fields[index].showType"/>
@@ -74,7 +74,7 @@
                         />
                       </a-col>
                       <a-col :span="6">
-                        <a-input  placeholder="字段中文名" v-model="fields[index].remark"/>
+                        <a-input placeholder="字段中文名" v-model="fields[index].remark"/>
                       </a-col>
                     </a-row>
                   </div>
@@ -103,7 +103,7 @@
     mixins: [baseMixin],
     data () {
       return {
-        gutter:48,
+        gutter: 48,
         list: [
           { name: 'John', text: '', id: 0 },
           { name: 'Joao', text: '', id: 1 },
@@ -167,10 +167,10 @@
         this.saveLoading = true
         saveFields(this.fields)
           .then(res => {
-            if (res.code===0){
-              this.$message.success(res.msg);
+            if (res.code === 0) {
+              this.$message.success(res.msg)
             } else {
-              this.$message.error(res.msg);
+              this.$message.error(res.msg)
             }
             this.saveLoading = false
           })

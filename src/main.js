@@ -20,7 +20,10 @@ import './core/lazy_use'
 import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less'
+import VueDraggableResizable from 'vue-draggable-resizable'
 
+import { Cascader } from 'ant-design-vue'
+import draggable from 'vuedraggable'
 
 Vue.config.productionTip = false
 
@@ -28,13 +31,9 @@ Vue.config.productionTip = false
 Vue.use(VueAxios)
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
-import VueDraggableResizable from 'vue-draggable-resizable'
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
-
-import { Cascader } from 'ant-design-vue';
-Vue.use(Cascader);
-import draggable from "vuedraggable";
+Vue.use(Cascader)
 Vue.component('draggable', draggable)
 new Vue({
   router,
