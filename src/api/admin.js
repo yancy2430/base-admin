@@ -22,3 +22,18 @@ export function permissByRole (roleId) {
     }
   })
 }
+
+export function savePermissionsByRole (roleId,data) {
+  return request({
+    url: url+'/admin/savePermissionsByRole',
+    method: 'post',
+    params:{
+      roleId:roleId
+    },
+    data:JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
