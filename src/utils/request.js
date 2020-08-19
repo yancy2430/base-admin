@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import storage from 'store'
 import notification from 'ant-design-vue/es/notification'
+import message from 'ant-design-vue/es/message';
 import { VueAxios } from './axios'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
@@ -54,6 +55,9 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
+  if (response.data.code!==0){
+    message.error(response.data.msg);
+  }
   return response.data
 }, errorHandler)
 

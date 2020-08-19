@@ -98,9 +98,9 @@
       handleAdd () {
         const newData = {
           key: this.count,
-          name: `Edward King `,
+          name: '',
           path: '',
-          code: `London, Park Lane no. `
+          code: ''
         }
         this.dataSource.push(newData)
         this.$emit('input', this.dataSource)

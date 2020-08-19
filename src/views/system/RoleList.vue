@@ -14,9 +14,9 @@
             <a @click="showEditGroup(record)">编辑</a>
             <a-divider type="vertical"/>
             <a-popconfirm
-              title="是否删除这条数据?"
+              title="是否删除这个权限组?"
               ok-text="是"
-              @confirm="delMenu(record.id)"
+              @confirm="delGroup(record.id)"
               cancel-text="否"
             >
               <a style="color: #ff4d4f;">删除</a>
@@ -30,7 +30,7 @@
             <a-popconfirm
               title="是否删除这条数据?"
               ok-text="是"
-              @confirm="delMenu(record.id)"
+              @confirm="delRole(record.id)"
               cancel-text="否">
               <a style="color: #ff4d4f;">删除</a>
             </a-popconfirm>
@@ -71,7 +71,8 @@
 
 <script>
   import BaseTable from '../../base/BaseTable'
-  import { roleList, addGroup, addRole } from '@/api/system'
+  import { roleList, addGroup, addRole} from '@/api/system'
+  import { delRole,delGroup} from '@/api/admin'
   import RoleGroupEdit from './modules/RoleGroupEdit'
   import RoleEdit from './modules/RoleEdit'
   import RoleAdd from './modules/RoleAdd'
@@ -124,6 +125,22 @@
       })
     },
     methods: {
+      delGroup(id){
+        delGroup(id).then(res => {
+          roleList().then(res => {
+            this.data = res.data
+            this.table = new Date().getTime()
+          })
+        })
+      },
+      delRole(id){
+        delRole(id).then(res => {
+          roleList().then(res => {
+            this.data = res.data
+            this.table = new Date().getTime()
+          })
+        })
+      },
       assignPermissions (id) {
         this.roleId = id
         this.allotVisible = true

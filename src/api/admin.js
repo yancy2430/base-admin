@@ -1,5 +1,15 @@
 import request from '@/utils/request'
 const url = 'http://localhost:89'
+export function getAdminInfo () {
+  return request({
+    url: url+"admin/info",
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
 export function methods () {
   return request({
     url: url + '/admin/methods',
@@ -31,6 +41,30 @@ export function savePermissionsByRole (roleId, data) {
       roleId: roleId
     },
     data: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+export function delRole (roleId) {
+  return request({
+    url: url + '/admin/delRole',
+    method: 'post',
+    params: {
+      roleId: roleId
+    },
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+export function delGroup (id) {
+  return request({
+    url: url + '/admin/delGroup',
+    method: 'post',
+    params: { id: id },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }

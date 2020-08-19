@@ -9,7 +9,6 @@
 <script>
 import AvatarDropdown from './AvatarDropdown'
 import SelectLang from '@/components/SelectLang'
-
 export default {
   name: 'RightContent',
   components: {
@@ -49,11 +48,19 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.currentUser = {
-        name: 'Serati Ma'
-      }
-    }, 1500)
+    this.$store.dispatch('GetInfo').then((res) => {
+        this.currentUser = res.data
+    })
+    // getAdminInfo().then(res=>{
+    //   this.currentUser = {
+    //     name: 'Serati Ma'
+    //   }
+    // })
+    // setTimeout(() => {
+    //   this.currentUser = {
+    //     name: 'Serati Ma'
+    //   }
+    // }, 1500)
   }
 }
 </script>

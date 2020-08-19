@@ -16,29 +16,33 @@
                 placeholder="Controlled autosize"
                 :auto-size="{ minRows: 3, maxRows: 5 }"/>
               <!--文本-->
-              <a-input v-else-if="item.inputType===1" placeholder=""/>
+              <a-input v-if="item.inputType===1"/>
               <!--数字-->
-              <a-input v-else-if="item.inputType===2" placeholder=""/>
+              <a-input-number v-if="item.inputType===2"/>
               <!--选择-->
-              <a-input v-else-if="item.inputType===3" placeholder=""/>
+              <a-select v-if="item.inputType===3">
+                <a-select-option value="lucy">
+                  Lucy
+                </a-select-option>
+              </a-select>
               <!--勾选-->
-              <a-input v-else-if="item.inputType===4" placeholder=""/>
+              <a-input v-if="item.inputType===4" placeholder=""/>
               <!--日期时间-->
-              <a-input v-else-if="item.inputType===5" placeholder=""/>
+              <a-input v-if="item.inputType===5" placeholder=""/>
               <!--日期-->
-              <a-input v-else-if="item.inputType===6" placeholder=""/>
+              <a-input v-if="item.inputType===6" placeholder=""/>
               <!--图片-->
-              <a-input v-else-if="item.inputType===7" placeholder=""/>
+              <a-input v-if="item.inputType===7" placeholder=""/>
               <!--文件-->
-              <a-input v-else-if="item.inputType===8" placeholder=""/>
+              <a-input v-if="item.inputType===8" placeholder=""/>
               <!--单级外键-->
-              <a-input v-else-if="item.inputType===9" placeholder=""/>
+              <a-input v-if="item.inputType===9" placeholder=""/>
               <!--多级外键-->
-              <a-input v-else-if="item.inputType===10" placeholder=""/>
+              <a-input v-if="item.inputType===10" placeholder=""/>
               <!--枚举类-->
-              <a-input v-else-if="item.inputType===11" placeholder=""/>
+              <a-input v-if="item.inputType===11" placeholder=""/>
               <!--开关-->
-              <a-input v-else-if="item.inputType===13" placeholder=""/>
+              <a-input v-if="item.inputType===13" placeholder=""/>
             </a-tooltip>
           </a-form-item>
         </a-col>
