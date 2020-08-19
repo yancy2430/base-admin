@@ -2,28 +2,35 @@
   <div>
     <a-select
       v-if="data.length>5"
-      mode="multiple"
+      :mode="multiple?'multiple':'default'"
       v-model="mValue">
       <a-select-option v-for="d in data" :key="d.id" :value="d.id">
         {{ d.name }}
       </a-select-option>
     </a-select>
-    <a-checkbox-group v-else v-model="mValue">
-      <a-checkbox :value="d.id" v-for="d in data" :key="d.id" >
+    <a-checkbox-group v-else-if="multiple" v-model="mValue">
+      <a-checkbox :value="d.id" v-for="d in data" :key="d.id">
         {{ d.name }}
       </a-checkbox>
     </a-checkbox-group>
+    <a-radio-group v-else v-model="mValue">
+      <a-radio :value="d.id" v-for="d in data" :key="d.id">
+        {{ d.name }}
+      </a-radio>
+    </a-radio-group>
   </div>
 </template>
 <script>
   import { getEnums } from '@/api/baseData'
+
   export default {
     name: 'SSelect',
     props: {
       hash: Number,
-      result: Array
+      result: Array,
+      multiple:Boolean
     },
-data () {
+    data () {
       return {
         data: [],
         value: [],

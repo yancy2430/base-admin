@@ -39,6 +39,7 @@
             v-else-if="item.input==4 && item.enumHash"
             style="width: 76%;margin-left: -3px;"
             v-model="item.value"
+            :multiple="true"
             :hash="item.enumHash"
           >
           </s-select>

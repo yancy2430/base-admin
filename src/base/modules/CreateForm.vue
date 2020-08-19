@@ -3,10 +3,10 @@
   <section>
     <a-form :form="form" layout="vertical" hide-required-mark>
       <a-row :gutter="16">
-        <a-col :span="item.inputType===12?24:12" v-for="(item,index) in inputs" :key="index">
+        <a-col :span="item.inputType===12?24:12" v-for="(item,index) in inputs" :key="index"  v-if="item.inputType>0">
 
           <a-form-item :label="item.title">
-            <a-tooltip placement="topRight" mouseEnterDelay="0.4">
+            <a-tooltip placement="topRight" :mouseEnterDelay="0.4">
               <template slot="title">
                 <span>{{ item.prompt }}</span>
               </template>
@@ -20,13 +20,22 @@
               <!--数字-->
               <a-input-number v-if="item.inputType===2"/>
               <!--选择-->
-              <a-select v-if="item.inputType===3">
-                <a-select-option value="lucy">
-                  Lucy
-                </a-select-option>
-              </a-select>
-              <!--勾选-->
-              <a-input v-if="item.inputType===4" placeholder=""/>
+              <s-select
+                v-else-if="item.inputType===11 && item.enumHash"
+                style="width: 76%;margin-left: -3px;"
+                v-model="item.value"
+                :multiple="false"
+                :hash="item.enumHash"
+              >
+              </s-select>
+              <m-select
+                v-else-if="item.inputType===9 && item.optionHash"
+                style="width: 76%;margin-left: -3px;"
+                v-model="item.value"
+                :multiple="true"
+                :hash="item.optionHash"
+              >
+              </m-select>
               <!--日期时间-->
               <a-input v-if="item.inputType===5" placeholder=""/>
               <!--日期-->
@@ -35,12 +44,8 @@
               <a-input v-if="item.inputType===7" placeholder=""/>
               <!--文件-->
               <a-input v-if="item.inputType===8" placeholder=""/>
-              <!--单级外键-->
-              <a-input v-if="item.inputType===9" placeholder=""/>
-              <!--多级外键-->
-              <a-input v-if="item.inputType===10" placeholder=""/>
-              <!--枚举类-->
-              <a-input v-if="item.inputType===11" placeholder=""/>
+
+              <cascader v-else-if="item.inputType===10" v-model="item.value" :hash="item.treeHash" :pid="0"></cascader>
               <!--开关-->
               <a-input v-if="item.inputType===13" placeholder=""/>
             </a-tooltip>
@@ -61,10 +66,10 @@
         zIndex: 1,
       }"
     >
-      <a-button :style="{ marginRight: '8px' }" @click="onClose">
+      <a-button :style="{ marginRight: '8px' }">
         Cancel
       </a-button>
-      <a-button type="primary" @click="onClose">
+      <a-button type="primary">
         Submit
       </a-button>
     </div>
@@ -75,10 +80,13 @@
   import pick from 'lodash.pick'
 
   import moment from 'moment'
+  import SSelect from './SSelect'
+  import MSelect from './MSelect'
   // 表单字段
   const fields = ['description', 'id']
 
   export default {
+    components: { MSelect, SSelect },
     props: {
       inputs: {
         type: Array,

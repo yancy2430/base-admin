@@ -1,6 +1,6 @@
 <template>
   <a-select
-    mode="multiple"
+    :mode="multiple?'multiple':'default'"
     style="width: 100%"
     option-label-prop="title"
     :filter-option="false"
@@ -20,6 +20,7 @@
   export default {
     props: {
       hash: Number,
+      multiple:Boolean,
       result: {
         type: Array,
         default: function () {
@@ -30,6 +31,9 @@
     model: {
       prop: 'result',
       event: 'change'
+    },
+    created(){
+      this.fetchUser("")
     },
     data () {
       this.lastFetchId = 0
@@ -48,6 +52,7 @@
         const fetchId = this.lastFetchId
         this.data = []
         this.fetching = true
+        console.log(value)
         getOptions(this.hash, value)
           .then(res => {
             if (fetchId !== this.lastFetchId) {
