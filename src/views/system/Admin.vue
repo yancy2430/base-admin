@@ -1,21 +1,34 @@
 <template>
   <page-header-wrapper>
-    <base-table module="adminUser"/>
+    <base-table module="adminUser" @newClick="newAdmin" />
+    <a-drawer
+      title="添加管理员"
+      :width="820"
+      :visible="isNewAdmin"
+      :body-style="{ paddingBottom: '80px' }"
+      @close="isNewAdmin=false">
+      <new-admin></new-admin>
+    </a-drawer>
   </page-header-wrapper>
 </template>
 
 <script>
   import BaseTable from '../../base/BaseTable'
-  let myNotification = new Notification('标题', {
-    body: '通知正文内容'
-  })
+  import NewAdmin from './modules/NewAdmin'
 
-  myNotification.onclick = () => {
-    console.log('通知被点击')
-  }
   export default {
     name: 'Admin',
-    components: { BaseTable }
+    components: { NewAdmin, BaseTable },
+    data(){
+      return {
+        isNewAdmin:false
+      }
+    },
+    methods:{
+      newAdmin(){
+        this.isNewAdmin = true
+      }
+    }
 
   }
 </script>

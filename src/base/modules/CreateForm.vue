@@ -19,23 +19,6 @@
               <a-input v-if="item.inputType===1"/>
               <!--数字-->
               <a-input-number v-if="item.inputType===2"/>
-              <!--选择-->
-              <s-select
-                v-else-if="item.inputType===11 && item.enumHash"
-                style="width: 76%;margin-left: -3px;"
-                v-model="item.value"
-                :multiple="false"
-                :hash="item.enumHash"
-              >
-              </s-select>
-              <m-select
-                v-else-if="item.inputType===9 && item.optionHash"
-                style="width: 76%;margin-left: -3px;"
-                v-model="item.value"
-                :multiple="true"
-                :hash="item.optionHash"
-              >
-              </m-select>
               <!--日期时间-->
               <a-input v-if="item.inputType===5" placeholder=""/>
               <!--日期-->
@@ -44,10 +27,13 @@
               <a-input v-if="item.inputType===7" placeholder=""/>
               <!--文件-->
               <a-input v-if="item.inputType===8" placeholder=""/>
-
-              <cascader v-else-if="item.inputType===10" v-model="item.value" :hash="item.treeHash" :pid="0"></cascader>
               <!--开关-->
               <a-input v-if="item.inputType===13" placeholder=""/>
+              <r-select v-if="item.inputType===9" :inputType="item.inputType" :hash="item.hash" v-model="item.value" ></r-select>
+              <r-select v-if="item.inputType===15" :inputType="item.inputType" :hash="item.hash" v-model="item.value" ></r-select>
+              <r-select v-if="item.inputType===11" :inputType="item.inputType" :hash="item.hash" v-model="item.value" ></r-select>
+              <r-select v-if="item.inputType===14" :inputType="item.inputType" :hash="item.hash" v-model="item.value" ></r-select>
+              <r-select v-if="item.inputType===10" :inputType="item.inputType" :hash="item.hash" v-model="item.value" ></r-select>
             </a-tooltip>
           </a-form-item>
         </a-col>
@@ -82,11 +68,12 @@
   import moment from 'moment'
   import SSelect from './SSelect'
   import MSelect from './MSelect'
+  import RSelect from './RSelect'
   // 表单字段
   const fields = ['description', 'id']
 
   export default {
-    components: { MSelect, SSelect },
+    components: { RSelect, MSelect, SSelect },
     props: {
       inputs: {
         type: Array,
@@ -96,46 +83,6 @@
     data () {
       return {
         form: this.$form.createForm(this),
-        options: [
-          {
-            value: 'zhejiang',
-            label: 'Zhejiang',
-            name: 'Zhejiang',
-            children: [
-              {
-                value: 'hangzhou',
-                label: 'Hangzhou',
-                name: 'hangzhou',
-                children: [
-                  {
-                    value: 'xihu',
-                    label: 'West Lake',
-                    name: 'xihu'
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            value: 'jiangsu',
-            label: 'Jiangsu',
-            name: 'Jiangsu',
-            children: [
-              {
-                value: 'nanjing',
-                label: 'Nanjing',
-                name: 'nanjing',
-                children: [
-                  {
-                    value: 'zhonghuamen',
-                    label: 'Zhong Hua Men',
-                    name: 'zhonghuamen'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
       }
     },
     created () {

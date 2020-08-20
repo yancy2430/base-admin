@@ -92,13 +92,22 @@ export function trees (table, pid) {
     }
   })
 }
-export function getOptions (table, keyword) {
+export function getOptions (table, keyword,mValue) {
+  let opIds = []
+  if (mValue instanceof Array){
+    for (let i = 0; i < mValue.length; i++) {
+      opIds.push(mValue[i])
+    }
+  }else {
+    opIds =[mValue]
+  }
   return request({
     url: api.options,
     method: 'get',
     params: {
       table: table,
-      keyword: keyword
+      keyword: keyword,
+      opIds:opIds.join(',')
     },
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -107,7 +116,6 @@ export function getOptions (table, keyword) {
 }
 
 export function getEnums (hash) {
-  console.log(hash)
   return request({
     url: api.enums,
     method: 'get',

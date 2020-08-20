@@ -6,7 +6,9 @@
       change-on-select
       style=" width: 100%;"
       :options="selectData"
+      v-model="mValue"
       :field-names="{ label: 'name', value: 'id', children: 'children' }"
+      @change="handleChange"
     />
     <a-select
       v-else
@@ -15,8 +17,9 @@
       style="width: 100%"
       option-label-prop="title"
       :filter-option="false"
-      v-model="mValue"
+      :value="mValue"
       @search="search"
+      :defaultValue="value"
       @change="handleChange"
     >
       <a-select-option v-for="d in selectData" :key="d.id" :title="d.name" :value="d.id">
@@ -35,9 +38,9 @@
     props: ["value","inputType","hash"],
     data () {
       this.search = debounce(this.search, 100)
-      this.mValue = [...this.value]
+
       return {
-        mValue:[],
+        mValue:this.value,
         searchValue:"",
         selectData:[],
         showSearch:true,
@@ -47,8 +50,7 @@
     created(){
       if (this.inputType == 9){//单选单级外键
         this.mode = "default"
-        getOptions(this.hash, this.searchValue).then((res) => {
-          console.log(res.data)
+        getOptions(this.hash, this.searchValue,this.mValue).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
@@ -56,7 +58,7 @@
       }
       else if (this.inputType == 15){//多选单级外键
         this.mode = "multiple"
-        getOptions(this.hash, this.searchValue).then((res) => {
+        getOptions(this.hash, this.searchValue,this.mValue).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
@@ -94,7 +96,8 @@
         })
       },
       handleChange(value){
-        console.log(value)
+        this.mValue = value
+        this.$emit('input', value)
         this.$emit('change', value)
       }
 

@@ -5,7 +5,7 @@
       </search-form>
     </div>
     <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="visible =true">新建</a-button>
+      <a-button type="primary" icon="plus" @click="onNewClick">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1">
@@ -123,7 +123,7 @@
       CreateForm
     },
     props: {
-      module: String
+      module: String,
     },
     data () {
       return {
@@ -278,6 +278,9 @@
     },
 
     methods: {
+      onNewClick(){
+        this.$emit('newClick')
+      },
       onSearch (val) { // 搜索
         this.searchData = val
         this.$refs.table.refresh(true)
