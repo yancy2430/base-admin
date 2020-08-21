@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const url = 'http://localhost:89'
+const url = 'http://192.168.2.100:89'
 export function getAdminInfo () {
   return request({
     url: url+"admin/info",
