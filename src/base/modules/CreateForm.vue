@@ -36,6 +36,7 @@
               <r-select v-if="item.inputType===10" :inputType="item.inputType" :hash="item.hash" v-model="item.value" ></r-select>
             </a-tooltip>
           </a-form-item>
+
         </a-col>
       </a-row>
     </a-form>
