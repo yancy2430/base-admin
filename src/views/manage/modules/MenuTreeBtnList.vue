@@ -31,7 +31,7 @@
 </template>
 <script>
   import EditableCell from './EditableCell'
-  import { methods } from '@/api/admin'
+  import { methods } from 'fruits-api/manage'
 
   export default {
     name: 'MenuTreeBtnList',

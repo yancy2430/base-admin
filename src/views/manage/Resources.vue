@@ -38,7 +38,7 @@
 <script>
   import MenuTreeBtnList from './modules/MenuTreeBtnList'
 
-  import { resources, delMenu } from '@/api/system'
+  import { resources, delMenu } from 'fruits-api/setting'
   import MenuEdit from './modules/MenuEdit'
   const columns = [
     {

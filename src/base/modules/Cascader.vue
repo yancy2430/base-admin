@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import { trees, getOptions } from '@/api/baseData'
+  import { tree } from 'fruits-api/common'
 
   export default {
     name: 'Cascader',
@@ -35,7 +35,7 @@
       }
     },
     created () {
-      trees(this.hash, this.pid)
+      tree(this.hash)
         .then(res => {
           this.options = res.data
         })

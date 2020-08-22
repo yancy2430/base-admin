@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { getEnums, getOptions, trees } from '@/api/baseData'
+  import { enums, options, tree } from 'fruits-api/common'
   import debounce from 'lodash/debounce'
   export default {
     name: 'RSelect',
@@ -50,7 +50,7 @@
     created(){
       if (this.inputType == 9){//单选单级外键
         this.mode = "default"
-        getOptions(this.hash, this.searchValue,this.mValue).then((res) => {
+        options(this.hash, this.searchValue,this.mValue).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
@@ -58,7 +58,7 @@
       }
       else if (this.inputType == 15){//多选单级外键
         this.mode = "multiple"
-        getOptions(this.hash, this.searchValue,this.mValue).then((res) => {
+        options(this.hash, this.searchValue,this.mValue).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
@@ -66,7 +66,7 @@
       }else if (this.inputType == 11){
         this.mode = "default"
         this.showSearch = false
-        getEnums(this.hash).then((res) => {
+        enums(this.hash).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
@@ -74,13 +74,13 @@
       }else if (this.inputType == 14){
         this.mode = "multiple"
         this.showSearch = false
-        getEnums(this.hash).then((res) => {
+        enums(this.hash).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
         })
       }else if (this.inputType == 10){
-        trees(this.hash).then((res) => {
+        tree(this.hash).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }
@@ -89,7 +89,7 @@
     },
     methods: {
       search(value){
-        getOptions(this.hash, value).then((res) => {
+        options(this.hash, value).then((res) => {
           if (res.code === 0) {
             this.selectData = [...res.data]
           }

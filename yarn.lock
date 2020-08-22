@@ -5486,10 +5486,10 @@ from2@^2.1.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-fruits-api@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/fruits-api/-/fruits-api-1.0.4.tgz#87968d8bb959b82739fb956189e5118335705362"
-  integrity sha512-kkUHWBz8AmmFjqYT5S06Gs9mM1SViucFGvsA/aVgsvnpeEWBN1RA4TdNgtyT2XHSWTD8RP26/9UkyGOFcdIa1g==
+fruits-api@^2020.8.2-2.2320:
+  version "2020.8.2-2.2320"
+  resolved "https://registry.npmjs.org/fruits-api/-/fruits-api-2020.8.2-2.2320.tgz#5f5989486fc55e55e8cec5414953f18c8d713c48"
+  integrity sha512-YaEdu3nLyQsVofPeCflRNUoYIRWjQHQirMD1ypQVvsZweIRjfE7Ys4v15ntKETIreKiwC/PUgEkhTsO+mb1k5g==
 
 fs-constants@^1.0.0:
   version "1.0.0"

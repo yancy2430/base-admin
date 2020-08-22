@@ -71,8 +71,7 @@
 
 <script>
   import BaseTable from '../../base/BaseTable'
-  import { roleList, addGroup, addRole} from '@/api/system'
-  import { delRole,delGroup} from '@/api/admin'
+  import {list, addGroup, addRole,delRole,delGroup} from 'fruits-api/manage'
   import RoleGroupEdit from './modules/RoleGroupEdit'
   import RoleEdit from './modules/RoleEdit'
   import RoleAdd from './modules/RoleAdd'
@@ -119,7 +118,8 @@
       }
     },
     created () {
-      roleList().then(res => {
+      console.log("a")
+      list().then(res => {
         this.data = res.data
         this.table = new Date().getTime()
       })
@@ -127,7 +127,7 @@
     methods: {
       delGroup(id){
         delGroup(id).then(res => {
-          roleList().then(res => {
+          list().then(res => {
             this.data = res.data
             this.table = new Date().getTime()
           })
@@ -135,7 +135,7 @@
       },
       delRole(id){
         delRole(id).then(res => {
-          roleList().then(res => {
+          list().then(res => {
             this.data = res.data
             this.table = new Date().getTime()
           })
@@ -159,7 +159,7 @@
         addRole(this.roleData).then(res => {
           if (res.code === 0) {
             this.$message.success(res.msg)
-            roleList().then(res => {
+            list().then(res => {
               this.data = res.data
               this.AddRoleConfirmLoading = false
               this.showAddRoleVisible = false
@@ -182,7 +182,7 @@
         addGroup(this.groupData).then(res => {
           if (res.code === 0) {
             this.$message.success(res.msg)
-            roleList().then(res => {
+            list().then(res => {
               this.data = res.data
               this.confirmLoading = false
               this.showGroupVisible = false

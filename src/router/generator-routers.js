@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import * as loginService from '@/api/login'
+import * as manage from 'fruits-api/manage'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView, EmptyView } from '@/layouts'
 
@@ -45,7 +45,7 @@ const rootRouter = {
  */
 export const generatorDynamicRouter = (token) => {
   return new Promise((resolve, reject) => {
-    loginService.getCurrentUserNav(token).then(res => {
+    manage.menu().then(res => {
       const { data } = res
       const menuNav = []
       const childrenNav = []

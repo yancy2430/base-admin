@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-  import { getEnums } from '@/api/baseData'
+  import { enums } from 'fruits-api/common'
 
   export default {
     name: 'SSelect',
@@ -54,7 +54,7 @@
       }
     },
     created () {
-      getEnums(this.hash)
+      enums(this.hash)
         .then(res => {
           this.data = res.data
         })

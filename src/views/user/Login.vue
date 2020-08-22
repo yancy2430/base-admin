@@ -70,7 +70,7 @@
 
   import md5 from 'md5'
   import { timeFix } from '@/utils/util'
-  import { login } from '@/api/login'
+  import { login } from 'fruits-api/manage'
   import { ACCESS_TOKEN } from '@/store/mutation-types'
   import storage from 'store'
   export default {
@@ -109,7 +109,7 @@
         values.password = md5(values.password)
 
         setTimeout(() => {
-          login(values)
+          login(values.username,values.password,this.loginType)
             .then((res) => {
               if (res.code === 0) {
                 this.loginSuccess(res)

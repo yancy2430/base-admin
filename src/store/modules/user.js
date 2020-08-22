@@ -1,5 +1,5 @@
 import storage from 'store'
-import { login, getInfo, logout } from '@/api/login'
+import { login,info, logout } from 'fruits-api/manage'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
 
@@ -50,7 +50,7 @@ const user = {
     // 获取用户信息
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
-        getInfo().then(response => {
+        info().then(response => {
           const result = response.data
           if (result.role && result.role.permissions.length > 0) {
             const role = result.role

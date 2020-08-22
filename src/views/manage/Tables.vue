@@ -91,7 +91,7 @@
 <script>
   import { RouteView } from '@/layouts'
   import { baseMixin } from '@/store/app-mixin'
-  import { tables, allEnums, fields, saveFields } from '@/api/baseData'
+  import { tables, allEnums, fields, saveFields } from 'fruits-api/setting'
 
   const plainOptions = ['搜索', '显示列', '编辑']
   const defaultCheckedList = ['Apple', 'Orange']
@@ -181,9 +181,7 @@
       onClick (obj) {
         this.selectedKeys = [obj.key]
         this.spinning = true
-        fields({
-          table: obj.key
-        })
+        fields(obj.key)
           .then(res => {
             this.spinning = false
             this.fields = res.data

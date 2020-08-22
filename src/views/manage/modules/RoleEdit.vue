@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { permissByRole, savePermissionsByRole } from '@/api/admin'
+  import { permissionsByRole, savePermissionsByRole } from 'fruits-api/manage'
   import RoleCheckbox from './RoleCheckbox'
   export default {
     name: 'RoleEdit',
@@ -60,7 +60,7 @@
       roleId: Number
     },
     created () {
-      permissByRole(this.roleId).then(res => {
+      permissionsByRole(this.roleId).then(res => {
         if (res.code === 0) {
           this.data = res.data
         }
@@ -68,7 +68,7 @@
     },
     watch: {
       roleId (v) {
-        permissByRole(v).then(res => {
+        permissionsByRole(v).then(res => {
           if (res.code === 0) {
             this.data = res.data
           }

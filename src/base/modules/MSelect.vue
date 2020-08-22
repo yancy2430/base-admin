@@ -16,7 +16,7 @@
 <script>
   import debounce from 'lodash/debounce'
 
-  import { getOptions } from '@/api/baseData'
+  import { options } from 'fruits-api/common'
   export default {
     props: {
       hash: Number,
@@ -53,7 +53,7 @@
         this.data = []
         this.fetching = true
         console.log(value)
-        getOptions(this.hash, value)
+        options(this.hash, value)
           .then(res => {
             if (fetchId !== this.lastFetchId) {
               // for fetch callback order

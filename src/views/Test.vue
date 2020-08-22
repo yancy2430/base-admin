@@ -13,10 +13,6 @@
 
   import Editor from '../base/Editor.vue'
   import RSelect from '../base/modules/RSelect'
-  import {login ,resetPassByEmail} from 'fruits-api/admin'
-  login("admin","123456","1").then(res=>{
-    console.log(res)
-  })
   export default {
     name: 'Test',
     components: {

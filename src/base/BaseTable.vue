@@ -108,7 +108,7 @@
 
 <script>
   import { STable, Ellipsis } from '@/components'
-  import { header, page, saveOrUpdateHeader, trees, getOptions } from '@/api/baseData'
+  import { header, page, saveOrUpdateHeader} from 'fruits-api/common'
   import CreateForm from './modules/CreateForm'
   import ViewDetail from './modules/ViewDetail'
   import SearchForm from './modules/SearchForm'
@@ -183,7 +183,7 @@
         advanced: false,
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return page(parameter, this.searchData, this.module)
+          return page(this.module,parameter, this.searchData)
             .then(res => {
               if (res.code == 0) {
                 this.mapping = res.data.mapping
