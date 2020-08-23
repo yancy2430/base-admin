@@ -18,6 +18,7 @@
     "@antv/data-set": "^0.10.2",
     "ant-design-vue": "^1.6.2",
     "axios": "^0.19.0",
+    "clipboard": "^2.0.6",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",
     "fruits-api": "^2020.8.2-3.924",

@@ -1,7 +1,7 @@
 <template>
   <div :class="wrpCls">
     <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
-    <span :class="prefixCls" ><a-icon type="reload" /></span>
+    <span :class="prefixCls" @click="reload" ><a-icon type="reload" /></span>
     <select-lang :class="prefixCls" />
   </div>
 </template>
@@ -31,6 +31,12 @@ export default {
     theme: {
       type: String,
       required: true
+    }
+  },
+  methods:{
+    reload(){
+      console.log("reload")
+      window.APP_PAGE_ROOT.reload()
     }
   },
   data () {

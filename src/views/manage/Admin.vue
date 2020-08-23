@@ -7,7 +7,7 @@
       :visible="isNewAdmin"
       :body-style="{ paddingBottom: '80px' }"
       @close="isNewAdmin=false">
-      <new-admin></new-admin>
+      <new-admin @submit="onAddAdmin"></new-admin>
     </a-drawer>
   </page-header-wrapper>
 </template>
@@ -27,6 +27,9 @@
     methods:{
       newAdmin(){
         this.isNewAdmin = true
+      },
+      onAddAdmin(data){
+
       }
     }
 

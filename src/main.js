@@ -35,6 +35,11 @@ Vue.component('vue-draggable-resizable', VueDraggableResizable)
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 Vue.use(Cascader)
 Vue.component('draggable', draggable)
+
+import clipboard from 'clipboard';
+//注册到vue原型上
+Vue.prototype.clipboard = clipboard;
+
 new Vue({
   router,
   store,

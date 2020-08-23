@@ -87,7 +87,6 @@
     // 组件实例
     const reqCom = requireComponents(fileName)
     // 截取路径作为组件名
-    console.log(reqCom)
   })
   export default {
     name: 'MenuEdit',

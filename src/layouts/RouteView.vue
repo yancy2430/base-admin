@@ -1,3 +1,11 @@
+<template>
+  <div>
+    <keep-alive v-if="keepAlive">
+      <router-view v-if="isRouterAlive"></router-view>
+    </keep-alive>
+  </div>
+</template>
+
 <script>
 export default {
   name: 'RouteView',
@@ -7,26 +15,20 @@ export default {
       default: true
     }
   },
-  data () {
-    return {}
+  data() {
+    return {
+      isRouterAlive: true
+    }
   },
-  render () {
-    // const { $route: { meta }, $store: {  } } = this
-    const inKeep = (
-      <keep-alive>
-        <router-view />
-      </keep-alive>
-    )
-    const notKeep = (
-      <router-view />
-    )
-    // 这里增加了 multiTab 的判断，当开启了 multiTab 时
-    // 应当全部组件皆缓存，否则会导致切换页面后页面还原成原始状态
-    // 若确实不需要，可改为 return meta.keepAlive ? inKeep : notKeep
-    // if (!meta.keepAlive) {
-    //   return notKeep
-    // }
-    return notKeep
+  created(){
+    window.APP_PAGE_ROOT = this
+  },
+  methods: {
+    reload (e) {
+      this.isRouterAlive = false
+      this.$nextTick(() => (this.isRouterAlive = true))
+    }
   }
+
 }
 </script>

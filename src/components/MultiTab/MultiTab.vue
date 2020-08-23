@@ -42,12 +42,14 @@ export default {
       this[action](targetKey)
     },
     remove (targetKey) {
+
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
       // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
       if (!this.fullPathList.includes(this.activeKey)) {
         this.selectedLastPath()
       }
+      console.log(this.fullPathList)
     },
     selectedLastPath () {
       this.activeKey = this.fullPathList[this.fullPathList.length - 1]
@@ -127,7 +129,7 @@ export default {
       }
     },
     activeKey: function (newPathKey) {
-      console.log(this.pages)
+      console.log(this.fullPathList)
       this.$router.push({ path: newPathKey })
     }
   },
