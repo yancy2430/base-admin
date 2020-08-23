@@ -118,7 +118,6 @@
       }
     },
     created () {
-      console.log("a")
       list().then(res => {
         this.data = res.data
         this.table = new Date().getTime()

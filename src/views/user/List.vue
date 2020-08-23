@@ -7,7 +7,7 @@
 <script>
     import BaseTable from '../../base/BaseTable'
     export default {
-        name: 'List',
+        name: 'UserList',
       components: { BaseTable }
     }
 </script>

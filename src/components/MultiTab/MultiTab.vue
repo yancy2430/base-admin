@@ -36,6 +36,7 @@ export default {
     this.pages.push(this.$route)
     this.fullPathList.push(this.$route.fullPath)
     this.selectedLastPath()
+
   },
   methods: {
     onEdit (targetKey, action) {
@@ -49,7 +50,6 @@ export default {
       if (!this.fullPathList.includes(this.activeKey)) {
         this.selectedLastPath()
       }
-      console.log(this.fullPathList)
     },
     selectedLastPath () {
       this.activeKey = this.fullPathList[this.fullPathList.length - 1]
@@ -127,10 +127,13 @@ export default {
         this.fullPathList.push(newVal.fullPath)
         this.pages.push(newVal)
       }
+      window.APP_PAGE_ROOT.whiteLists(this.pages)
     },
     activeKey: function (newPathKey) {
-      console.log(this.fullPathList)
       this.$router.push({ path: newPathKey })
+      if (window.APP_PAGE_ROOT.whiteList.length===0){
+        window.APP_PAGE_ROOT.whiteLists(this.pages)
+      }
     }
   },
   render () {
