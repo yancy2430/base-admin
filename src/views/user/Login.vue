@@ -104,6 +104,7 @@
         // this.form.resetFields()
       },
       handleSubmit (e) {
+        e.preventDefault();
         this.loginBtn = true
         const values = this.form.getFieldsValue()
         values.password = md5(values.password)

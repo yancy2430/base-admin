@@ -183,7 +183,7 @@
         advanced: false,
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return page(this.module,parameter, this.searchData)
+          return page(this.module,parameter.page, parameter.size, encodeURIComponent(JSON.stringify(this.searchData)))
             .then(res => {
               if (res.code == 0) {
                 this.mapping = res.data.mapping
