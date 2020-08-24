@@ -215,7 +215,7 @@
               sort: i,
               title: item.title,
               align: 'center',
-              // width: i == res.data.columns.length - 1 ? '' : item.width,
+              width: i == res.data.columns.length - 1 ? '' : item.width,
               show: item.show,
               dataIndex: item.fieldName,
               customRender: (text, record, index) => {

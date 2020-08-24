@@ -13,6 +13,7 @@
 
   import Editor from '../base/Editor.vue'
   import RSelect from '../base/modules/RSelect'
+  import {login} from  "phanpy-api/manage"
   export default {
     name: 'Test',
     components: {
@@ -30,6 +31,7 @@
     },
     methods:{
       onChange(v){
+        login("ads","dwa","")
         // console.log(this.a)
         console.log(this.e)
         // console.log(this.c)

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <keep-alive :include="whiteList" :exclude="exclude">
+    <!--<keep-alive :include="whiteList" :exclude="exclude">-->
       <router-view v-if="isRouterAlive"></router-view>
-    </keep-alive>
+    <!--</keep-alive>-->
   </div>
 </template>
 
