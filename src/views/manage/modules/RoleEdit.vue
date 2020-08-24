@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { permissionsByRole, savePermissionsByRole } from 'fruits-api/manage'
+  import { permissionsByRole, savePermissionsByRole } from 'phanpy-api/manage'
   import RoleCheckbox from './RoleCheckbox'
   export default {
     name: 'RoleEdit',

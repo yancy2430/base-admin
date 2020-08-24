@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { enums, options, tree } from 'fruits-api/common'
+  import { enums, options, tree } from 'phanpy-api/common'
   import debounce from 'lodash/debounce'
   export default {
     name: 'RSelect',

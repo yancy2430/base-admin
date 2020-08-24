@@ -78,7 +78,7 @@
 </template>
 
 <script>
-  import { menu, saveMenu } from 'fruits-api/setting'
+  import { menu, saveMenu } from 'phanpy-api/setting'
   import MenuTreeBtnList from './MenuTreeBtnList'
   const requireComponents = require.context('@/views', true, /\.vue/)
   // 打印结果

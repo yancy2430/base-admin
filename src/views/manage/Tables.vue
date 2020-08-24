@@ -91,7 +91,7 @@
 <script>
   import { RouteView } from '@/layouts'
   import { baseMixin } from '@/store/app-mixin'
-  import { tables, allEnums, fields, saveFields } from 'fruits-api/setting'
+  import { tables, allEnums, fields, saveFields } from 'phanpy-api/setting'
 
   const plainOptions = ['搜索', '显示列', '编辑']
   const defaultCheckedList = ['Apple', 'Orange']

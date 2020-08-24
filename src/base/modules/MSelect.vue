@@ -16,7 +16,7 @@
 <script>
   import debounce from 'lodash/debounce'
 
-  import { options } from 'fruits-api/common'
+  import { options } from 'phanpy-api/common'
   export default {
     props: {
       hash: Number,

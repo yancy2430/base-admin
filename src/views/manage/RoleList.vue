@@ -71,7 +71,7 @@
 
 <script>
   import BaseTable from '../../base/BaseTable'
-  import {list, addGroup, addRole,delRole,delGroup} from 'fruits-api/manage'
+  import {list, addGroup, addRole,delRole,delGroup} from 'phanpy-api/manage'
   import RoleGroupEdit from './modules/RoleGroupEdit'
   import RoleEdit from './modules/RoleEdit'
   import RoleAdd from './modules/RoleAdd'

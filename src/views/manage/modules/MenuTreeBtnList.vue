@@ -31,7 +31,7 @@
 </template>
 <script>
   import EditableCell from './EditableCell'
-  import { methods } from 'fruits-api/manage'
+  import { methods } from 'phanpy-api/manage'
 
   export default {
     name: 'MenuTreeBtnList',

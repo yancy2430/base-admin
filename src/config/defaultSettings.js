@@ -24,7 +24,7 @@ export default {
     locale: true
   },
   multiTab: true,
-  title: 'Ant Design Pro',
+  title: '向上商旅出票系统',
   pwa: false,
   iconfontUrl: '',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'

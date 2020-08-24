@@ -1,6 +1,6 @@
 <template>
   <page-header-wrapper>
-    <base-table module="fruitUser"></base-table>
+    <base-table module="order"></base-table>
   </page-header-wrapper>
 </template>
 

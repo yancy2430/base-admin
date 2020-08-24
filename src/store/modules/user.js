@@ -1,5 +1,5 @@
 import storage from 'store'
-import { login,info, logout } from 'fruits-api/manage'
+import { login,info, logout } from 'phanpy-api/manage'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
 

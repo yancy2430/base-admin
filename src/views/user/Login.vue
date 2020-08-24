@@ -70,7 +70,7 @@
 
   import md5 from 'md5'
   import { timeFix } from '@/utils/util'
-  import { login } from 'fruits-api/manage'
+  import { login } from 'phanpy-api/manage'
   import { ACCESS_TOKEN } from '@/store/mutation-types'
   import storage from 'store'
   export default {

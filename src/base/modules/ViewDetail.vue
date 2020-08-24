@@ -11,7 +11,7 @@
   import descriptionItem from './DescriptionItem'
 
   export default {
-    name: 'BaseTable',
+    name: 'ViewDetail',
     components: {
       descriptionItem
     },

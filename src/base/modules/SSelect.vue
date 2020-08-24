@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-  import { enums } from 'fruits-api/common'
+  import { enums } from 'phanpy-api/common'
 
   export default {
     name: 'SSelect',

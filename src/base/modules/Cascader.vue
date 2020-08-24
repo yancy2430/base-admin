@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import { tree } from 'fruits-api/common'
+  import { tree } from 'phanpy-api/common'
 
   export default {
     name: 'Cascader',

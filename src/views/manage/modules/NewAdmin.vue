@@ -135,7 +135,7 @@
 
 <script>
   import RSelect from "../../../base/modules/RSelect";
-  import { addAdmin } from "fruits-api/manage"
+  import { addAdmin } from "phanpy-api/manage"
   export default {
     name: 'NewAdmin',
     components: {RSelect},

@@ -108,7 +108,7 @@
 
 <script>
   import { STable, Ellipsis } from '@/components'
-  import { header, page, saveOrUpdateHeader} from 'fruits-api/common'
+  import { header, page, saveOrUpdateHeader} from 'phanpy-api/common'
   import CreateForm from './modules/CreateForm'
   import ViewDetail from './modules/ViewDetail'
   import SearchForm from './modules/SearchForm'

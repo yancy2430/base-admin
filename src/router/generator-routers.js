@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import * as manage from 'fruits-api/manage'
+import * as manage from 'phanpy-api/manage'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView, EmptyView } from '@/layouts'
 
