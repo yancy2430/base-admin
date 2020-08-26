@@ -1,7 +1,7 @@
 <template>
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
-      <search-form v-model="finds" @search="onSearch">
+      <search-form v-model="finds" v-if="false" @search="onSearch">
       </search-form>
     </div>
     <div class="table-operator">

@@ -23,6 +23,8 @@ import './global.less'
 import VueDraggableResizable from 'vue-draggable-resizable'
 
 import { Cascader } from 'ant-design-vue'
+import { Timeline } from 'ant-design-vue'
+Vue.use(Timeline)
 import draggable from 'vuedraggable'
 
 Vue.config.productionTip = false

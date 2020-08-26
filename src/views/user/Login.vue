@@ -110,6 +110,7 @@
         values.password = md5(values.password)
 
         setTimeout(() => {
+
           login(values.username,values.password,this.loginType)
             .then((res) => {
               if (res.code === 0) {

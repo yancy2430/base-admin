@@ -20,9 +20,7 @@
       <global-footer/>
     </template>
     <multi-tab class="multi-tab"></multi-tab>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <router-view></router-view>
   </pro-layout>
 </template>
 
@@ -153,8 +151,7 @@
       },
       logoRender() {
         return
-      <
-        LogoSvg / >
+      <LogoSvg / >
       }
     }
   }

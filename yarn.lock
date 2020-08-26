@@ -8963,10 +8963,10 @@ performance-now@^2.1.0:
   resolved "https://registry.npm.taobao.org/performance-now/download/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-phanpy-api@^2020.8.2-4.1048:
-  version "2020.8.2-4.1048"
-  resolved "https://registry.npmjs.org/phanpy-api/-/phanpy-api-2020.8.2-4.1048.tgz#cf7171558dd27f55e1f2e695a83786392925e120"
-  integrity sha512-GLlkVj8jM7E2mQ2rjDy7G0nq7EIUeqUk+gafIk5rAgYfSzuAB9Zu9Gm6bgoIT3LuXcdDypLZbw0WDFWBXty0mA==
+phanpy-api@2020.8.2-4.1051:
+  version "2020.8.2-4.1051"
+  resolved "https://registry.npmjs.org/phanpy-api/-/phanpy-api-2020.8.2-4.1051.tgz#44d198d053bf3eaf26184bdf71adc432204a0f46"
+  integrity sha512-Ybeb+eu4LYh3RpX6JyC66YbBxOyMnlhjGD79Jz0ZykqpEPuTdgBK8UaQRRKVgP8Cs2BLH46f8+zdBKrygF9Q3A==
 
 pify@^2.0.0:
   version "2.3.0"

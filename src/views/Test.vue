@@ -2,6 +2,7 @@
   <section>
     <!-- Two-way Data-Binding -->
 <!--    <Editor/>-->
+
     <r-select :inputType="9" :hash="-912237235" v-model="a" @change="onChange"></r-select>
     <r-select :inputType="15" :hash="2025773125" v-model="b" @change="onChange"></r-select>
     <r-select :inputType="11" :hash="-1863031764" v-model="c" @change="onChange"></r-select>
