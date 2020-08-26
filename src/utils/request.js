@@ -69,8 +69,8 @@ const installer = {
 }
 
 export default request
-export const url = "http://localhost:80"
+export const servceUrl = "http://localhost:80"
 export {
   installer as VueAxios,
-  request as axios
+  request as axios,
 }
