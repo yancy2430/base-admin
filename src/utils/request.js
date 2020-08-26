@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import storage from 'store'
 import notification from 'ant-design-vue/es/notification'
-import message from 'ant-design-vue/es/message';
+import message from 'ant-design-vue/es/message'
 import { VueAxios } from './axios'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
@@ -55,22 +55,27 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
-  if (response.data.code!==0){
-    message.error(response.data.msg);
+  if (response.data.code !== 0) {
+    message.error(response.data.msg)
   }
   return response.data
 }, errorHandler)
 
 const installer = {
   vm: {},
-  install (Vue) {
+  install(Vue) {
     Vue.use(VueAxios, request)
   }
 }
 
 export default request
-export const servceUrl = "http://localhost:80"
+if (process.env.NODE_ENV === 'development') {
+  export const servceUrl = 'http://localhost:80'
+} else {
+  export const servceUrl = 'http://xiangshang.com'
+}
+
 export {
   installer as VueAxios,
-  request as axios,
+  request as axios
 }
