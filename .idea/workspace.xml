@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="044e7039-b5c4-4e35-a7e3-27dc86a002c0" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="base-admin" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/admin/vue.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>getRoleList</find>
+      <find>@api/</find>
+      <find>login</find>
+      <find>header</find>
+      <find>savePermissionsByRole</find>
+      <find>permissionsByRole</find>
+      <find>@/api/</find>
+      <find>permissByRole</find>
+      <find>saveOrUpdateHeader</find>
+      <find>tree</find>
+      <find>saveFields</find>
+      <find>/admin/info</find>
+      <find>getInfo</find>
+      <find>UserInfo</find>
+      <find>@/api</find>
+      <find>loginService</find>
+      <find>trees</find>
+      <find>@/API</find>
+      <find>getCurrentUserNav</find>
+      <find>fields(</find>
+      <find>options</find>
+      <find>list</find>
+      <find>data</find>
+      <find>tables</find>
+      <find>getSmsCaptcha</find>
+      <find>roleList</find>
+      <find>page</find>
+      <find>reload</find>
+      <find>console.log(&quot;a&quot;)</find>
+      <find>keepAlive</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+      <replace>value</replace>
+      <replace>v-if</replace>
+      <replace>localhost</replace>
+      <replace>list</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/views/list</dir>
+      <dir>$PROJECT_DIR$/src/views/manage</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/views/settings/Tables.vue" />
+        <option value="$PROJECT_DIR$/src/views/settings/modules/EditableCell.vue" />
+        <option value="$PROJECT_DIR$/src/views/settings/modules/MenuTreeBtnList.vue" />
+        <option value="$PROJECT_DIR$/src/views/settings/MenuTree.vue" />
+        <option value="$PROJECT_DIR$/src/views/settings/modules/MenuEdit.vue" />
+        <option value="$PROJECT_DIR$/src/config/router.config.js" />
+        <option value="$PROJECT_DIR$/src/store/modules/async-router.js" />
+        <option value="$PROJECT_DIR$/src/router/index.js" />
+        <option value="$PROJECT_DIR$/src/store/modules/permission.js" />
+        <option value="$PROJECT_DIR$/src/mock/services/user.js" />
+        <option value="$PROJECT_DIR$/src/api/login.js" />
+        <option value="$PROJECT_DIR$/src/layouts/EmptyView.vue" />
+        <option value="$PROJECT_DIR$/src/layouts/index.js" />
+        <option value="$PROJECT_DIR$/src/views/system/modules/MenuEdit.vue" />
+        <option value="$PROJECT_DIR$/src/views/system/modules/RoleEdit.vue" />
+        <option value="$PROJECT_DIR$/src/background.js" />
+        <option value="$PROJECT_DIR$/src/views/system/Admin.vue" />
+        <option value="$PROJECT_DIR$/src/utils/request.js" />
+        <option value="$PROJECT_DIR$/src/views/system/RoleList.vue" />
+        <option value="$PROJECT_DIR$/src/views/system/modules/MenuTreeBtnList.vue" />
+        <option value="$PROJECT_DIR$/src/components/GlobalHeader/RightContent.vue" />
+        <option value="$PROJECT_DIR$/src/layouts/BasicLayout.less" />
+        <option value="$PROJECT_DIR$/src/base/modules/CreateForm.vue" />
+        <option value="$PROJECT_DIR$/src/api/baseData.js" />
+        <option value="$PROJECT_DIR$/node_modules/electron/path.txt" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/api/admin.js" />
+        <option value="$PROJECT_DIR$/src/views/Test.vue" />
+        <option value="$PROJECT_DIR$/src/api/system.js" />
+        <option value="$PROJECT_DIR$/src/views/system/Resources.vue" />
+        <option value="$PROJECT_DIR$/src/views/manage/Resources.vue" />
+        <option value="$PROJECT_DIR$/src/views/manage/modules/MenuEdit.vue" />
+        <option value="$PROJECT_DIR$/src/views/dashboard/Workplace.vue" />
+        <option value="$PROJECT_DIR$/src/views/user/Login.vue" />
+        <option value="$PROJECT_DIR$/src/base/modules/RSelect.vue" />
+        <option value="$PROJECT_DIR$/src/views/manage/modules/MenuTreeBtnList.vue" />
+        <option value="$PROJECT_DIR$/src/views/manage/modules/RoleEdit.vue" />
+        <option value="$PROJECT_DIR$/src/base/modules/Cascader.vue" />
+        <option value="$PROJECT_DIR$/src/base/modules/MSelect.vue" />
+        <option value="$PROJECT_DIR$/src/base/modules/SSelect.vue" />
+        <option value="$PROJECT_DIR$/src/store/modules/user.js" />
+        <option value="$PROJECT_DIR$/src/router/generator-routers.js" />
+        <option value="$PROJECT_DIR$/src/views/user/Register.vue" />
+        <option value="$PROJECT_DIR$/src/views/manage/Tables.vue" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/base/BaseTable.vue" />
+        <option value="$PROJECT_DIR$/src/views/manage/RoleList.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/List.vue" />
+        <option value="$PROJECT_DIR$/src/views/user/List.vue" />
+        <option value="$PROJECT_DIR$/src/layouts/RouteView.vue" />
+        <option value="$PROJECT_DIR$/src/components/MultiTab/MultiTab.vue" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="984" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="base-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="base-admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="base-admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="base-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/layouts" />
+      <recent name="$PROJECT_DIR$/src/views" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serve" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="serve" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/admin/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serve" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="044e7039-b5c4-4e35-a7e3-27dc86a002c0" name="Default Changelist" comment="" />
+      <created>1595425725698</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1595425725698</updated>
+      <workItem from="1595425726762" duration="9594000" />
+      <workItem from="1595815932367" duration="25717000" />
+      <workItem from="1596679945691" duration="88655000" />
+      <workItem from="1597996406866" duration="9816000" />
+      <workItem from="1598064656822" duration="14820000" />
+      <workItem from="1598617780486" duration="238000" />
+      <workItem from="1599143773481" duration="783000" />
+      <workItem from="1600179264271" duration="12000" />
+      <workItem from="1600257501900" duration="249000" />
+      <workItem from="1600257756925" duration="265000" />
+    </task>
+    <task id="LOCAL-00001" summary="添加配置文件">
+      <created>1595426480502</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1595426480502</updated>
+    </task>
+    <task id="LOCAL-00002" summary="添加配置文件">
+      <created>1595637246485</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1595637246485</updated>
+    </task>
+    <task id="LOCAL-00003" summary="添加配置文件">
+      <created>1596507626688</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1596507626688</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加配置文件">
+      <created>1596586611763</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1596586611763</updated>
+    </task>
+    <task id="LOCAL-00005" summary="添加配置文件">
+      <created>1596901870552</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1596901870552</updated>
+    </task>
+    <task id="LOCAL-00006" summary="添加配置文件">
+      <created>1596982643483</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1596982643483</updated>
+    </task>
+    <task id="LOCAL-00007" summary="添加配置文件">
+      <created>1597067355802</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1597067355802</updated>
+    </task>
+    <task id="LOCAL-00008" summary="添加配置文件">
+      <created>1597068838794</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1597068838794</updated>
+    </task>
+    <task id="LOCAL-00009" summary="添加配置文件">
+      <created>1597279626801</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1597279626802</updated>
+    </task>
+    <task id="LOCAL-00010" summary="添加配置文件">
+      <created>1597336337697</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1597336337698</updated>
+    </task>
+    <task id="LOCAL-00011" summary="添加配置文件">
+      <created>1597452189882</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1597452189883</updated>
+    </task>
+    <task id="LOCAL-00012" summary="添加配置文件">
+      <created>1597506840736</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1597506840736</updated>
+    </task>
+    <task id="LOCAL-00013" summary="添加配置文件">
+      <created>1597623860551</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1597623860551</updated>
+    </task>
+    <task id="LOCAL-00014" summary="添加配置文件">
+      <created>1597692616599</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1597692616599</updated>
+    </task>
+    <task id="LOCAL-00015" summary="添加配置文件">
+      <created>1597797737114</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1597797737114</updated>
+    </task>
+    <task id="LOCAL-00016" summary="添加配置文件">
+      <created>1597885050734</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1597885050734</updated>
+    </task>
+    <task id="LOCAL-00017" summary="去除electron依赖 暂时不需要用到&#10;新增api接口依赖">
+      <created>1598034091902</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1598034091902</updated>
+    </task>
+    <task id="LOCAL-00018" summary="去除electron依赖 暂时不需要用到&#10;新增api接口依赖">
+      <created>1598116982742</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1598116982742</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="150149000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1920" height="984" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49887893" visible="true" weight="0.24907847" />
+      <window_info id="Structure" order="1" sideWeight="0.50167227" side_tool="true" weight="0.24907847" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.5011211" side_tool="true" weight="0.24907847" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3295964" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3295964" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39910313" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295964" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.57399106" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3295964" />
+      <window_info anchor="bottom" id="TypeScript" order="11" weight="0.3295964" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/node_modules/@vue/cli-plugin-unit-jest/generator/template/tests/unit/example.spec.js" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="添加配置文件" />
+    <MESSAGE value="去除electron依赖 暂时不需要用到&#10;新增api接口依赖" />
+    <option name="LAST_COMMIT_MESSAGE" value="去除electron依赖 暂时不需要用到&#10;新增api接口依赖" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/layouts/RouteView.vue</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es2015.core.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="280" column="99" lean-forward="true" selection-start-line="280" selection-start-column="7" selection-end-line="280" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/base/modules/MSelect.vue" />
+    <entry file="file://$PROJECT_DIR$/src/base/modules/SSelect.vue" />
+    <entry file="file://$PROJECT_DIR$/node_modules/electron/install.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/electron/path.txt" />
+    <entry file="file://$PROJECT_DIR$/yarn.lock" />
+    <entry file="file://$PROJECT_DIR$/src/App.vue" />
+    <entry file="file://$PROJECT_DIR$/node_modules/vue-draggable-resizable/dist/VueDraggableResizable.umd.min.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/fruits-api/module/admin.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/fruits-api/admin.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/fruits-api/index.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@ant-design-vue/pro-layout/es/components/ConfigProvider/index.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@ant-design-vue/pro-layout/es/components/DocumentTitle/util.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@ant-design-vue/pro-layout/es/components/DocumentTitle/index.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@ant-design-vue/pro-layout/es/index.js" />
+    <entry file="file://$PROJECT_DIR$/postcss.config.js" />
+    <entry file="file://$PROJECT_DIR$/src/views/Test.vue" />
+    <entry file="file://$PROJECT_DIR$/src/api/system.js" />
+    <entry file="file://$PROJECT_DIR$/src/views/manage/Resources.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/manage/modules/MenuEdit.vue" />
+    <entry file="file://$PROJECT_DIR$/src/api/manage.js" />
+    <entry file="file://$PROJECT_DIR$/src/views/dashboard/Workplace.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/user/Login.vue" />
+    <entry file="file://$PROJECT_DIR$/src/base/modules/RSelect.vue" />
+    <entry file="file://$PROJECT_DIR$/package.json" />
+    <entry file="file://$PROJECT_DIR$/node_modules/fruits-api/setting.js" />
+    <entry file="file://$PROJECT_DIR$/src/views/manage/modules/MenuTreeBtnList.vue" />
+    <entry file="file://$PROJECT_DIR$/src/api/admin.js" />
+    <entry file="file://$PROJECT_DIR$/src/api/baseData.js" />
+    <entry file="file://$PROJECT_DIR$/src/router/generator-routers.js" />
+    <entry file="file://$PROJECT_DIR$/src/api/login.js" />
+    <entry file="file://$PROJECT_DIR$/src/base/modules/Cascader.vue" />
+    <entry file="file://$PROJECT_DIR$/node_modules/fruits-api/manage.js" />
+    <entry file="file://$PROJECT_DIR$/src/store/modules/user.js" />
+    <entry file="file://$PROJECT_DIR$/src/views/manage/RoleList.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/manage/Tables.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/user/Register.vue" />
+    <entry file="file://$PROJECT_DIR$/src/utils/request.js" />
+    <entry file="file://$PROJECT_DIR$/src/mock/services/user.js" />
+    <entry file="file://$PROJECT_DIR$/src/mock/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/main.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/fruits-api/common.js" />
+    <entry file="file://$PROJECT_DIR$/src/base/BaseTable.vue" />
+    <entry file="file://$PROJECT_DIR$/src/layouts/BasicLayout.vue" />
+    <entry file="file://$PROJECT_DIR$/src/layouts/RouteView.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/order/List.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/user/List.vue" />
+    <entry file="file://$PROJECT_DIR$/src/views/manage/Admin.vue" />
+    <entry file="file://$PROJECT_DIR$/src/components/GlobalHeader/RightContent.vue" />
+    <entry file="file://$PROJECT_DIR$/src/components/MultiTab/MultiTab.vue" />
+    <entry file="file://$PROJECT_DIR$/admin/vue.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
