@@ -81,6 +81,11 @@ export default {
     const slot = this.$slots.default
     const vnode: VNode = getFirstComponentChild(slot)
     const componentOptions: ?VNodeComponentOptions = vnode && vnode.componentOptions
+
+    if (!vnode){
+      return vnode
+    }
+
     const key: ?string = vnode.key == null
       // same constructor may get registered as different local components
       // so cid alone is not enough (#3269)

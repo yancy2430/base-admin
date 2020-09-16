@@ -1,6 +1,6 @@
 <template>
   <div>
-    <keep-alive :include="whiteList" :exclude="exclude">
+    <keep-alive key="KeepAlive" :include="whiteList" :exclude="exclude">
       <router-view v-if="isRouterAlive" :key="$route.fullPath"></router-view>
     </keep-alive>
   </div>
@@ -27,11 +27,11 @@ export default {
   },
   methods: {
     reload (e) {
-      this.whiteList = this.whiteList.filter(item => item !== this.$route.fullPath)
+      this.exclude = this.$route.fullPath
       this.isRouterAlive = false
       this.$nextTick(() => {
         this.isRouterAlive = true
-        this.whiteList.push(this.$route.fullPath)
+        this.exclude=""
       })
     },
     //通知排除缓存
