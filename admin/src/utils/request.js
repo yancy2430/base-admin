@@ -71,7 +71,7 @@ const installer = {
 export default request
 let url
 if (process.env.NODE_ENV === 'development') {
-   url = 'http://localhost'
+   url = 'http://192.168.0.101'
 } else {
    url = 'http://api.xiangshangsl.com'
 }

@@ -71,7 +71,8 @@ export const generatorDynamicRouter = (token) => {
  */
 export const generator = (routerMap, parent) => {
   return routerMap.map(item => {
-    const { title, show, hideChildren, hiddenHeaderContent, target, icon } = item.meta || {}
+    const { title, hideChildren, hiddenHeaderContent, target, icon } = item.meta || {}
+    const { hidden } =item || {}
     const currentRouter = {
       // 如果路由设置了 path，则作为默认 path，否则 路由地址 动态拼接生成如 /dashboard/workplace
       path: item.path || `${parent && parent.path || ''}/${item.key}`,
@@ -92,7 +93,7 @@ export const generator = (routerMap, parent) => {
       }
     }
     // 是否设置了隐藏菜单
-    if (show === false) {
+    if (hidden === true) {
       currentRouter.hidden = true
     }
     // 是否设置了隐藏子菜单
