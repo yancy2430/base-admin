@@ -73,11 +73,11 @@
                     :fixed="item.fixed"
                     :ellipsis="true"
             >
-                <template slot-scope="text, record,index">
-<!--                    {{$slots[]}}-->
-                    {{columns[index]}}
-                    <slot name="tableOperationBtn" :data="record"></slot>
-<!--                    <slot name="tableOperationBtn" :data="record"></slot>-->
+                <template :name="item.dataIndex" :data="item" slot-scope="text, record,index">
+                    <span v-if="$scopedSlots[item.dataIndex]">
+                        <slot :name="item.dataIndex" :data="record"></slot>
+                    </span>
+                    <span v-else>{{record[item.dataIndex]}}</span>
                 </template>
             </a-table-column>
         </s-table>
@@ -196,7 +196,8 @@
             }
         },
         created() {
-            header(this.module)
+
+          header(this.module)
                 .then(res => {
                     const columns = []
                     for (let i = 0; i < res.data.finds.length; i++) {
@@ -216,58 +217,24 @@
                             width: i == res.data.columns.length - 1 ? '' : item.width,
                             show: item.show,
                             dataIndex: item.fieldName,
-                            customRender: (text, record, index) => {
-
-                              if (this.$slots[item.fieldName]){
-                                console.log(this.$slots[item.fieldName])
-                                return  this.$slots[item.fieldName]
-                              }
-
-                                switch (item.inputType) {
-                                    case 7:
-                                        return
-                                    <
-                                        img
-                                        style = 'width: 50px;height: 40px'
-                                        src = {text}
-                                        />
-                                    case 11:
-                                        if (this.mapping) {
-                                            for (const index in item.mapping) {
-                                                if (text == item.mapping[index].value) {
-                                                    return item.mapping[index].name
-                                                }
-                                            }
-                                        }
-                                        return ''
-                                    case 9:
-                                        if (this.mapping[item.fieldName]) {
-                                            return this.mapping[item.fieldName][text]
-                                        }
-                                    case 10:
-                                        if (this.mapping[item.fieldName]) {
-                                            return this.mapping[item.fieldName][text]
-                                        }
-                                    default:
-                                        return text
-                                }
-                            }
+                            scopedSlots: {customRender: item.fieldName},
                         })
                     }
-                    console.log(this.$slots)
-                  // if (this.$slots.tableOperationBtn){
-                    columns.push({
-                        sort: columns.length,
-                        title: '操作',
-                        key: 'operation',
-                        align: 'center',
-                        fixed: 'right',
-                        show: true,
-                        width: 160,
-                        scopedSlots: {customRender: 'action'}
-                    })
-                  // }
+                      if (this.$scopedSlots['tableOperationBtn']){
+                        columns.push({
+                            sort: columns.length,
+                            title: '操作',
+                            key: 'tableOperationBtn',
+                            align: 'center',
+                            fixed: 'right',
+                            show: true,
+                            width: 160,
+                            dataIndex: "tableOperationBtn",
+                            scopedSlots: {customRender: 'tableOperationBtn'}
+                        })
+                      }
                   this.columns = columns
+
                 })
         },
         computed: {

@@ -1,9 +1,6 @@
 <template>
     <page-header-wrapper>
         <base-table module="blogArticle" ref="table">
-            <template slot="flag">
-                <a>1</a>
-            </template>
             <template slot="leftHeaderBtn">
                 <router-link  to="/blog/articleRelease"><a-button type="primary" icon="plus" >发布文章</a-button></router-link>
             </template>
