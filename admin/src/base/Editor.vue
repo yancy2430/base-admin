@@ -29,6 +29,7 @@
         props:['value','contentType'],
         data() {
             const v = this.value
+            console.log(v)
             return {
                 content: v,
                 editorOption: {}

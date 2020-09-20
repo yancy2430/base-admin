@@ -18,26 +18,17 @@
                 <a-form-item>
                     <a-textarea v-decorator="['summary',{ rules: [{ required: true, message: '文章摘要不能为空' }] },]" placeholder="请输入文章摘要" :rows="3"/>
                 </a-form-item>
-                <a-form-item>
-                    <div style="text-align: right;">
-                        <a-radio-group v-decorator="['contentType',{ initialValue: 'RichText' }]"
-                                       @change="onContentType">
-                            <a-radio-button value="RichText">
-                                RichText
-                            </a-radio-button>
-                            <a-radio-button value="Markdown">
-                                Markdown
-                            </a-radio-button>
-                        </a-radio-group>
-                    </div>
-                </a-form-item>
                 <a-form-item prefixCls="edit">
-                    <editor :contentType="contentType" v-decorator="['content',{ rules: [{ required: true, message: '文章内容不能为空' }] },]"></editor>
+                    <!--<mavon-editor-->
+                            <!--v-decorator="['content',{ rules: [{ required: true, message: '文章内容不能为空' }] },]"-->
+                    <!--&gt;-->
+                    <!--</mavon-editor>-->
+                    <mavon-editor style="box-shadow: none;border: 1px solid #d9d9d9;
+    border-radius: 2px;" v-decorator="['content',{ rules: [{ required: true, message: '文章内容不能为空' }] },]" />
                 </a-form-item>
                 <footer-toolbar :siderWidth="180" :collapsed="true">
-                    <a-button type="danger" :loading="false" style="margin-right: 16px">取消发布</a-button>
-                    <a-button :loading="false" style="margin-right: 16px">保存草稿</a-button>
-                    <a-button type="primary" :loading="submitLoading" html-type="submit">发布文章</a-button>
+                    <a-button :loading="false" style="margin-right: 16px">取消发布</a-button>
+                    <a-button type="primary" :loading="submitLoading" html-type="submit">保存文章</a-button>
                 </footer-toolbar>
             </a-form>
         </a-card>
@@ -45,19 +36,17 @@
 </template>
 
 <script>
-    import Editor from "../../base/Editor";
     import {FooterToolbar} from '@/components'
     import {categorys,addArticle,articleOne} from "tdeado-api/blogmanage"
     import AFormItem from "ant-design-vue/es/form/FormItem";
-    import VueSimplemde from 'vue-simplemde'  // 引入文本编辑器
-
+    import mavonEditor from 'mavon-editor'
+    import 'mavon-editor/dist/css/index.css'
     export default {
         name: "articleRelease",
         components: {
             AFormItem,
-            Editor,
             FooterToolbar,
-            VueSimplemde
+          'mavon-editor': mavonEditor.mavonEditor
         },
         data() {
             return {
@@ -78,6 +67,7 @@
                     this.$multiTab.rename("/blog/articleRelease/"+this.id,res.data.title);
                     // this.$route.meta.customTitle = res.data.title
                     // console.log(this.$route.meta.customTitle)
+                  console.log(res.data)
                     this.form.setFieldsValue(res.data)
                 });
             }else {
@@ -116,5 +106,9 @@
 </script>
 
 <style scoped>
-
+    .v-note-wrapper{
+        z-index: 1;}
+    .v-note-wrapper.fullscreen{
+        z-index: 999;
+    }
 </style>
