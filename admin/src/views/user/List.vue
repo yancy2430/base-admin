@@ -1,6 +1,7 @@
 <template>
   <page-header-wrapper>
-    <base-table module="userMember"></base-table>
+    <base-table module="userMember">
+    </base-table>
   </page-header-wrapper>
 </template>
 

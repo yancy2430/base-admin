@@ -48,13 +48,11 @@
                 <a-icon style="font-size: 10px;" :type="searchShow ? 'up' : 'down'"/>
             </a>
         </div>
-
-        <!--:components="components"-->
         <s-table
                 ref="table"
                 size="middle"
                 rowKey="id"
-
+                :components="components"
                 :data="loadData"
                 :alert="false"
                 :align="'center'"
@@ -68,15 +66,18 @@
                     :customRender="item.customRender"
                     :width="item.width<50?50:item.width"
                     v-if="item.show"
-                    :key="item.id"
+                    :key="index"
                     :title="item.title"
                     :data-index="item.dataIndex"
                     :align="item.align"
                     :fixed="item.fixed"
                     :ellipsis="true"
             >
-                <template slot-scope="text, record">
+                <template slot-scope="text, record,index">
+<!--                    {{$slots[]}}-->
+                    {{columns[index]}}
                     <slot name="tableOperationBtn" :data="record"></slot>
+<!--                    <slot name="tableOperationBtn" :data="record"></slot>-->
                 </template>
             </a-table-column>
         </s-table>
@@ -132,44 +133,44 @@
                 drag: false,
                 opVisible: false,
                 options: [],
-                // components: {
-                //   header: {
-                //     cell: (h, props, children) => {
-                //       const { key, ...restProps } = props
-                //
-                //       const col = this.columns.find(col => {
-                //         const k = col.dataIndex || col.key
-                //         return k === key
-                //       })
-                //
-                //       if (!col || !col.width) {
-                //         return h('th', { ...restProps }, [...children])
-                //       }
-                //       const dragProps = {
-                //         key: col.dataIndex || col.key,
-                //         class: 'table-draggable-handle',
-                //         attrs: {
-                //           w: 10,
-                //           x: col.width,
-                //           z: 1,
-                //           axis: 'x',
-                //           draggable: true,
-                //           resizable: false
-                //         },
-                //         on: {
-                //           dragging: (x, y) => {
-                //             col.width = Math.max(x, 1)
-                //           },
-                //           dragstop: (x, y) => {
-                //             this.updateHeader()
-                //           }
-                //         }
-                //       }
-                //       const drag = h('vue-draggable-resizable', { ...dragProps })
-                //       return h('th', { ...restProps, class: 'resize-table-th' }, [...children, drag])
-                //     }
-                //   }
-                // },
+                components: {
+                  header: {
+                    cell: (h, props, children) => {
+                      const { key, ...restProps } = props
+
+                      const col = this.columns.find(col => {
+                        const k = col.dataIndex || col.key
+                        return k === key
+                      })
+
+                      if (!col || !col.width) {
+                        return h('th', { ...restProps }, [...children])
+                      }
+                      const dragProps = {
+                        key: col.dataIndex || col.key,
+                        class: 'table-draggable-handle',
+                        attrs: {
+                          w: 10,
+                          x: col.width,
+                          z: 1,
+                          axis: 'x',
+                          draggable: true,
+                          resizable: false
+                        },
+                        on: {
+                          dragging: (x, y) => {
+                            col.width = Math.max(x, 1)
+                          },
+                          dragstop: (x, y) => {
+                            this.updateHeader()
+                          }
+                        }
+                      }
+                      const drag = h('vue-draggable-resizable', { ...dragProps })
+                      return h('th', { ...restProps, class: 'resize-table-th' }, [...children, drag])
+                    }
+                  }
+                },
                 columns: [],
                 finds: [],
                 cpFinds: [],
@@ -207,6 +208,7 @@
                         const item = res.data.columns[i]
 
                         columns.push({
+                            id: item.id,
                             tableName: item.tableName,
                             sort: i,
                             title: item.title,
@@ -215,6 +217,12 @@
                             show: item.show,
                             dataIndex: item.fieldName,
                             customRender: (text, record, index) => {
+
+                              if (this.$slots[item.fieldName]){
+                                console.log(this.$slots[item.fieldName])
+                                return  this.$slots[item.fieldName]
+                              }
+
                                 switch (item.inputType) {
                                     case 7:
                                         return
@@ -246,6 +254,8 @@
                             }
                         })
                     }
+                    console.log(this.$slots)
+                  // if (this.$slots.tableOperationBtn){
                     columns.push({
                         sort: columns.length,
                         title: '操作',
@@ -256,7 +266,8 @@
                         width: 160,
                         scopedSlots: {customRender: 'action'}
                     })
-                    this.columns = columns
+                  // }
+                  this.columns = columns
                 })
         },
         computed: {
@@ -288,8 +299,10 @@
                 const headers = []
                 for (const index in this.columns) {
                     if (this.columns[index].dataIndex) {
+                      console.log(this.columns[index])
                         headers.push({
-                            'id': this.columns[index].tableName + '-' + this.columns[index].dataIndex,
+                            'id': this.columns[index].id,
+                            'strId': this.columns[index].tableName + '-' + this.columns[index].dataIndex,
                             'tableName': this.columns[index].tableName,
                             'show': this.columns[index].show,
                             'width': this.columns[index].width
