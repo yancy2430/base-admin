@@ -11112,10 +11112,10 @@ tar-stream@^2.0.0, tar-stream@^2.1.2:
     inherits "^2.0.3"
     readable-stream "^3.1.1"
 
-tdeado-api@20.917.2223:
-  version "20.917.2223"
-  resolved "https://registry.yarnpkg.com/tdeado-api/-/tdeado-api-20.917.2223.tgz#18ac665831073f3cf38d0d60a717c6c96bddc96d"
-  integrity sha512-3ZN6MW6cIqh1ykr2E5oNvLyUzQjhddw7K81nDDxtOSJBx3R7Rs27/Qk70gwn4uyP2K7gPRt8gbQHKcGLupzUHg==
+tdeado-api@20.921.929:
+  version "20.921.929"
+  resolved "https://registry.yarnpkg.com/tdeado-api/-/tdeado-api-20.921.929.tgz#04c0c4d4e04fe87749736844412ad2efe8f7a3ba"
+  integrity sha512-MemkPhSvoBUYkkoeHusF1I3DfOn5wSp5Gn5s1y2aFjjudNnE0zH+i//daXEr+FB5TT1q4EqETrc5vEf7hRq0EA==
 
 terser-webpack-plugin@^1.4.3:
   version "1.4.3"

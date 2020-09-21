@@ -5,7 +5,7 @@
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">通道逸动网络科技有限公司</span>
+            <span class="title">湖南向上商旅服务有限公司</span>
           </a>
         </div>
         <div class="desc">

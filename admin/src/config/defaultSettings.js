@@ -24,7 +24,7 @@ export default {
     locale: true
   },
   multiTab: true,
-  title: '逸动网络',
+  title: '向上商旅',
   pwa: false,
   iconfontUrl: '',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
