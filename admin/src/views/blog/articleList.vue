@@ -80,12 +80,11 @@
     watch:{
       categorys(v){
         this.cateSelectedKeys=[this.categorys[0].id]
-        this.onOpenChange({key:this.categorys[0].id})
       },
       articleList(v){
         if (v.records.length>0){
           this.selectedKeys=[v.records[0].id]
-          this.article=v.records[0]
+          this.article=this.articleList.records[0]
         }
       },
       article(e){
