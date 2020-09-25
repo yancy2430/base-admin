@@ -2,17 +2,22 @@
     <page-header-wrapper>
         <a-card :bordered="false">
             <a-form :layout="'horizontal'" :form="form" @submit="submit">
+                <a-form-item style="display: none">
+                    <a-input v-decorator="['id']" />
+                </a-form-item>
+                <a-form-item>
+                    <a-select placeholder="选择分类" style="width: 120px"
+                              v-decorator="['categoryId',{ rules: [{ required: true, message: '文章分类、标题不能为空' }] },]"
+                    >
+                        <a-select-option v-for="item in categorys" :value="item.id" :key="item.id">
+                            {{item.name}}
+                        </a-select-option>
+                    </a-select>
+                </a-form-item>
                 <a-form-item>
                     <a-input style="width: 50%" placeholder="请输入文章标题"
                              v-decorator="['title',{ rules: [{ required: true, message: '文章分类、标题不能为空' }] },]"
                     >
-                        <a-select slot="addonBefore" placeholder="选择分类" style="width: 120px"
-                                  v-decorator="['categoryId',{ rules: [{ required: true, message: '文章分类、标题不能为空' }] },]"
-                        >
-                            <a-select-option v-for="item in categorys" :value="item.id" :key="item.id">
-                                {{item.name}}
-                            </a-select-option>
-                        </a-select>
                     </a-input>
                 </a-form-item>
                 <a-form-item>
@@ -37,7 +42,7 @@
 
 <script>
     import {FooterToolbar} from '@/components'
-    import {categorys,addArticle,articleOne} from "tdeado-api/blogmanage"
+    import { categorys, addArticle, articleOne, updateArticle } from 'tdeado-api/blogmanage'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import mavonEditor from 'mavon-editor'
     import 'mavon-editor/dist/css/index.css'
@@ -68,7 +73,14 @@
                     // this.$route.meta.customTitle = res.data.title
                     // console.log(this.$route.meta.customTitle)
                   console.log(res.data)
-                    this.form.setFieldsValue(res.data)
+                    this.form.setFieldsValue({
+                      id:res.data.id,
+                      title:res.data.title,
+                      categoryId:res.data.categoryId,
+                      summary:res.data.summary,
+                      content:res.data.content,
+
+                    })
                 });
             }else {
                 this.$multiTab.rename("/blog/articleRelease","发布文章");
@@ -83,13 +95,22 @@
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         console.log('Received values of form: ', values);
-                        addArticle(values).then(res=>{
-                            this.submitLoading = false
-                            this.$message.success('发布成功',0.5).then(res=>{
-                                // this.$router.push({ path: '/blog/articleList' })
-                                this.$multiTab.closeCurrentPage();
-                            });
+                      if (values.id){
+                        updateArticle(values).then(res=>{
+                          this.submitLoading = false
+                          this.$message.success('修改成功',0.5).then(res=>{
+                            this.$multiTab.closeCurrentPage();
+                          });
                         })
+                      } else {
+                        addArticle(values).then(res=>{
+                          this.submitLoading = false
+                          this.$message.success('发布成功',0.5).then(res=>{
+                            this.$multiTab.closeCurrentPage();
+                          });
+                        })
+                      }
+
                     }else {
                         this.submitLoading = false
                     }
