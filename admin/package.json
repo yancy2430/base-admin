@@ -34,7 +34,7 @@
     "store": "^2.0.12",
     "tdeado-api": "20.921.929",
     "viser-vue": "^2.4.6",
-    "vue": "../vue",
+    "vue": "^2.6.12",
     "vue-clipboard2": "^0.2.1",
     "vue-cropper": "0.4.9",
     "vue-draggable-resizable": "2.1.0",

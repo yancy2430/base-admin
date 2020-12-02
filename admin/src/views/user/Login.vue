@@ -7,12 +7,12 @@
       :form="form"
       @submit="handleSubmit"
     >
-      <a-alert
-        v-if="isLoginError"
-        type="error"
-        showIcon
-        style="margin-bottom: 24px;"
-        :message="message"/>
+      <!--<a-alert-->
+        <!--v-if="isLoginError"-->
+        <!--type="error"-->
+        <!--showIcon-->
+        <!--style="margin-bottom: 24px;"-->
+        <!--:message="message"/>-->
       <a-form-item>
         <a-input
           size="large"
@@ -74,6 +74,7 @@
   import { ACCESS_TOKEN } from '@/store/mutation-types'
   import storage from 'store'
   import {onbindAccount} from '@/utils/webSocket'
+  import request from '../../utils/request'
   export default {
     components: {},
     data () {
@@ -102,18 +103,36 @@
       },
       handleTabClick (key) {
         this.customActiveKey = key
-        // this.form.resetFields()
       },
       handleSubmit (e) {
         e.preventDefault();
+
+        this.form.validateFields((err, values) => {
+          if (err) {
+            this.loginBtn = false
+            return;
+          }
+          // this.form.resetFields();
+          this.visible = false;
         this.loginBtn = true
-        const values = this.form.getFieldsValue()
+        // const values = this.form.getFieldsValue()
+
         values.password = md5(values.password)
 
         setTimeout(() => {
 
-          login(values.username,values.password,this.loginType)
-            .then((res) => {
+          request({
+            url: 'login',
+            method: 'POST',
+            params:{
+              username: values.username,
+              password: values.password,
+              loginType: this.loginType
+            },
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+            }
+          }).then((res) => {
               if (res.code === 0) {
                 this.loginSuccess(res)
               } else {
@@ -129,6 +148,7 @@
               this.loginBtn = false
             })
         }, 600)
+        });
       },
       loginSuccess (res) {
         console.log(res)

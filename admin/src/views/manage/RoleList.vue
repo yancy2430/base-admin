@@ -5,7 +5,7 @@
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="showAddGroup">新建权限组</a-button>
       </div>
-      <a-table :key="table" :defaultExpandAllRows="true" :columns="columns" :data-source="data" :row-key="item=>{ return (item.id+''+(item.code || '')) }">
+      <a-table size="middle" :key="table" :defaultExpandAllRows="true" :columns="columns" :data-source="data" :row-key="item=>{ return (item.id+''+(item.code || '')) }">
 
         <span slot="action" slot-scope="record">
           <div v-if="record.children">
@@ -75,6 +75,7 @@
   import RoleGroupEdit from './modules/RoleGroupEdit'
   import RoleEdit from './modules/RoleEdit'
   import RoleAdd from './modules/RoleAdd'
+  import request from '../../utils/request'
 
   export default {
     name: 'RoleList',
@@ -95,17 +96,20 @@
           {
             title: '名称',
             dataIndex: 'name',
-            width: '25%'
+            width: '25%',
+            align:'center'
           },
           {
             title: '角色代码',
             dataIndex: 'code',
-            width: '20%'
+            width: '20%',
+            align:'center'
           },
           {
             title: '说明',
             dataIndex: 'desc',
-            width: '20%'
+            width: '20%',
+            align:'center'
           },
           {
             title: '操作',
@@ -118,7 +122,13 @@
       }
     },
     created () {
-      list().then(res => {
+      request({
+        url: '/roleList',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then(res => {
         this.data = res.data
         this.table = new Date().getTime()
       })
@@ -155,7 +165,14 @@
       },
       addRole () {
         this.AddRoleConfirmLoading = true
-        addRole(this.roleData).then(res => {
+        request({
+          url: '/addRole',
+          method: 'POST',
+          data: JSON.stringify(this.roleData),
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        }).then(res => {
           if (res.code === 0) {
             this.$message.success(res.msg)
             list().then(res => {
@@ -178,7 +195,14 @@
       },
       addGroup () {
         this.confirmLoading = true
-        addGroup(this.groupData).then(res => {
+        request({
+          url: 'addGroup',
+          method: 'POST',
+          data: JSON.stringify(this.groupData),
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        }).then(res => {
           if (res.code === 0) {
             this.$message.success(res.msg)
             list().then(res => {

@@ -40,26 +40,33 @@
 
   import { resources, delMenu } from 'tdeado-api/setting'
   import MenuEdit from './modules/MenuEdit'
+  import request from '../../utils/request'
   const columns = [
     {
       title: '名称',
-      dataIndex: 'name'
+      dataIndex: 'name',
+      align:'center',
+      width: '100px',
+
     },
 
     {
       title: '路径',
       dataIndex: 'path',
-      width: '20%'
+      width: '20%',
+      align:'center'
     },
     {
       title: '图标',
       dataIndex: 'icon',
-      width: '12%'
+      width: '12%',
+      align:'center'
     },
     {
       title: '排序',
       dataIndex: 'sort',
-      width: '20%'
+      width: '20%',
+      align:'center'
     }, {
       title: '操作',
       key: 'operation',
@@ -82,13 +89,25 @@
       }
     },
     created () {
-      resources().then(res => {
+      request({
+        url: 'resources',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then(res => {
         this.data = res.data
       })
     },
     methods: {
       closeEdit () {
-        resources().then(res => {
+        request({
+          url: 'resources',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }).then(res => {
           this.data = res.data
         })
         setTimeout(() => {
@@ -107,7 +126,16 @@
         this.visible = true
       },
       delMenu (id) {
-        delMenu(id).then(res => {
+        request({
+          url: 'delMenu',
+          method: 'GET',
+          params:{
+            id: id
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }).then(res => {
           if (res.code === 0) {
             resources().then(res => {
               this.data = res.data

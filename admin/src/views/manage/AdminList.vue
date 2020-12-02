@@ -1,6 +1,9 @@
 <template>
   <page-header-wrapper>
-    <base-table module="adminUser" @newClick="newAdmin" />
+    <!--<base-table url="admin/adminUser" @newClick="newAdmin" />-->
+    <td-table url="admin/adminUser">
+
+    </td-table>
     <a-drawer
       title="添加管理员"
       :width="820"
@@ -15,10 +18,11 @@
 <script>
   import BaseTable from '../../base/BaseTable'
   import NewAdmin from './modules/NewAdmin'
+  import TdTable from '../../base/TdTable'
 
   export default {
     name: 'Admin',
-    components: { NewAdmin, BaseTable },
+    components: { TdTable, NewAdmin, BaseTable },
     data(){
       return {
         isNewAdmin:false

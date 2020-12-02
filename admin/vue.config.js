@@ -94,17 +94,21 @@ const vueConfig = {
 
   devServer: {
     // development server port 8000
-    port: 8000
+    port: 8000,
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro',
-    //     ws: false,
-    //     changeOrigin: true
-    //   }
-    // }
-  },
+    proxy: {
+      '/admin/': {
+        // target: 'http://api.xiangshangsl.com',
+        target: 'http://localhost:80',
+        // target: 'http://192.168.2.64:20001',
+        // target: 'http://192.168.2.195:20001',
+        ws: false,
+        changeOrigin: true,
+        // pathRewrite: {'^/admin': '/'}
+      },
 
+    }
+  },
   // disable source map in production
   productionSourceMap: false,
   lintOnSave: false,

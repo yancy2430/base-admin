@@ -1,5 +1,6 @@
 import storage from 'store'
-import { login,info, logout } from 'tdeado-api/manage'
+import request from '@/utils/request'
+
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
 
@@ -33,24 +34,17 @@ const user = {
   },
 
   actions: {
-    // 登录
-    Login ({ commit }, userInfo) {
-      return new Promise((resolve, reject) => {
-        login(userInfo).then(response => {
-          const token = response.data
-          storage.set(ACCESS_TOKEN, token, 7 * 24 * 60 * 60 * 1000)
-          commit('SET_TOKEN', token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
 
     // 获取用户信息
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
-        info().then(response => {
+        request({
+          url: 'userInfo',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }).then(response => {
           const result = response.data
           if (result.role && result.role.permissions.length > 0) {
             const role = result.role
@@ -81,8 +75,13 @@ const user = {
     // 登出
     Logout ({ commit, state }) {
       return new Promise((resolve) => {
-        logout(state.token).then(() => {
-          resolve()
+
+        request({
+          url: 'logout',
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
         }).catch(() => {
           resolve()
         }).finally(() => {

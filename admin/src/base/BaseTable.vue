@@ -62,7 +62,7 @@
                 :pageSize="20"
         >
             <a-table-column
-                    v-for="(item,index) in columns"
+                    v-for="(item,index) in heads"
                     :customRender="item.customRender"
                     :width="item.width<50?50:item.width"
                     v-if="item.show"
@@ -239,12 +239,13 @@
                 })
         },
         computed: {
-            rowSelection() {
-                return {
-                    selectedRowKeys: this.selectedRowKeys,
-                    onChange: this.onSelectChange
-                }
-            },
+          rowSelection () {
+              return {
+                selectedRowKeys: this.selectedRowKeys,
+                columnWidth: 50,
+                onChange: this.onSelectChange
+              }
+          },
             dragOptions() {
                 return {
                     animation: 200,

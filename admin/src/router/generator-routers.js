@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import * as manage from 'tdeado-api/manage'
+import request from '@/utils/request'
 // eslint-disable-next-line
 import { BasicLayout, BlankLayout, PageView, RouteView, EmptyView } from '@/layouts'
 
@@ -45,7 +45,13 @@ const rootRouter = {
  */
 export const generatorDynamicRouter = (token) => {
   return new Promise((resolve, reject) => {
-    manage.menu().then(res => {
+    request({
+      url: 'menu',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
+    }).then(res => {
       const { data } = res
       const menuNav = []
       const childrenNav = []

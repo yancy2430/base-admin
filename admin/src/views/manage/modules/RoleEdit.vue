@@ -1,26 +1,29 @@
 <template>
-  <div>
-    <a-form-item v-for="(permission, index) in data" :key="index" v-if="permission.children" >
-      <span slot="label" style="font-weight: bold">
-        {{ permission.name }}
-      </span>
-      <a-row :gutter="16" v-for="(item, i) in permission.children" :key="i">
-        <a-col :xl="4" :lg="24">
-          {{ item.name }}：
-        </a-col>
-        <a-col :xl="20" :lg="24">
-          <a-checkbox
-            :indeterminate="item.indeterminate"
-            v-model="item.checked"
-            @change="onChangeCheckAll($event,item)">
-            全选
-          </a-checkbox>
-          <a-checkbox v-for="(btn, j) in item.btns" :key="j" :value="btn.code" v-model="btn.checked" @change="onChangeCheck($event,btn,item)">
-            {{ btn.name }}
-          </a-checkbox>
-        </a-col>
-      </a-row>
-    </a-form-item>
+  <div class="role-edit">
+    <a-tabs default-active-key="1" >
+      <a-tab-pane v-for="(permission, index) in data" :key="index">
+        <template slot="tab"><a-checkbox v-model="permission.checked"></a-checkbox><span style="margin-left: 5px;">{{permission.name}}</span></template>
+        <a-tabs default-active-key="0" tab-position="left" @change="callback">
+          <a-tab-pane v-for="(item, index) in permission.children" :key="index">
+            <template slot="tab"><span style="margin-right: 5px;">{{item.name}}</span><a-checkbox v-model="item.checked"></a-checkbox></template>
+            <a-card :bordered="false">
+              <template slot="title"><span style="margin-right: 5px;">按钮</span><a-checkbox></a-checkbox></template>
+              <a-checkbox v-for="(btn, index) in item.btns" :key="index" v-model="btn.checked">{{btn.name}}</a-checkbox>
+            </a-card>
+            <a-card title="字段" :bordered="false" >
+              <template slot="title"><span style="margin-right: 5px;">字段</span><a-checkbox></a-checkbox></template>
+              <a-checkbox v-for="(btn, index) in item.btns" :key="index" v-model="btn.checked">{{btn.name}}</a-checkbox>
+            </a-card>
+            <a-card title="组件" :bordered="false" >
+              <template slot="title"><span style="margin-right: 5px;">组件</span><a-checkbox></a-checkbox></template>
+              <a-checkbox v-for="(btn, index) in item.btns" :key="index" v-model="btn.checked">{{btn.name}}</a-checkbox>
+            </a-card>
+          </a-tab-pane>
+
+        </a-tabs>
+      </a-tab-pane>
+    </a-tabs>
+
     <div
       :style="{
         position: 'absolute',
@@ -45,8 +48,8 @@
 </template>
 
 <script>
-  import { permissionsByRole, savePermissionsByRole } from 'tdeado-api/manage'
   import RoleCheckbox from './RoleCheckbox'
+  import request from '../../../utils/request'
   export default {
     name: 'RoleEdit',
     components: { RoleCheckbox },
@@ -60,7 +63,16 @@
       roleId: Number
     },
     created () {
-      permissionsByRole(this.roleId).then(res => {
+      request({
+        url: 'permissionsByRole',
+        method: 'GET',
+        params:{
+          roleId: this.roleId
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then(res => {
         if (res.code === 0) {
           this.data = res.data
         }
@@ -68,7 +80,16 @@
     },
     watch: {
       roleId (v) {
-        permissionsByRole(v).then(res => {
+        request({
+          url: 'permissionsByRole',
+          method: 'GET',
+          params:{
+            roleId: v
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }).then(res => {
           if (res.code === 0) {
             this.data = res.data
           }
@@ -76,9 +97,22 @@
       }
     },
     methods: {
+      callback(key) {
+        console.log(key);
+      },
       handleSubmit () {
         this.loginBtn = true
-        savePermissionsByRole(this.roleId, this.data).then(res => {
+        request({
+          url: 'savePermissionsByRole',
+          method: 'POST',
+          params:{
+            roleId:this.roleId
+          },
+          data: JSON.stringify(this.data),
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        }).then(res => {
           if (res.code === 0) {
             this.$emit('close', true)
           }
@@ -126,6 +160,15 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+  .role-edit .ant-tabs .ant-tabs-left-content{
+   padding-left: 0px!important;
+}
+  .role-edit .ant-card-head-title {
+    padding: 11px 0!important;
+  }
+  .role-edit .ant-card-body {
+    padding: 14px 24px;
+    zoom: 1;
+  }
 </style>
