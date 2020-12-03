@@ -1,6 +1,6 @@
 <template>
   <section>
-    <mavon-editor/>
+    <mavon-editor v-if="$auth('AdminInfo')" />
   </section>
 </template>
 <script>
@@ -16,7 +16,8 @@
       return {
       }
     },
-    methods:{
+    computed:{
+
     }
   }
 </script>

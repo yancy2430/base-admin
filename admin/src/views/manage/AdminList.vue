@@ -1,9 +1,29 @@
 <template>
   <page-header-wrapper>
-    <!--<base-table url="admin/adminUser" @newClick="newAdmin" />-->
     <td-table url="admin/adminUser">
-
+      <template slot="leftHeaderBtn">
+        <a-button type="primary" @click="newAdmin()">
+          添加管理员
+        </a-button>
+        <a-dropdown :style="{ marginLeft: '8px' }">
+          <a-menu slot="overlay">
+            <a-menu-item key="1">
+              <a-icon type="delete"/>
+              删除
+            </a-menu-item>
+            <a-menu-item key="2">
+              <a-icon type="lock"/>
+              锁定
+            </a-menu-item>
+          </a-menu>
+          <a-button>
+            批量操作
+            <a-icon type="down"/>
+          </a-button>
+        </a-dropdown>
+      </template>
     </td-table>
+
     <a-drawer
       title="添加管理员"
       :width="820"

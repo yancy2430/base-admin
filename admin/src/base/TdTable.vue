@@ -19,22 +19,6 @@
                 <a-row>
                     <a-col :span="12" :style="{ textAlign: 'left' }">
                         <slot name="leftHeaderBtn"></slot>
-                        <a-dropdown v-if="selectedRowKeys.length > 0">
-                            <a-menu slot="overlay">
-                                <a-menu-item key="1">
-                                    <a-icon type="delete"/>
-                                    删除
-                                </a-menu-item>
-                                <a-menu-item key="2">
-                                    <a-icon type="lock"/>
-                                    导出
-                                </a-menu-item>
-                            </a-menu>
-                            <a-button>
-                                批量操作
-                                <a-icon type="down"/>
-                            </a-button>
-                        </a-dropdown>
                     </a-col>
                     <a-col :span="12" :style="{ textAlign: 'right' }">
 

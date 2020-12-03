@@ -8,7 +8,7 @@
         <a-input v-model="record.name" placeholder=""/>
       </template>
       <template slot="path" slot-scope="text, record">
-        <a-select show-search v-model="record.path" style="width: 100%" @change="handleChange(record)">
+        <a-select mode="multiple" show-search v-model="record.path" style="width: 100%" @change="handleChange(record)">
           <a-select-option :value="method.url" v-for="(method,index) in methods" :key="index">
             {{ method.url }}
           </a-select-option>
@@ -32,6 +32,7 @@
 <script>
   import EditableCell from './EditableCell'
   import { methods } from 'tdeado-api/manage'
+  import request from '../../../utils/request'
 
   export default {
     name: 'MenuTreeBtnList',
@@ -49,7 +50,13 @@
       }
     },
     created () {
-      methods().then(res => {
+      request({
+        url: 'methods',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then(res => {
         if (res.code === 0) {
           this.methods = res.data
         }

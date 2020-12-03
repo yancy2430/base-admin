@@ -80,6 +80,7 @@
 <script>
   import { menu, saveMenu } from 'tdeado-api/setting'
   import MenuTreeBtnList from './MenuTreeBtnList'
+  import request from '../../../utils/request'
   const requireComponents = require.context('@/views', true, /\.vue/)
   // 打印结果
   // 遍历出每个组件的路径
@@ -135,7 +136,14 @@
     methods: {
       handleSubmit (e) {
         this.loginBtn = true
-        saveMenu(this.form).then(res => {
+        request({
+          url: 'saveMenu',
+          method: 'POST',
+          data: JSON.stringify(this.form),
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        }).then(res => {
           if (res.code === 0) {
             this.$emit('close', true)
           }
@@ -143,7 +151,16 @@
         })
       },
       getMenu (id) {
-        menu(id).then(res => {
+        request({
+          url: 'getMenu',
+          method: 'GET',
+          params:{
+            id: id
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }).then(res => {
           this.form = res.data
         })
       }

@@ -2,16 +2,15 @@
   <page-header-wrapper>
     <a-card :bordered="false">
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="addItem(0)">新建菜单</a-button>
-
+        <a-button v-if="$auth('AdminSaveMenu')" type="primary" icon="plus" @click="addItem(0)">新建菜单</a-button>
       </div>
       <a-table :columns="columns" :data-source="data" size="middle" row-key="id">
         <span slot="action" slot-scope="record">
-          <a @click="addItem(record.id)">新增</a>
-          <a-divider type="vertical"/>
-          <a @click="editItem($event,record)">编辑</a>
-          <a-divider type="vertical"/>
-          <a-popconfirm
+          <a v-if="$auth('AdminSaveMenu')" @click="addItem(record.id)">新增</a>
+          <a-divider v-if="$auth('AdminSaveMenu')" type="vertical"/>
+          <a v-if="$auth('AdminEditMenu')" @click="editItem($event,record)">编辑</a>
+          <a-divider v-if="$auth('AdminEditMenu')" type="vertical"/>
+          <a-popconfirm v-if="$auth('AdminDelMenu')"
             title="是否删除这条数据?"
             ok-text="是"
             @confirm="delMenu(record.id)"
