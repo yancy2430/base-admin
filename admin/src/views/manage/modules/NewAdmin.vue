@@ -59,6 +59,7 @@
                         :wrapperCol="wrapperCol"
                 >
                     <a-select
+                            mode="multiple"
                               v-decorator="[
             'roleId',
             {rules: [{ required: true, message: '请选择角色' }], validateTrigger: 'change'}
@@ -66,7 +67,7 @@
                     >
                         <a-select-opt-group v-for="d in options" :key="d.id">
                             <span slot="label">{{ d.name }}</span>
-                            <a-select-option v-for="item in d.children" :key="item.id" :value="item.name">
+                            <a-select-option v-for="item in d.children" :key="item.id" :value="item.id">
                                 {{ item.name }}
                             </a-select-option>
                         </a-select-opt-group>
@@ -101,17 +102,6 @@
           ]"/>
                 </a-form-item>
 
-                <a-form-item
-                        label="安全设置"
-                        :labelCol="labelCol"
-                        :wrapperCol="wrapperCol"
-                        class="stepFormText"
-                >
-                    <a-checkbox>
-                        用户重新登录时重设密码
-                    </a-checkbox>
-                </a-form-item>
-
                 <a-form-item :wrapperCol="{span: 19, offset: 5}">
                     <a-button :loading="loading" type="primary" @click="onAddAdmin">提交</a-button>
                     <a-button style="margin-left: 8px" @click="prevStep">上一步</a-button>
@@ -122,22 +112,22 @@
                     <div class="information" ref="information">
                         <a-row>
                             <a-col :sm="8" :xs="24">登录账号：</a-col>
-                            <a-col :sm="16" :xs="24">{{forms[0].username}}
+                            <a-col :sm="16" :xs="24">{{formValues[0].username}}
                             </a-col>
                         </a-row>
                         <a-row>
                             <a-col :sm="8" :xs="24">真实姓名：</a-col>
-                            <a-col :sm="16" :xs="24">{{forms[0].name}}
+                            <a-col :sm="16" :xs="24">{{formValues[0].name}}
                             </a-col>
                         </a-row>
                         <a-row>
                             <a-col :sm="8" :xs="24">绑定手机：</a-col>
-                            <a-col :sm="16" :xs="24">{{forms[0].phone}}
+                            <a-col :sm="16" :xs="24">{{formValues[0].phone}}
                             </a-col>
                         </a-row>
                         <a-row>
                             <a-col :sm="8" :xs="24">登录密码：</a-col>
-                            <a-col :sm="16" :xs="24">{{forms[0].password}}
+                            <a-col :sm="16" :xs="24">{{formValues[1].password}}
                             </a-col>
                         </a-row>
                     </div>
@@ -169,10 +159,11 @@
   import RSelect from "../../../base/modules/RSelect";
   import { addAdmin } from "tdeado-api/manage"
   import request from '../../../utils/request'
+  import AFormItem from 'ant-design-vue/es/form/FormItem'
 
   export default {
     name: 'NewAdmin',
-    components: { RSelect },
+    components: { AFormItem, RSelect },
     data () {
       return {
         copyUserInfo: "",
@@ -257,7 +248,7 @@
 
       },
       finish () {
-        this.formValues = {}
+        this.formValues = []
         this.currentTab = 0
       },
       onCopyInfo () {

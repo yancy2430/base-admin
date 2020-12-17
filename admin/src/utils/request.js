@@ -56,7 +56,7 @@ request.interceptors.request.use(config => {
 // response interceptor
 request.interceptors.response.use((response) => {
   if (response.data.code !== 0) {
-    message.error(response.data.msg)
+    console.log(response.data.msg)
   }
   return response.data
 }, errorHandler)
