@@ -4,15 +4,21 @@
             <a-form class="ant-advanced-search-form" :form="form" @submit="handleSearch">
                 <a-row :gutter="24">
                     <a-col
-                            v-for="i in 11"
-                            :key="i"
+                            v-for="(item,index) in heads"
+                            :key="index"
+                            v-if="item.search!==0"
                             :span="6"
-                            :style="{ display: i < count ? 'block' : 'none' }"
                     >
-                        <a-form-item label="条件">
-                            <a-input
-                                    placeholder="placeholder"
-                            />
+                        <a-form-item :label="item.title">
+                            <remote-select v-if="item.options" :name="item.options" v-decorator="[item.name]"  placeholder="请选择"></remote-select>
+                            <template v-else>
+                                <a-input  v-if="item.search===1" v-decorator="[item.name]" placeholder=""/>
+                                <a-input v-if="item.search===2" v-decorator="[item.name]"  placeholder=""/>
+                                <a-input v-if="item.search===3" v-decorator="[item.name]"  placeholder=""/>
+                                <a-input v-if="item.search===4" v-decorator="[item.name]"  placeholder=""/>
+                                <a-range-picker style="width: auto" v-if="item.search===5" v-decorator="[item.name]"  />
+                                <a-range-picker style="width: auto" v-if="item.search===6" show-time v-decorator="[item.name]"  />
+                            </template>
                         </a-form-item>
                     </a-col>
                 </a-row>
@@ -21,7 +27,6 @@
                         <slot name="leftHeaderBtn"></slot>
                     </a-col>
                     <a-col :span="12" :style="{ textAlign: 'right' }">
-
                         <a-button type="primary" html-type="submit">
                             搜索
                         </a-button>
@@ -37,6 +42,7 @@
             </a-form>
         </div>
         <s-table
+                bordered
                 class="td-table"
                 ref="table"
                 size="middle"
@@ -58,6 +64,25 @@
                     :align="item.align"
                     :width="item.width===0?'':item.width"
             >
+                <template :name="item.name" :data="item" slot-scope="text, record,index">
+                    <span v-if="$scopedSlots[item.name]">
+                        <slot :name="item.name" :data="record"></slot>
+                    </span>
+                    <span v-else>{{record[item.name]}}</span>
+                </template>
+            </a-table-column>
+            <a-table-column
+                    :ellipsis="false"
+                    key="operate"
+                    title="操作"
+                    align="center"
+            >
+                <template name="operate" :data="item" slot-scope="text, record,index">
+                    <span v-if="$scopedSlots['operate']">
+                        <slot name="operate" :data="record"></slot>
+                    </span>
+                    <span v-else></span>
+                </template>
             </a-table-column>
         </s-table>
     </a-card>
@@ -66,11 +91,13 @@
 <script>
   import { STable, Ellipsis } from '@/components'
   import request from '../utils/request'
+  import RemoteSelect from './modules/RemoteSelect'
 
   export default {
     name: "TdTable",
-    props: ['url'],
+    props: ['url','operate_width'],
     components: {
+      RemoteSelect,
       STable,
     },
     data () {
@@ -80,16 +107,25 @@
         heads: [],
         selectedRowKeys: [],
         selectedRows: [],
+        searchData: {},
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
+          let params={
+            page: parameter.page,
+            size: parameter.size,
+            header: true,
+          }
+          this.searchData
+          for (let key in this.searchData) {
+            if (Array.isArray(this.searchData[key])){
+              this.searchData[key]=this.searchData[key].join(",");
+            }
+          }
+          Object.assign(params,this.searchData)
           return request({
-            url: '/adminList',
+            url: this.url,
             method: 'GET',
-            params: {
-              page: parameter.page,
-              size: parameter.size,
-              header: true,
-            },
+            params: params,
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
             }
@@ -113,7 +149,7 @@
         }
       },
       count () {
-        return this.expand ? 11 : 9;
+        return this.expand ? 50 : 8;
       },
     },
     methods: {
@@ -122,8 +158,11 @@
         this.selectedRows = selectedRows
       },
       handleSearch (e) {
+
         e.preventDefault();
         this.form.validateFields((error, values) => {
+          this.searchData = values;
+          this.$refs.table.refresh(true)
           console.log('error', error);
           console.log('Received values of form: ', values);
         });

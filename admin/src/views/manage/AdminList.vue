@@ -1,6 +1,6 @@
 <template>
   <page-header-wrapper>
-    <td-table url="admin/adminUser">
+    <td-table url="adminList">
       <template slot="leftHeaderBtn">
         <a-button type="primary" @click="newAdmin()">
           添加管理员
@@ -21,6 +21,12 @@
             <a-icon type="down"/>
           </a-button>
         </a-dropdown>
+      </template>
+      <template slot="roles" slot-scope="record">
+          <!--{{record.data.roleName.join(",")}}-->
+        <a-tag color="blue" style="margin: 2px;" v-for="item in record.data.roles" :key="item">
+          {{item.name}}
+        </a-tag>
       </template>
     </td-table>
 

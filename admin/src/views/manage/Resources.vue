@@ -4,7 +4,7 @@
       <div class="table-operator">
         <a-button v-if="$auth('AdminSaveMenu')" type="primary" icon="plus" @click="addItem(0)">新建菜单</a-button>
       </div>
-      <a-table :columns="columns" :data-source="data" size="middle" row-key="id">
+      <a-table bordered :columns="columns" :data-source="data" size="middle" row-key="id">
         <span slot="action" slot-scope="record">
           <a v-if="$auth('AdminSaveMenu')" @click="addItem(record.id)">新增</a>
           <a-divider v-if="$auth('AdminSaveMenu')" type="vertical"/>
@@ -71,6 +71,7 @@
       key: 'operation',
       fixed: 'right',
       width: 160,
+      align:'center',
       scopedSlots: { customRender: 'action' }
     }
   ]

@@ -5,7 +5,7 @@
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="showAddGroup">新建权限组</a-button>
       </div>
-      <a-table size="middle" :key="table" :defaultExpandAllRows="true" :columns="columns" :data-source="data" :row-key="item=>{ return (item.id+''+(item.code || '')) }">
+      <a-table bordered size="middle" :key="table" :defaultExpandAllRows="true" :columns="columns" :data-source="data" :row-key="item=>{ return (item.id+''+(item.code || '')) }">
 
         <span slot="action" slot-scope="record">
           <div v-if="record.children">
@@ -116,6 +116,7 @@
             key: 'operation',
             fixed: 'right',
             width: 200,
+            align:'center',
             scopedSlots: { customRender: 'action' }
           }
         ]
