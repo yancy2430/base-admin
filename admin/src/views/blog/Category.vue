@@ -1,22 +1,10 @@
 <template>
     <page-header-wrapper>
-        <base-table module="blogCategory" ref="table">
-            <template slot="leftHeaderBtn">
-                <a-button type="primary" icon="plus"  @click="showModal" >添加分类</a-button>
-            </template>
-            <template slot="tableOperationBtn" slot-scope="record">
-                <a @click="updateCategory(record.data)">编辑</a>
-                <a-divider type="vertical"/>
-                <a-popconfirm
-                        title="是否删除这篇文章?"
-                        ok-text="是"
-                        cancel-text="否"
-                        @confirm="deleteCategory(record.data.id)"
-                >
-                    <a>删除</a>
-                </a-popconfirm>
-            </template>
-        </base-table>
+        <td-table url="blog/category">
+            <a-button type="primary">
+                添加管理员
+            </a-button>
+        </td-table>
         <create-new-category
                 ref="createNewCategory"
                 :visible="visible"
@@ -28,15 +16,14 @@
 </template>
 
 <script>
-  import BaseTable from "../../base/BaseTable";
   import CreateNewCategory from './module/CreateNewCategory'
-  import { addCategory, updateCategory,removeCategory } from 'tdeado-api/blogmanage'
+  import TdTable from '../../base/TdTable'
 
   export default {
     name: "Category",
     components: {
+      TdTable,
       CreateNewCategory,
-      BaseTable
     },
     data () {
       return {

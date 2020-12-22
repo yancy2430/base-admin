@@ -1,12 +1,16 @@
 <template>
-    <a-select mode="multiple"
+    <a-select
+              :mode="mode"
               placeholder="请选择"
               @change="onSelect"
               :filter-option="false"
               @blur="fetchUser"
               @search="fetchUser"
+              show-search
+              allowClear
+              showArrow
     >
-        <a-select-option v-for="d in data" :key="d.value" :title="d.label" :value="d.value">
+        <a-select-option v-for="d in data" :key="d.value" :value="d.value">
             {{ d.label }}
         </a-select-option>
     </a-select>
@@ -18,11 +22,11 @@
   import request from '../../utils/request'
   export default {
     name: 'RemoteSelect',
-    props:['value','type','name','placeholder'],
+    props:['value','type','name','placeholder','multiple'],
     data(){
       return {
         data: [],
-        value: [],
+        mode:this.multiple || "",
         fetching: false,
       }
     },
@@ -36,7 +40,7 @@
         this.$emit('change', value);
       },
       fetchUser(value) {
-        console.log(value)
+
         this.data = [];
         this.fetching = true;
         request({

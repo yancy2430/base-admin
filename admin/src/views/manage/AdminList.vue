@@ -24,7 +24,7 @@
       </template>
       <template slot="roles" slot-scope="record">
           <!--{{record.data.roleName.join(",")}}-->
-        <a-tag color="blue" style="margin: 2px;" v-for="item in record.data.roles" :key="item">
+        <a-tag color="blue" style="margin: 2px;" v-for="item in record.data.roles" :key="item.id">
           {{item.name}}
         </a-tag>
       </template>

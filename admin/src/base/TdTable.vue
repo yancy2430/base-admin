@@ -10,7 +10,7 @@
                             :span="6"
                     >
                         <a-form-item :label="item.title">
-                            <remote-select v-if="item.options" :name="item.options" v-decorator="[item.name]"  placeholder="请选择"></remote-select>
+                            <remote-select v-if="item.options" :name="item.options" v-decorator="[item.name]"  placeholder="请选择" />
                             <template v-else>
                                 <a-input  v-if="item.search===1" v-decorator="[item.name]" placeholder=""/>
                                 <a-input v-if="item.search===2" v-decorator="[item.name]"  placeholder=""/>
@@ -251,4 +251,22 @@
         text-align: center;
         padding-top: 80px;
     }
+
+    /*.ant-input ,.ant-select{*/
+    /*    min-height: 28px ;*/
+    /*    padding: 0 8px;*/
+    /*    line-height: 26px;*/
+    /*}*/
+    /*.ant-select-selection,.ant-select-selection--multiple{*/
+    /*    min-height: 28px;*/
+    /*}*/
+    /*.ant-select-selection__placeholder {*/
+    /*    margin-left: 0;*/
+    /*}*/
+    .ant-form-item-label{
+        height: 28px;
+        padding: 2px 8px;
+        line-height: 26px;
+    }
+
 </style>
