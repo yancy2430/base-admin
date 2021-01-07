@@ -137,7 +137,7 @@
       handleSubmit (e) {
         this.loginBtn = true
         request({
-          url: 'saveMenu',
+          url: this.form.id !== undefined?'editMenu':'saveMenu',
           method: 'POST',
           data: JSON.stringify(this.form),
           headers: {

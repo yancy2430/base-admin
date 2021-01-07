@@ -100,7 +100,7 @@
       })
     },
     methods: {
-      closeEdit () {
+      getList(){
         request({
           url: 'resources',
           method: 'GET',
@@ -113,6 +113,9 @@
         setTimeout(() => {
           this.visible = false
         }, 500)
+      },
+      closeEdit () {
+        this.getList();
       },
       editItem (e, item) {
         this.menuPid = undefined
@@ -136,11 +139,7 @@
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
           }
         }).then(res => {
-          if (res.code === 0) {
-            resources().then(res => {
-              this.data = res.data
-            })
-          }
+          this.getList()
         })
       }
     }
