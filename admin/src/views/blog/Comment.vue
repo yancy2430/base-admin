@@ -1,4 +1,4 @@
-<template>
+5x'j'j<template>
     <page-header-wrapper>
         <base-table module="blogComment"></base-table>
     </page-header-wrapper>

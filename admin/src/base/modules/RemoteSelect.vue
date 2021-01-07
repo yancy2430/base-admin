@@ -55,7 +55,6 @@
           }
         })
           .then(body => {
-            console.log(body)
             this.data = body.data;
             this.fetching = false;
           });
