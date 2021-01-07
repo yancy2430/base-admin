@@ -1,25 +1,27 @@
 <template>
   <section>
-    <mavon-editor v-if="$auth('AdminInfo')" />
+    <!--<mavon-editor v-if="$auth('AdminInfo')" />-->
+    <td-city-select @change="onChange" v-model="aaaa"></td-city-select>
   </section>
 </template>
 <script>
-  import mavonEditor from 'mavon-editor'
-  require('mavon-editor/dist/css/index.css')
+  import request from '../utils/request'
+  import TdCitySelect from '../base/TdCitySelect'
+
   export default {
-    name: 'Test',
-    components: {
-      'mavon-editor': mavonEditor.mavonEditor
-
-    },
-    data(){
+    components: { TdCitySelect },
+    data() {
       return {
-      }
+        aaaa: "",
+      };
     },
-    computed:{
-
+    methods:{
+      onChange(value, selectedOptions) {
+        console.log(value, selectedOptions)
+        console.log(this.aaaa)
+      },
     }
-  }
+  };
 </script>
 
 <style>
