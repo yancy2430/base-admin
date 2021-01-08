@@ -68,7 +68,7 @@
                     <span v-if="$scopedSlots[item.name]">
                         <slot :name="item.name" :data="record"></slot>
                     </span>
-                    <span v-else>{{record[item.name]}}</span>
+                    <span v-else>{{Object.prototype.toString.call(record[item.name]) === '[object Object]'?record[item.name].label:record[item.name]}}</span>
                 </template>
             </a-table-column>
             <a-table-column

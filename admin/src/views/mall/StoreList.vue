@@ -7,8 +7,10 @@
                     创建新店铺
                 </a-button>
             </template>
+            <template slot="logo" slot-scope="record">
+                <img :src="record.data.logo" style="width: 40px;height: 40px" />
+            </template>
         </td-table>
-
         <a-drawer
                 title="创建新店铺"
                 :width="720"
