@@ -16,36 +16,28 @@
                 okText="保存"
                 @ok="handleCreate"
                 @cancel="handleCancel">
-            <a-form-model :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-                <a-form-model-item label="电话名称">
+            <a-form-model :model="form" :label-col="labelCol" :rules="rules"
+                          ref="ruleForm"
+                          :wrapper-col="wrapperCol">
+                <a-form-model-item label="电话名称" prop="name">
                     <a-input v-model="form.name" />
                 </a-form-model-item>
-                <a-form-model-item label="分类">
-                    <a-select v-model="form.region" placeholder="please select your zone">
-                        <a-select-option value="shanghai">
-                            Zone one
-                        </a-select-option>
-                        <a-select-option value="beijing">
-                            Zone two
-                        </a-select-option>
-                    </a-select>
+                <a-form-model-item label="电话号码" prop="phoneNumber">
+                    <a-input v-model="form.phoneNumber" />
+                </a-form-model-item>
+                <a-form-model-item label="分类" prop="cateId">
+                    <remote-select v-model="form.cateId" name="com.tdeado.phone.entity.PhoneCate">
+                    </remote-select>
                 </a-form-model-item>
 
-                <a-form-model-item label="城市">
-                    <td-city-select v-model="form.city"></td-city-select>
+                <a-form-model-item label="城市" prop="cityId">
+                    <td-city-select v-model="form.cityId"></td-city-select>
                 </a-form-model-item>
-
-                <a-form-model-item label="过期时间">
-                    <a-date-picker
-                            v-model="form.date1"
-                            show-time
-                            type="date"
-                            placeholder="Pick a date"
-                            style="width: 100%;"
-                    />
+                <a-form-model-item label="地址" prop="address">
+                    <a-input v-model="form.address" placeholder="详细地址" />
                 </a-form-model-item>
-                <a-form-model-item label="说明">
-                    <a-input v-model="form.desc" type="textarea" />
+                <a-form-model-item label="说明" prop="explain">
+                    <a-input v-model="form.explain" type="textarea" :auto-size="{ minRows: 3, maxRows: 6 }" />
                 </a-form-model-item>
             </a-form-model>
         </a-modal>
@@ -55,23 +47,44 @@
 <script>
   import TdTable from '../../base/TdTable'
   import TdCitySelect from '../../base/TdCitySelect'
+  import RemoteSelect from '../../base/modules/RemoteSelect'
   export default {
     name: "PhoneList",
-    components: { TdCitySelect,  TdTable },
+    components: { RemoteSelect, TdCitySelect,  TdTable },
     data () {
       return {
         visible: false,
         confirmLoading:false,
         labelCol: { span: 5 },
         wrapperCol: { span: 17 },
+        rules: {
+          name: [
+            { required: true, message: '名称不能为空', trigger: 'blur' },
+            { min: 1, max: 6, message: '长度不能超过6个字', trigger: 'blur' },
+          ],
+          phoneNumber: [{ required: true, message: '电话号码不能为空', trigger: 'blur' }],
+          cateId: [{ required: true, message: '必须选择分类', trigger: 'change' }],
+          cityId: [
+            {
+              type: 'array',
+              required: true,
+              message: '请选择城市',
+              trigger: 'change',
+            },
+          ],
+          address: [
+            { required: true, message: '详细地址不能为空', trigger: 'change' },
+          ],
+          explain: [{ required: true, message: '说明不能为空', trigger: 'blur' }],
+        },
         form: {
           name: '',
-          region: undefined,
-          date1: undefined,
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: '',
+          phoneNumber: '',
+          cateId: '',
+          cityId: [],
+          address: '',
+          expireTime: '',
+          explain: '',
         },
       };
     },
@@ -83,7 +96,16 @@
         this.visible = false;
       },
       handleCreate () {
-        this.visible = false;
+        this.$refs.ruleForm.validate(valid => {
+          if (valid) {
+            alert('submit!');
+
+            // this.visible = false;
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
     }
   }

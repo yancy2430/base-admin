@@ -3,7 +3,7 @@
             :field-names="{ label: 'name', value: 'id', children: 'children' }"
             :options="options"
             :show-search="{ filter }"
-            placeholder="Please select"
+            placeholder="请选择城市"
             @change="onChange"
     />
 </template>

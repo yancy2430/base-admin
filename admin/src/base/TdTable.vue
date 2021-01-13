@@ -1,25 +1,32 @@
 <template>
     <a-card :bordered="false">
         <div class="table-page-search-wrapper">
-            <a-form class="ant-advanced-search-form" :form="form" @submit="handleSearch">
+
+            <a-form class="ant-advanced-search-form" layout="inline" :form="form" @submit="handleSearch">
                 <a-row :gutter="24">
                     <a-col
                             v-for="(item,index) in heads"
                             :key="index"
                             v-if="item.search!==0"
-                            :span="6"
+                            :xs="24"
+                            :sm="12"
+                            :lg="8"
+                            :xl="6"
+                            :xxl="4"
                     >
-                        <a-form-item :label="item.title">
-                            <remote-select v-if="item.options" :name="item.options" v-decorator="[item.name]"  placeholder="请选择" />
-                            <template v-else>
-                                <a-input  v-if="item.search===1" v-decorator="[item.name]" placeholder=""/>
-                                <a-input v-if="item.search===2" v-decorator="[item.name]"  placeholder=""/>
-                                <a-input v-if="item.search===3" v-decorator="[item.name]"  placeholder=""/>
-                                <a-input v-if="item.search===4" v-decorator="[item.name]"  placeholder=""/>
-                                <a-range-picker style="width: auto" v-if="item.search===5" v-decorator="[item.name]"  />
-                                <a-range-picker style="width: auto" v-if="item.search===6" show-time v-decorator="[item.name]"  />
-                            </template>
-                        </a-form-item>
+                <a-form-item
+                             :label-col="labelCol" :wrapper-col="wrapperCol" :label="item.title">
+                    <remote-select v-if="item.options" :name="item.options" v-decorator="[item.name]"
+                                   placeholder="请选择"/>
+                    <template v-else>
+                        <a-input v-if="item.search===1" v-decorator="[item.name]" placeholder=""/>
+                        <a-input v-if="item.search===2" v-decorator="[item.name]" placeholder=""/>
+                        <a-input v-if="item.search===3" v-decorator="[item.name]" placeholder=""/>
+                        <a-input v-if="item.search===4" v-decorator="[item.name]" placeholder=""/>
+                        <a-range-picker style="width: auto" v-if="item.search===5" v-decorator="[item.name]"/>
+                        <a-range-picker style="width: auto" v-if="item.search===6" show-time v-decorator="[item.name]"/>
+                    </template>
+                </a-form-item>
                     </a-col>
                 </a-row>
                 <a-row>
@@ -95,13 +102,15 @@
 
   export default {
     name: "TdTable",
-    props: ['url','operate_width'],
+    props: ['url', 'operate_width'],
     components: {
       RemoteSelect,
       STable,
     },
     data () {
       return {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 14 },
         expand: false,
         form: this.$form.createForm(this, { name: 'advanced_search' }),
         heads: [],
@@ -110,18 +119,17 @@
         searchData: {},
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          let params={
+          let params = {
             page: parameter.page,
             size: parameter.size,
             header: true,
           }
-          this.searchData
           for (let key in this.searchData) {
-            if (Array.isArray(this.searchData[key])){
-              this.searchData[key]=this.searchData[key].join(",");
+            if (Array.isArray(this.searchData[key])) {
+              this.searchData[key] = this.searchData[key].join(",");
             }
           }
-          Object.assign(params,this.searchData)
+          Object.assign(params, this.searchData)
           return request({
             url: this.url,
             method: 'GET',
@@ -263,7 +271,7 @@
     /*.ant-select-selection__placeholder {*/
     /*    margin-left: 0;*/
     /*}*/
-    .ant-form-item-label{
+    .ant-form-item-label {
         height: 28px;
         padding: 2px 8px;
         line-height: 26px;
