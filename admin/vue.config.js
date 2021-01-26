@@ -99,7 +99,7 @@ const vueConfig = {
     proxy: {
       '/admin/': {
         // target: 'http://api.xiangshangsl.com',
-        target: 'http://192.168.2.100:8010',
+        target: 'http://localhost:8010',
         // target: 'http://192.168.2.64:20001',
         // target: 'http://192.168.2.195:20001',
         ws: false,
