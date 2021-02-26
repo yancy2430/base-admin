@@ -1,28 +1,12 @@
 <template>
   <div class="role-edit">
-    <a-tabs default-active-key="1" >
-      <a-tab-pane v-for="(permission, index) in data" :key="index">
-        <template slot="tab"><a-checkbox v-model="permission.checked"></a-checkbox><span style="margin-left: 5px;">{{permission.name}}</span></template>
-        <a-tabs default-active-key="0" tab-position="left" @change="callback">
-          <a-tab-pane v-for="(item, index) in permission.children" :key="index">
-            <template slot="tab"><span style="margin-right: 5px;">{{item.name}}</span><a-checkbox v-model="item.checked"></a-checkbox></template>
-            <a-card :bordered="false">
-              <template slot="title"><span style="margin-right: 5px;">按钮</span><a-checkbox></a-checkbox></template>
-              <a-checkbox v-for="(btn, index) in item.btns" :key="index" v-model="btn.checked">{{btn.name}}</a-checkbox>
-            </a-card>
-            <a-card title="字段" :bordered="false" >
-              <template slot="title"><span style="margin-right: 5px;">字段</span><a-checkbox></a-checkbox></template>
-              <a-checkbox v-for="(btn, index) in item.btns" :key="index" v-model="btn.checked">{{btn.name}}</a-checkbox>
-            </a-card>
-            <a-card title="组件" :bordered="false" >
-              <template slot="title"><span style="margin-right: 5px;">组件</span><a-checkbox></a-checkbox></template>
-              <a-checkbox v-for="(btn, index) in item.btns" :key="index" v-model="btn.checked">{{btn.name}}</a-checkbox>
-            </a-card>
-          </a-tab-pane>
 
-        </a-tabs>
-      </a-tab-pane>
-    </a-tabs>
+    <a-tree
+        v-model="selectedKeys"
+        checkable
+        :tree-data="data"
+        :replaceFields="{children:'children', title:'name', key:'code' }"
+    />
 
     <div
       :style="{
@@ -48,6 +32,7 @@
 </template>
 
 <script>
+  import md5 from 'md5'
   import RoleCheckbox from './RoleCheckbox'
   import request from '../../../utils/request'
   export default {
@@ -56,7 +41,9 @@
     data () {
       return {
         data: [],
-        loginBtn: false
+        loginBtn: false,
+        selectedKeys: [],
+        defaultSelectedKeys: [],
       }
     },
     props: {
@@ -74,7 +61,9 @@
         }
       }).then(res => {
         if (res.code === 0) {
-          this.data = res.data
+          this.data = res.data.list
+          this.selectedKeys = [...res.data.selected]
+          this.defaultSelectedKeys = [...res.data.selected];
         }
       })
     },
@@ -91,24 +80,29 @@
           }
         }).then(res => {
           if (res.code === 0) {
-            this.data = res.data
+            this.data = res.data.list
+            this.selectedKeys = [...res.data.selected]
+            this.defaultSelectedKeys = [...res.data.selected];
           }
         })
       }
     },
     methods: {
-      callback(key) {
-        console.log(key);
-      },
       handleSubmit () {
         this.loginBtn = true
+        if (md5(this.selectedKeys)===md5(this.defaultSelectedKeys)){
+
+          this.$emit('close', true)
+          this.loginBtn = false
+          return;
+        }
         request({
           url: 'savePermissionsByRole',
           method: 'POST',
           params:{
             roleId:this.roleId
           },
-          data: JSON.stringify(this.data),
+          data: JSON.stringify(this.selectedKeys),
           headers: {
             'Content-Type': 'application/json; charset=utf-8'
           }
@@ -116,6 +110,7 @@
           if (res.code === 0) {
             this.$emit('close', true)
           }
+        }).finally(()=>{
           this.loginBtn = false
         })
       },

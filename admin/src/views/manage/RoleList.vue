@@ -60,10 +60,10 @@
         placement="right"
         :closable="false"
         :visible="allotVisible"
-        :width="820"
+        :width="420"
         @close="allotVisible =false"
       >
-        <role-edit :roleId="roleId"></role-edit>
+        <role-edit :roleId="roleId" @close="allotVisible =false"></role-edit>
       </a-drawer>
     </a-card>
   </page-header-wrapper>
