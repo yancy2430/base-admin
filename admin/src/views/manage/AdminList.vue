@@ -28,6 +28,14 @@
           {{item.name}}
         </a-tag>
       </template>
+      <template slot="operate" slot-scope="record">
+        <!--{{record.data.roleName.join(",")}}-->
+        <a @click="lockAdmin(record.data.id)">锁定</a>
+        <a-divider type="vertical" />
+        <a>修改</a>
+        <a-divider type="vertical" />
+        <a style="color: red;">删除</a>
+      </template>
     </td-table>
 
     <a-drawer
@@ -60,6 +68,18 @@
       },
       onAddAdmin(data){
 
+      },
+      lockAdmin(id){
+        this.$confirm({
+          title: '确认锁定',
+          content: '是否确定需要锁定此账号',
+          onOk() {
+            return new Promise((resolve, reject) => {
+              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+            }).catch(() => console.log('Oops errors!'));
+          },
+          onCancel() {},
+        });
       }
     }
 

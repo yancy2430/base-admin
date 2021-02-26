@@ -41,6 +41,8 @@ Vue.use(Cascader)
 Vue.component('draggable', draggable)
 import { FormModel } from 'ant-design-vue';
 Vue.use(FormModel);
+import { Tree } from 'ant-design-vue';
+Vue.use(Tree);
 import clipboard from 'clipboard';
 //注册到vue原型上
 Vue.prototype.clipboard = clipboard;
