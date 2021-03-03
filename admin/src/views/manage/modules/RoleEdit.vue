@@ -21,7 +21,7 @@
         zIndex: 1,
       }"
     >
-      <a-button :style="{ marginRight: '8px' }" @click="visible = false">
+      <a-button :style="{ marginRight: '8px' }" @click="$emit('close', true)">
         取消
       </a-button>
       <a-button type="primary" :loading="loginBtn" :disabled="loginBtn" @click="handleSubmit">
